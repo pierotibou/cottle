@@ -249,7 +249,7 @@
 					</div>
 					<div class="code">
 						<blockquote><span>C# code:</span></blockquote>
-<code>private void   SomeFunction ()
+<code>private void   SomeFunction()
 {
     Document   document;
     Scope      scope;
@@ -362,7 +362,7 @@
 					</div>
 					<div class="code">
 						<blockquote><span>C# code:</span></blockquote>
-<code>scope["name"] = "John";</code>
+<code>scope["name"] = "John"; // implicit conversion to Value, new StringValue("John") is valid too</code>
 					</div>
 					<div class="code">
 						<blockquote><span>Result:</span></blockquote>
@@ -398,7 +398,8 @@
 <code>Special characters {, }, | and \ must be escaped.</code>
 					</div>
 					<p>Special characters can be changed as you'll see in
-					section <a href="#block_delimiters_customization">Block delimiters customization</a>.</p>
+					section
+					"<a href="#block_delimiters_customization">Block delimiters customization</a>".</p>
 				</div>
 
 				<h3>Using array values</h3>
@@ -414,7 +415,7 @@
 					</div>
 					<div class="code">
 						<blockquote><span>C# code:</span></blockquote>
-<code>scope["myarray"] = new Dictionary&lt;Value,Value&gt;
+<code>scope["myarray"] = new Dictionary&lt;Value,Value&gt; // implicit conversion to ArrayValue
 {
     {"f1", "dotted"},
     {"f2", "subscript"}
@@ -430,10 +431,11 @@
 					for the value whose key is the value of <code>f2</code>
 					(which hasn't be defined), leading to an undefined
 					result.</p>
-					<p>If the keys of two or more pairs are equal, only the
-					value of the last one can be accessed directly. However,
-					the other pairs can still be retrieved with different
-					methods as we'll see later.</p>
+					<p>It is valid to have an array in which two or more keys
+					are equal, but you will only be able to access the last
+					one when using direct access. However, iteration through
+					the array's elements, as we'll see later, will show you
+					its entire content.</p>
 				</div>
 
 				<h3>Literals and variables</h3>
@@ -908,7 +910,7 @@ Move one disk from A to C</code>
 					functions:</p>
 					<div class="code">
 						<blockquote><span>Template:</span></blockquote>
-<code>{declare depth(item) to:
+<code>{declare depth(item) as:
     ...
 }</code>
 					</div>
@@ -941,7 +943,7 @@ Move one disk from A to C</code>
 					</div>
 					<div class="code">
 					<blockquote><span>C# code:</span></blockquote>
-<code>scope["repeat"] = new FunctionValue (new CallbackFunction (delegate (IList&lt;Value&gt; values, Scope scope, TextWriter output)
+<code>scope["repeat"] = new FunctionValue(new CallbackFunction(delegate(IList&lt;Value&gt; values, Scope scope, TextWriter output)
 {
     StringBuilder builder = new StringBuilder();
     int           i;
@@ -1024,13 +1026,64 @@ hello! hello! hello!
 						<blockquote><span>C# code:</span></blockquote>
 <code>scope = new Scope();
 scope["is_admin"] = user.IsAdmin ();
-scope["log"] = () => log.BuildComplexAdministrationLogValue ();
+scope["log"] = () => log.BuildComplexAdministrationLogValue (); // implicit conversion to LazyValue
 
 document.Render(scope, Console.Out);</code>
 					</div>
 					<p>In this example, method
 					<code>log.BuildComplexAdministrationLogValue</code> won't
 					be called unless <code>is_admin</code> value is true.</p>
+				</div>
+
+				<h3>Inspect objects through reflection</h3>
+				<div class="section">
+					<p>Instead of converting complex object hierarchies to
+					Cottle values, you can have the library do it for you by
+					using .NET reflection. Keep in mind that reflection is
+					significantly slower than creating Cottle values manually,
+					but as it's a lazy mechanism it may be a good choice if you
+					have complex objects and don't know in advance which fields
+					might be used in your templates.</p>
+					<p>To use reflection, create a new ReflectionValue from any
+					.NET object instance, and push it to your scope. Its fields
+					and properties will be accessible like if it were a Cottle
+					array:</p>
+					<div class="code">
+						<blockquote><span>Template:</span></blockquote>
+<code>Your image has a size of {image.Width} x {image.Height} pixels.
+
+{for key, value in stream:
+  {key} = {value}
+}</code>
+					</div>
+					<div class="code">
+						<blockquote><span>C# code:</span></blockquote>
+<code>scope["image"] = new ReflectionValue(new Bitmap(50, 50));</code>
+					</div>
+					<div class="code">
+						<blockquote><span>Result:</span></blockquote>
+<code>Your image has a size of 50 x 50 pixels.
+
+nativeImage =
+Tag =
+PhysicalDimension =
+Size =
+Width = 50
+Height = 50
+HorizontalResolution = 96
+VerticalResolution = 96
+Flags = 2
+RawFormat =
+PixelFormat =
+Palette =
+FrameDimensionsList =
+PropertyIdList =
+PropertyItems =</code>
+					</div>
+					<p>By default, a <code>ReflectionValue</code> will read all
+					instance members, both public and private. If you want to
+					change this behavior, specify your BindingFlags as a second
+					parameter to <code>ReflectionValue</code> constructor.</p>
 				</div>
 
 				<h3 id="block_delimiters_customization">Block delimiters customization</h3>
