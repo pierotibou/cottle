@@ -4,77 +4,143 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<style type="text/css">
 			a {
-				color:				#5070B0;
-				text-decoration:	none;
+				color:	#4060A0;
 			}
 
 			a:hover {
-				color:				#6080C0;
-				text-decoration:	underline;
+				color:	#6080C0;
+			}
+
+			aside.toc {
+				position:	fixed;
+				top:		32px;
+				right:		64px;
+				text-align:	right;
+				max-width:	200px;
+			}
+
+			aside.toc a {
+				text-decoration:	none;
+			}
+
+			aside.toc li a,
+			aside.toc li li a {
+				display:		block;
+				padding-right:	6px;
+				border-right:	0px;
+			}
+
+			aside.toc li ul {
+				display:		none;
+				padding-right:	8px;
+				font-size:		0.8em;
+				line-height:	1.4;
+			}
+
+			aside.toc li:hover > a {
+				padding-right:	5px;
+				border-right:	1px solid #4060A0;
+			}
+
+			aside.toc li.active > a {
+				padding-right:	4px;
+				border-right:	2px solid #4060A0;
+			}
+
+			aside.toc li:hover > ul {
+				display:	block;
+			}
+
+			aside.toc strong {
+				color:	#4060A0;
+			}
+
+			aside.toc ul {
+				padding:		0;
+				margin:			0;
+				font-size:		0.9em;
+				line-height:	1.6;
+				list-style:		none;
 			}
 
 			body {
-				padding:	0px;
-				margin:		32px 64px;
-				font:		normal normal normal 0.9em 'Trebuchet MS', Helvetica, sans-serif;
+				padding:		0px;
+				margin:			32px 264px 32px 64px;
+				font:			normal normal normal 0.9em "Helvetica Neue", Helvetica, Arial, sans-serif;
+				line-height:	1.4;
+				color:			#303030;
 			}
 
-			div.code {
+			blockquote.code {
 				position:		relative;
-				padding:		10px 6px 1px 6px;
-				margin:			12px 8px;
-				background:		#D0E0F0;
-				border-top:		1px solid #80A0B0;
-				border-right:	1px solid #A0C0D0;
-				border-bottom:	1px solid #A0C0D0;
-				border-left:	1px solid #80A0B0;
-				border-radius:	6px;
+				padding:		4px 8px;
+				margin:			12px 0;
+				background:		#E3EDF6;
+				border-top:		1px solid #A9C7E4;
+				border-right:	1px solid #BDD3EA;
+				border-bottom:	1px solid #BDD3EA;
+				border-left:	1px solid #A9C7E4;
+				border-radius:	4px;
+				color:			#4060A0;
 			}
 
-			div.code code {
-				font:			normal normal normal 1.0em monospace;
-				white-space:	pre;
+			blockquote.code code {
+				display:		block;
+				font:			normal normal normal 0.8em Menlo, Monaco, Consolas, "Courier New", monospace;
+				white-space:	pre-wrap;
 			}
 
-			div.code code strong {
-				background:		#D0C0B0;
+			blockquote.code code strong {
 				font-weight:	bold;
+				color:			#2A3F69;
 			}
 
-			div.code blockquote {
-				position:	relative;
-				top:		-18px;
-				height: 	0px;
-				padding:	0px;
-				margin:		0px;
-			}
-
-			div.code blockquote span {
-				padding:		0px 4px 0px 5px;
-				background:		#B0C6E0;
-				border-top:		1px solid #C0D0F0;
-				border-right:	1px solid #A0B0C0;
-				border-bottom:	1px solid #A0B0C0;
-				border-left:	1px solid #C0D0F0;
-				border-radius:	6px;
-				font-size:		0.7em;
+			blockquote.code span {
+				float:			right;
+				position:		relative;
+				top:			-10px;
+				padding:		1px 8px;
+				background:		#BDD3EA;
+				border-top:		1px solid #A9C7E4;
+				border-right:	1px solid #96BADD;
+				border-bottom:	1px solid #96BADD;
+				border-left:	1px solid #A9C7E4;
+				border-radius:	8px;
+				font-size:		0.8em;
 				font-weight:	bold;
 			}
 
 			div.section {
-				margin:		8px 0px 48px 0px;
+				margin:	8px 0 48px 0;
 			}
 
 			div.section div.section {
-				margin:		8px 0px 32px 0px;
+				margin:		8px 0 32px 0;
 			}
 
 			div.section div.section div.section {
-				margin:		8px 0px 24px 0px;
+				margin:		8px 0 24px 0;
 			}
 
+			div.section div.section div.section div.section {
+				margin:		8px 0 16px 0;
+			}
+
+			div.section li code,
+			div.section p code {
+				padding:		0 2px;
+				font:			normal normal normal 1.0em monospace;
+				background:		#E3EDF6;
+				border-top:		1px solid #A9C7E4;
+				border-right:	1px solid #BDD3EA;
+				border-bottom:	1px solid #BDD3EA;
+				border-left:	1px solid #A9C7E4;
+				border-radius:	4px;
+				color:			#2A3F69;
+			}			
+
 			div.section p {
-				margin:	12px 8px;
+				margin:	12px 0;
 			}
 
 			div.section ul {
@@ -88,67 +154,13 @@
 				margin:		0px;
 			}
 
-			div.section p code,
-			div.section ul code {
-				background:	#E0E0E0;
-				font:		normal normal normal 1.0em monospace;
-			}
-
-			div.toc {
-				position:	absolute;
-				left:		4px;
-				top:		4px;
-			}
-
-			div.toc span.handle {
-				cursor:			pointer;
-				padding:		1px 8px 1px 9px;
-				background:		#B0C6E0;
-				border-top:		1px solid #C0D0F0;
-				border-right:	1px solid #A0B0C0;
-				border-bottom:	1px solid #A0B0C0;
-				border-left:	1px solid #C0D0F0;
-				border-radius:	6px;
-				font-size:		0.7em;
-				font-weight:	bold;
-			}
-
-			div.toc ul {
-				display:		none;
-				padding:		1px 6px;
-				margin:			2px;
-				background:		#D0E0F0;
-				border-top:		1px solid #80A0B0;
-				border-right:	1px solid #A0C0D0;
-				border-bottom:	1px solid #A0C0D0;
-				border-left:	1px solid #80A0B0;
-				border-radius:	4px;
-				font-size:		0.9em;
-				line-height:	16px;
-				list-style:		none;
-			}
-
-			div.toc:hover ul {
-				display:		block;
-			}
-
-			div.toc ul ul {
-				display:		block;
-				padding:		0px 6px;
-				margin:			0px 2px;
-				background:		transparent;
-				border-top:		0px;
-				border-right:	0px;
-				border-bottom:	0px;
-				border-left:	0px;
-			}
-
 			h1 {
-				padding:	0px;
-				margin:		24px 8px;
-				text-align:	center;				
-				font-size:	2.0em;
-				color:		#4060A0;
+				padding:		0px;
+				margin:			24px 8px;
+				text-align:		center;				
+				font-size:		2.2em;
+				font-variant:	small-caps;
+				color:			#4060A0;
 			}
 
 			h2 {
@@ -164,11 +176,22 @@
 				font-size:	1.0em;
 				color:		#6080C0;
 			}
+
+			h4 {
+				padding:	0px;
+				margin:		4px 0;
+				font-size:	1.0em;
+				color:		#728FC7;
+			}
 		</style>
 		<title>Cottle Documentation</title>
 	</head>
 	<body>
 		<h1>Cottle Documentation</h1>
+		<aside class="toc">
+			<strong>Table of contents</strong>
+			<ul id="toc-to"></ul>
+		</aside>
 		<div class="section" id="toc-from">
 			<h2>Cottle overview</h2>
 			<div class="section">
@@ -185,8 +208,8 @@
 					<p>A simple Cottle template printing an HTML document
 					showing how many messages are in your mailbox could look
 					like this:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>&lt;html&gt;
     &lt;body&gt;
         &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
@@ -199,7 +222,7 @@
         &lt;/p&gt;
     &lt;/body&gt;
 &lt;/html&gt;</code>
-					</div>
+					</blockquote>
 					<p>As you can guess by looking at this code, a Cottle
 					template contains both "raw" text printed directly and
 					special tags used to control how text output is generated.
@@ -243,12 +266,12 @@
 						into an output string or writer.</li>
 					</ul>
 					<p>Here is a simple use case:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Text contents of the template file 'test.cottle'.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>private void   SomeFunction()
 {
     IDocument  document;
@@ -265,11 +288,11 @@
 
     document.Render(scope, Console.Out); // may throw a RenderException on error
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Text contents of the template file 'test.cottle'.</code>
-					</div>
+					</blockquote>
 					<p>Since the sample C# codes used in example is quite
 					redundant, only specific parts for each one will appear in
 					following examples. They should be inserted where the
@@ -288,14 +311,14 @@
 					special characters. That means raw text will appear exactly
 					as you entered it in your template, as shown in this
 					example:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Hello, world!</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Hello, world!</code>
-					</div>
+					</blockquote>
 				</div>
 
 				<h3>Using commands in templates</h3>
@@ -308,14 +331,14 @@
 					parameters, then a "}" (right brace) character to end it.
 					Here is an example using the <code>echo</code> command
 					which outputs the value of a variable or constant:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>The answer is: {echo 42}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>The answer is: 42</code>
-					</div>
+					</blockquote>
 					<p>Of course, this template sample has no actual use as it
 					results in a constant string, but we'll see more realistic
 					examples in following sections.</p>
@@ -323,18 +346,18 @@
 					<code>if</code> command, also require a body which must
 					appear between a ":" (colon) character and the "}" at the
 					end of the command:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{if condition:something}</code>
-					</div>
+					</blockquote>
 					<p>Command bodies are always raw text, not code, so in this
 					example "something" will be printed if the <code>if</code>
 					command is satisfied. You can of course use commands from
 					within another command body:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{if condition:{echo result}}</code>
-					</div>
+					</blockquote>
 				</div>
 
 				<h3>Sending variables to a template</h3>
@@ -355,18 +378,18 @@
 					<p>Once assigned, variables can be used in the template,
 					for example by using the <code>echo</code> command that
 					can output the value of any variable:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Hello {echo name}, you have no new message.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["name"] = "John"; // implicit conversion to Value, new StringValue("John") is valid too</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Hello John, you have no new message.</code>
-					</div>
+					</blockquote>
 					<p>As <code>echo</code> is the most commonly used command a
 					shorter form is available and you can omit the "echo"
 					keyword if the name of the variable you want to print
@@ -389,14 +412,14 @@
 					</ul>
 					<p>If you need to print one of these in your template, you
 					must preceed them with a backslash character:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Special characters \{, \}, \| and \\ must be escaped.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Special characters {, }, | and \ must be escaped.</code>
-					</div>
+					</blockquote>
 					<p>Special characters can be changed as you'll see in
 					section
 					"<a href="#block_delimiters_customization">Block delimiters customization</a>".</p>
@@ -409,22 +432,22 @@
 					either scalar values or other nested map values. Values
 					within a map value can be accessed directly by their key,
 					using either dotted or subscript notation:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>You can use either {mymap.f1} or {mymap["f2"]} notations for map values.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["mymap"] = new Dictionary&lt;Value,Value&gt; // implicit conversion to MapValue
 {
     {"f1", "dotted"},
     {"f2", "subscript"}
 };</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>You can use either dotted or subscript notations for map values.</code>
-					</div>
+					</blockquote>
 					<p>Please note the quotes used in subscript notation.
 					Trying to access value of <code>{mymap[f2]}</code> will
 					result in a very different behavior, since it will search
@@ -447,15 +470,15 @@
 					expression returning a value (this last case will be
 					explained in details later in this document).</p>
 					<p>Here is how to use literal values in your templates:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{17.42}
 {"Constant string value"}
 {'String with single quotes'}
 {["key1": "value1", "key2": "value2", 43: "value for key 43"]}
 {["constant", "map", "with", "auto-generated", "numeric", "keys"]}
 {[1: ["map", "with"], "mixed": "values"]}</code>
-					</div>
+					</blockquote>
 					<p>As you can see in this example, literals can be:</p>
 					<ul>
 						<li>Integer or decimal numeric constants,</li>
@@ -472,12 +495,12 @@
 					<p>Functions in Cottle are special values that can be
 					called just like functions in any programming language,
 					using this syntax:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>You have {len(messages)} new message(s) in your inbox.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>IScope  scope;
 
 scope = new DefaultScope(); // see below for details about this line
@@ -488,11 +511,11 @@ scope["messages"] = new Dictionary&lt;Value,Value&gt;
     {1, "message #1"},
     {2, "message #2"}
 };</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>You have 3 new message(s) in your inbox.</code>
-					</div>
+					</blockquote>
 					<p>Please note the use of a <code>DefaultScope</code>
 					object in this sample. This special sub-class of the
 					<code>IScope</code> interface comes with all Cottle
@@ -503,8 +526,8 @@ scope["messages"] = new Dictionary&lt;Value,Value&gt;
 					<p>To get a description of each of the functions assigned
 					when using a <code>DefaultScope</code> object, see
 					paragraph
-					"<a href="#common_functions">Common functions</a>". For all
-					following samples, we'll assume that common functions are
+					"<a href="#builtin_functions">Builtin functions</a>". For all
+					following samples, we'll assume that builtin functions are
 					assigned before template is rendered.</p>
 				</div>
 
@@ -514,15 +537,15 @@ scope["messages"] = new Dictionary&lt;Value,Value&gt;
 					add comments to your template. This command can be followed
 					by any literal text and won't print any result when
 					template is rendered.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{_ This is a comment that will be ignored when rendering the template}
 Hello, World!</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Hello, World!</code>
-					</div>
+					</blockquote>
 				</div>
 			</div>
 
@@ -541,8 +564,8 @@ Hello, World!</code>
 					<p>The <code>if</code> command also supports optional
 					<code>elif</code> (else if) and <code>else</code> blocks
 					that behave like in any programming language.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{if 1:
     A condition on a numeric value is true if the value is non-zero.
 }
@@ -560,9 +583,9 @@ Hello, World!</code>
 |else:
     X equals zero.
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["items"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "item #0"},
@@ -572,9 +595,9 @@ Hello, World!</code>
 
 scope["test"] = 42;
 scope["x"] = -3;</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>A condition on a numeric value is true if the value is non-zero.
 
 Variable "test" is true!
@@ -582,7 +605,7 @@ Variable "test" is true!
 There are more than two items in map (3, actually).
 
 X is negative.</code>
-					</div>
+					</blockquote>
 				</div>
 
 				<h3>Maps enumeration</h3>
@@ -595,8 +618,8 @@ X is negative.</code>
 					an optional <code>empty</code> block printed when the map
 					you tried to enumerate doesn't contain any key/value
 					pair.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{for index, text in messages:
     Message #{add(index, 1)}: {text}
 |empty:
@@ -604,9 +627,9 @@ X is negative.</code>
 }
 
 Tags: {for tag in tags:{tag} }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "Hi, this is a sample message!"},
@@ -620,15 +643,15 @@ scope["tags"] = new Value[]
     "horror",
     "fantastic"
 };</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Message #1: Hi, this is a sample message!
 Message #2: Hi, me again!
 Message #3: Hi, guess what?
 
 Tags: action horror fantastic</code>
-					</div>
+					</blockquote>
 				</div>
 
 				<h3 id="variables_assignment">Variables assignment</h3>
@@ -640,8 +663,8 @@ Tags: action horror fantastic</code>
 					to be used several times, or code complex template
 					mechanism by combining the <code>if</code>,
 					<code>for</code> and <code>set</code> commands.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set nb_msgs to len(messages)}
 
 {if gt(nb_msgs,0):
@@ -659,22 +682,22 @@ Tags: action horror fantastic</code>
 }
 
 {nb_long} message{if gt(nb_long, 1):s is|else: are} more than 20 characters long.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "Hi, this is a sample message!"},
     {1, "Hi, me again!"},
     {2, "Hi, guess what?"}
 };</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>You have 3 new messages in your mailbox!
 
 1 message is more than 20 characters long.</code>
-					</div>
+					</blockquote>
 					<p>You can assume that all variables are set in a global
 					common scope. More advanced use of variable assignments
 					will be explained later in this document.</p>
@@ -682,14 +705,14 @@ Tags: action horror fantastic</code>
 					to assign some value to a map subscript. If you want to
 					append, replace or erase a value in a map, you'll have
 					to build a new one and inject, filter out or replace
-					desired value. Common functions
+					desired value. Builtin functions
 					"<a href="#function_cat">cat</a>",
 					"<a href="#function_slice">slice</a>",
 					"<a href="#function_union">union</a>",
 					"<a href="#function_except">except</a>" can be used to
 					easily achieve such operations:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set my_array to [4, 8, 50, 90, 23, 42]}
 {set my_array to cat(slice(my_array, 0, 2), slice(my_array, 4))}
 {set my_array to cat(slice(my_array, 0, 2), [15, 16], slice(my_array, 2))}
@@ -699,12 +722,12 @@ Tags: action horror fantastic</code>
 {set my_hash to union(my_hash, ["append_me": "I'm here!"])}
 {set my_hash to except(my_hash, ["delete_me": 0])}
 {dump my_hash}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>[0: 4, 1: 8, 0: 15, 1: 16, 4: 23, 5: 42]
 ["let_me": "I shouldn't be touched", "append_me": "I'm here!"]</code>
-					</div>					
+					</blockquote>					
 				</div>
 
 				<h3>Conditional loops</h3>
@@ -715,8 +738,8 @@ Tags: action horror fantastic</code>
 					number of iterations, or rendering of your template will
 					never complete. When possible, prefer the use of the
 					<code>for</code> command over <code>while</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set password to ""}
 {set nb to rand(8, 16)}
 {set i to 0}
@@ -736,11 +759,11 @@ Tags: action horror fantastic</code>
 }
 
 Your random password is: {password}.</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Your random password is: 2PIBnodftxz8jAX.</code>
-					</div>
+					</blockquote>
 				</div>
 			</div>
 
@@ -755,8 +778,8 @@ Your random password is: {password}.</code>
 					<code>Cottle.Settings.CustomSetting</code> object to
 					override any configuration parameter you want, or implement
 					the interface yourself for more advanced uses:</p>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 					<code>IDocument       document;
 IScope          scope;
 CustomSetting   setting;
@@ -775,7 +798,7 @@ using (StreamReader template = new StreamReader(new FileStream("test.cottle", Fi
 }
 
 document.Render(scope, Console.Out);</code>
-					</div>
+					</blockquote>
 					<p>Configuration parameters can be updated where the first
 					"TODO" comment is located. This code will be used for
 					detailed usage of specific parameters in following
@@ -813,8 +836,8 @@ document.Render(scope, Console.Out);</code>
 					this document, exact white spaces are preserved in
 					results.</p>
 					<p>CollapseBlankCharacters:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>&lt;ul&gt;
     {for s in ["First", "Second", "Third"]:
         &lt;li&gt;
@@ -822,52 +845,52 @@ document.Render(scope, Console.Out);</code>
         &lt;/li&gt;
     }
 &lt;/ul&gt;</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>setting.Trimmer = Trimmers.CollapseBlankCharacters;</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>&lt;ul&gt;  &lt;li&gt; First &lt;/li&gt;  &lt;li&gt; Second &lt;/li&gt;  &lt;li&gt; Third &lt;/li&gt;  &lt;/ul&gt;</code>
-					</div>
+					</blockquote>
 					<p>LeadingAndTrailingBlankCharacters:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{'white'} {'spaces '} around raw blocks are
 going to be
 {' collapsed'} .</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>setting.Trimmer = Trimmers.LeadingAndTrailingBlankCharacters;</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>whitespaces around raw blocks are
 going to be collapsed.</code>
-					</div>
+					</blockquote>
 					<p>FirstAndLastBlankLines:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>This is a line of text with {'inline'} Cottle code.
 
 {for s in ["normal", "exceptional", "elite"]:
     - Length of string "{s}" is {len(s)} character(s).
 
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>setting.Trimmer = Trimmers.FirstAndLastBlankLines;</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>This is a line of text with inline Cottle code.
     - Length of string "normal" is 6 character(s).
     - Length of string "exceptional" is 11 character(s).
     - Length of string "elite" is 5 character(s).</code>
-					</div>
+					</blockquote>
 					<p>If you want to write your own trimmer, assign a method
 					taking a <code>string</code> as its only argument and
 					returning the "trimmed" text. This method will be called on
@@ -893,12 +916,12 @@ going to be collapsed.</code>
 					not be able to understand your code. For example, choosing
 					the ] character as a delimiter is a bad idea, as it will
 					conflict with internal end-of-map delimiter.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Block delimiters are now [[block_begin]], [[block_continue]] and [[block_end]].</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>setting.BlockBegin = "[[";
 setting.BlockContinue = "||";
 setting.BlockEnd = "]]";
@@ -906,11 +929,11 @@ setting.BlockEnd = "]]";
 scope["block_begin"] = "double left bracket (" + setting.BlockBegin + ")";
 scope["block_continue"] = "double pipe (" + setting.BlockContinue + ")";
 scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Block delimiters are now double left bracket ([[), double pipe (||) and double right bracket (]]).</code>
-					</div>
+					</blockquote>
 				</div>
 			</div>
 
@@ -924,20 +947,20 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					for example, won't print anything when passed through the
 					<code>echo</code> command, but will appear as
 					<code>&lt;void&gt;</code> with <code>dump</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{dump "string"}
 {dump 42}
 {dump unknown(3)}
 {dump [856, "hello", "x": 17]}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>"string"
 42
 &lt;void&gt;
 [0: 856, 1: "hello", "x": 17]</code>
-					</div>
+					</blockquote>
 				</div>
 
 				<h3>Understanding value types</h3>
@@ -947,17 +970,17 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					automatically when required. In some cases however, you may
 					have to force a cast to get desired result, for example
 					when accessing values from a map:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set map to ["first", "second", "third"]}
 {set key to "1"}
 
 {dump map[key]}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>&lt;void&gt;</code>
-					</div>
+					</blockquote>
 					<p>You could have expected this template to display
 					"second", but Cottle actually searches for the value
 					associated to key "1" (as a string) in <code>map</code>,
@@ -967,7 +990,7 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					automatic cast can be performed for you.</p>
 					<p>This can be solved by explicitely changing the type of
 					<code>key</code> to a number by using the
-					<a href="#function_cast">cast</a> common function.</p>
+					<a href="#function_cast">cast</a> builtin function.</p>
 				</div>
 
 				<h3>Functions declaration</h3>
@@ -985,8 +1008,8 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					expression or stored in a variable. To make a function halt
 					and return a value, use the <code>return</code> command
 					within its body.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set factorial(n) to:
     {if gt(n, 1):
         {return mul(n, factorial(sub(n, 1)))}
@@ -1012,9 +1035,9 @@ Move one disk from {from} to {to}
 }
 
 {hanoi(3)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Factorial 1 = 1
 Factorial 3 = 6
 Factorial 8 = 40320
@@ -1026,7 +1049,7 @@ Move one disk from A to C
 Move one disk from B to A
 Move one disk from B to C
 Move one disk from A to C</code>
-					</div>
+					</blockquote>
 					<p>You can see in this example that returning a value and
 					printing text are two very different things. Raw text
 					within function body is printed each time the function is
@@ -1052,8 +1075,8 @@ Move one disk from A to C</code>
 					"<a href="#variables_assignment">Variables assignment</a>",
 					all variables belong to the same top-level scope. Consider
 					this template:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set depth(item) to:
     {set res to 0}
 
@@ -1066,7 +1089,7 @@ Move one disk from A to C</code>
 }
 
 {depth([["1.1", "1.2", ["1.3.1", "1.3.2"]], "2", "3", ["4.1", "4.2"]])}</code>
-					</div>
+					</blockquote>
 					<p>The <code>depth</code> function is expected to return
 					the level of the deepest element in a value that contains
 					nested maps. Of course it could be written in a much more
@@ -1093,8 +1116,8 @@ Move one disk from A to C</code>
 					function <code>depth</code>, so that every subsequent
 					reference to <code>res</code> resolves to our local
 					instance:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{set depth(item) to:
     <strong>{declare res}</strong>
     {set res to 0}
@@ -1108,7 +1131,7 @@ Move one disk from A to C</code>
 }
 
 {depth([["1.1", "1.2", ["1.3.1", "1.3.2"]], "2", "3", ["4.1", "4.2"]])}</code>
-					</div>
+					</blockquote>
 					<p>You could even optimize the first <code>set</code>
 					command away by assigning a value to <code>res</code>
 					during declaration ; the <code>declare</code> command
@@ -1116,18 +1139,18 @@ Move one disk from A to C</code>
 					using the same kind of syntax than the <code>set</code>
 					command, the only difference being than "to" should be
 					replaced by "as":</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{declare res as 0}</code>
-					</div>
+					</blockquote>
 					<p>The same command can also be used to declare
 					functions:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{declare depth(item) as:
     ...
 }</code>
-					</div>
+					</blockquote>
 					<p>Note that the <code>set</code> command can also be used
 					without a value. Declaring or setting a variable without a
 					value is equivalent to asigning it a void value.</p>
@@ -1147,16 +1170,16 @@ Move one disk from A to C</code>
 					<code>FunctionValue</code> object, then add it to the
 					<code>Value</code> property of your <code>Document</code>
 					instance, as you would do for any regular variable:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Testing custom "repeat" function:
 
 {repeat("a", 15)}
 {repeat("hello! ", 3)}
 {repeat("-", 10)}</code>
-					</div>
-					<div class="code">
-					<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["repeat"] = new FunctionValue(new CallbackFunction(delegate(IList&lt;Value&gt; values, IScope scope, TextWriter output)
 {
     StringBuilder builder = new StringBuilder();
@@ -1167,15 +1190,15 @@ Move one disk from A to C</code>
 
     return builder.ToString();
 }, 2));</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Testing custom "repeat" function:
 
 aaaaaaaaaaaaaaa
 hello! hello! hello! 
 ----------</code>
-					</div>
+					</blockquote>
 					<p>Your custom .NET method must take three arguments:</p>
 					<ul>
 						<li>The list of arguments passed to the function
@@ -1229,21 +1252,21 @@ hello! hello! hello!
 					specialized version of the <code>Value</code> object and
 					are built from any resolver callback that returns a
 					<code>Value</code> instance:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>{if is_admin:
     Administration log:
     {log}
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope = new DefaultScope();
 scope["is_admin"] = user.IsAdmin();
 scope["log"] = () => log.BuildComplexAdministrationLogValue(); // implicit conversion to LazyValue
 
 document.Render(scope, Console.Out);</code>
-					</div>
+					</blockquote>
 					<p>In this example, method
 					<code>log.BuildComplexAdministrationLogValue</code> won't
 					be called unless <code>is_admin</code> value is true.</p>
@@ -1262,20 +1285,20 @@ document.Render(scope, Console.Out);</code>
 					.NET object instance, and push it to your scope. Its fields
 					and properties will be accessible like if it were a Cottle
 					map:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<blockquote class="code">
+						<span>Template:</span>
 <code>Your image has a size of {image.Width} x {image.Height} pixels.
 
 {for key, value in image:
   {key} = {value}
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>C# code:</span>
 <code>scope["image"] = new ReflectionValue(new Bitmap(50, 50));</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
 <code>Your image has a size of 50 x 50 pixels.
 
 nativeImage =
@@ -1293,7 +1316,7 @@ Palette =
 FrameDimensionsList =
 PropertyIdList =
 PropertyItems =</code>
-					</div>
+					</blockquote>
 					<p>By default, a <code>ReflectionValue</code> will read all
 					instance members, both public and private. If you want to
 					change this behavior, specify your BindingFlags as a second
@@ -1301,869 +1324,852 @@ PropertyItems =</code>
 				</div>
 			</div>
 
-			<h2 id="common_functions">Common functions</h2>
+			<h2 id="builtin_functions">Builtin functions</h2>
 			<div class="section">
-				<h3>Absolute value: abs(numeric)</h3>
+				<h3>All functions</h3>
 				<div class="section">
-					<p>Return the absolute value of given numeric value.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>abs(numeric)</h4>
+					<div class="section">
+						<p>Return the absolute value of given numeric value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{abs(-3)}
 {abs(5)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>3
 5</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute sum of two values: add(a, b)</h3>
-				<div class="section">
-					<p>Return the sum of two numeric values.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>add(a, b)</h4>
+					<div class="section">
+						<p>Return the sum of two numeric values.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{add(3, 7)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>10</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Logical AND: and(a, b, ...)</h3>
-				<div class="section">
-					<p>Perform logical "and" between given boolean values, i.e.
-					return "true" if every argument is true.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>and(a, b, ...)</h4>
+					<div class="section">
+						<p>Perform logical "and" between given boolean values, i.e.
+						return "true" if every argument is true.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{and(lt(2, 3), gt(5, 1))}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Use map values as another function's arguments:
-				call(func, map)</h3>
-				<div class="section">
-					<p>Call function <code>func</code> with values from given
-					map as arguments (keys are not used).</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>call(func, map)</h4>
+					<div class="section">
+						<p>Call function <code>func</code> with values from given
+						map as arguments (keys are not used).</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{call(cat, ["Hello", ", ", "World", "!"])}
 {call(max, [3, 8, 2, 7])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>Hello, World!
 8</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3 id="function_cast">Convert value to a scalar type:
-				cast(value, type)</h3>
-				<div class="section">
-					<p>Get value converted to requested scalar type. Type must
-					be a string value specifying desired type:</p>
-					<ul>
-						<li>b: convert to boolean value</li>
-						<li>n: convert to numeric value</li>
-						<li>s: convert to string value</li>
-					</ul>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4 id="function_cast">cast(value, type)</h4>
+					<div class="section">
+						<p>Get value converted to requested scalar type. Type must
+						be a string value specifying desired type:</p>
+						<ul>
+							<li>b: convert to boolean value</li>
+							<li>n: convert to numeric value</li>
+							<li>s: convert to string value</li>
+						</ul>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump eq(2, cast("2", "n"))}
 {dump ["value for key 0"][cast("0", "n")]}
 {dump cast("some string", "b")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>&lt;true&gt;
 "value for key 0"
 &lt;true&gt;</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3 id="function_cat">Concatenate values: cat(a, b, ...)</h3>
-				<div class="section">
-					<p>Concatenate all input values into a single one. This
-					function works on both strings and maps.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4 id="function_cat">cat(a, b, ...)</h4>
+					<div class="section">
+						<p>Concatenate all input values into a single one. This
+						function works on both strings and maps.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{cat("Hello, ", "World!")}
 {for v in cat([1, 2], [3]): {v}}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>Hello, World!
 1 2 3</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Returns the smallest integer greater than or equal to the
-				specified number: ceil(x)</h3>
-				<div class="section">
-					<p>Returns the smallest integer greater than or equal to
-					decimal value <code>x</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>ceil(x)</h4>
+					<div class="section">
+						<p>Returns the smallest integer greater than or equal to
+						decimal value <code>x</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{ceil(2.7)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>3</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get character from unicode value: char(int)</h3>
-				<div class="section">
-					<p>Get a 1-character string from its unicode numeric
-					value. See
-					<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
-					Wikipedia</a> for details.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>char(int)</h4>
+					<div class="section">
+						<p>Get a 1-character string from its unicode numeric
+						value. See
+						<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
+						Wikipedia</a> for details.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{char(97)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>a</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compare two values: cmp(a, b)</h3>
-				<div class="section">
-					<p>Compare <code>a</code> against <code>b</code>, and
-					return -1 if <code>a</code> is lower than <code>b</code>,
-					0 if they're equal, or 1 else. When used on numeric
-					values, the <code>cmp</code> function uses numerical order.
-					When used on strings, it uses alphabetical order. When
-					used on maps, it first compare their lengths then compare
-					their values if lengths are equal. Two values of different
-					types are always different.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>cmp(a, b)</h4>
+					<div class="section">
+						<p>Compare <code>a</code> against <code>b</code>, and
+						return -1 if <code>a</code> is lower than <code>b</code>,
+						0 if they're equal, or 1 else. When used on numeric
+						values, the <code>cmp</code> function uses numerical order.
+						When used on strings, it uses alphabetical order. When
+						used on maps, it first compare their lengths then compare
+						their values if lengths are equal. Two values of different
+						types are always different.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{cmp("abc", "bcd")}
 {cmp(9, 6)}
 {cmp([2, 4], [2, 4])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>-1
 1
 0</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute cosine of an angle: cos(x)</h3>
-				<div class="section">
-					<p>Get the cosine of angle <code>x</code> in radians.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>cos(x)</h4>
+					<div class="section">
+						<p>Get the cosine of angle <code>x</code> in radians.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{cos(-1.57)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>0.000796326710733263</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Cross-join pairs in a map: cross(map1, map2, ...)</h3>
-				<div class="section">
-					<p>Return a map containing all pairs from
-					<code>map1</code> having a key that also exists in
-					<code>map2</code> and all following maps. Output pair
-					values will always be taken from <code>map1</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>cross(map1, map2, ...)</h4>
+					<div class="section">
+						<p>Return a map containing all pairs from
+						<code>map1</code> having a key that also exists in
+						<code>map2</code> and all following maps. Output pair
+						values will always be taken from <code>map1</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump cross([1: "a", 2: "b", 3: "c"], [1: "x", 3: "y"])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>[1: "a", 3: "c"]</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get input value or default value: default(test[,
-				fallback])</h3>
-				<div class="section">
-					<p>Return <code>test</code> if it
-					<a href="#conditional_statements">evaluates to true</a>, or
-					<code>fallback</code> otherwise (or a void value if
-					<code>fallback</code> is missing).</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>default(test[, fallback])</h4>
+					<div class="section">
+						<p>Return <code>test</code> if it
+						<a href="#conditional_statements">evaluates to true</a>, or
+						<code>fallback</code> otherwise (or a void value if
+						<code>fallback</code> is missing).</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{set x to 3}
 {dump default(x, "invisible")}
 {dump default(y, "visible")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>3
 "visible"</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute divide result of two values: div(a, b)</h3>
-				<div class="section">
-					<p>Return the numeric value of <code>a</code> divided by
-					the numeric value of <code>b</code>. Result of a division
-					by zero is a void value.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>div(a, b)</h4>
+					<div class="section">
+						<p>Return the numeric value of <code>a</code> divided by
+						the numeric value of <code>b</code>. Result of a division
+						by zero is a void value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{div(5, 2)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>2.5</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Test if values are equal: eq(a, b, ...)</h3>
-				<div class="section">
-					<p>Return true if all arguments are equal, or false
-					otherwise. See <a href="#function_cmp">cmp</a> common
-					function for more information about comparisons.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>eq(a, b, ...)</h4>
+					<div class="section">
+						<p>Return true if all arguments are equal, or false
+						otherwise. See <a href="#function_cmp">cmp</a> common
+						function for more information about comparisons.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{eq(7, 7)}
 {eq(1, 4)}
 {eq("test", "test")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true
 false
 true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3 id="function_except">Remove pairs from a map:
-				except(map1, map2, ...)</h3>
-				<div class="section">
-					<p>Return a map containing all pairs from <code>map1</code>
-					having a key that does not exist in <code>map2</code> and
-					any of following maps. This function can also be used to
-					remove a single pair from a map (if you are sure that it's
-					key is not used by any other pair, otherwise all pairs
-					using that key would be removed also).</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4 id="function_except">except(map1, map2, ...)</h4>
+					<div class="section">
+						<p>Return a map containing all pairs from <code>map1</code>
+						having a key that does not exist in <code>map2</code> and
+						any of following maps. This function can also be used to
+						remove a single pair from a map (if you are sure that it's
+						key is not used by any other pair, otherwise all pairs
+						using that key would be removed also).</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump except([1: "a", 2: "b", 3: "c"], [2: "x", 4: "y"])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>[1: "a", 3: "c"]</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Filter values from a map: filter(map, predicate[, a,
-				b, ...])</h3>
-				<div class="section">
-					<p>Return a map containing all pairs having a value that
-					satisfies given predicate. Function <code>predicate</code>
-					is invoked for each value from <code>map</code> with this
-					value as its first argument, and pair is added to output
-					map if predicate result
-					<a href="#conditional_statements">evaluates to true</a>.</p>
-					<p>Optional arguments can be specified when calling
-					<code>filter</code> and will be passed to each invocation
-					of <code>predicate</code> as second, third, forth argument
-					and so on.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>filter(map, predicate[, a, b, ...])</h4>
+					<div class="section">
+						<p>Return a map containing all pairs having a value that
+						satisfies given predicate. Function <code>predicate</code>
+						is invoked for each value from <code>map</code> with this
+						value as its first argument, and pair is added to output
+						map if predicate result
+						<a href="#conditional_statements">evaluates to true</a>.</p>
+						<p>Optional arguments can be specified when calling
+						<code>filter</code> and will be passed to each invocation
+						of <code>predicate</code> as second, third, forth argument
+						and so on.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{declare multiple_of(x, y) as: {return eq(mod(x, y), 0)}}
 {for v in filter([1, 6, 7, 4, 9, 5, 0], multiple_of, 3): {v}}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>6 9 0</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Find index of element in a value: find(value, token[,
-				start])</h3>
-				<div class="section">
-					<p>Find the 0-based index of given token in a map, or
-					sub-string in a string. Search starts at index 0 unless
-					<code>start</code> argument is specified.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>find(value, token[, start])</h4>
+					<div class="section">
+						<p>Find the 0-based index of given token in a map, or
+						sub-string in a string. Search starts at index 0 unless
+						<code>start</code> argument is specified.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{find([89, 3, 572, 35, 7], 35)}
 {find("hello, world!", "o", 5)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>3
 8</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Swap keys and values in a map: flip(map)</h3>
-				<div class="section">
-					<p>Return a map were pairs are created by swapping each
-					key and value pair from input map. Using resulting map
-					with the <code>for</code> command will still iterate
-					through each pair even if there was duplicates, but only
-					the last occurrence of each duplicate can be accessed
-					using map subscript operator ([]).</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>flip(map)</h4>
+					<div class="section">
+						<p>Return a map were pairs are created by swapping each
+						key and value pair from input map. Using resulting map
+						with the <code>for</code> command will still iterate
+						through each pair even if there was duplicates, but only
+						the last occurrence of each duplicate can be accessed
+						using map subscript operator ([]).</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump flip([1: "hello,", 2: "world!"])}
 {dump flip(["a": 0, "b": 0])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>["hello,": 1, "world!": 2]
 [0: "a", 0: "b"]</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Returns the largest integer less than or equal to the
-				specified number: floor(x)</h3>
-				<div class="section">
-					<p>Returns the largest integer less than or equal to
-					decimal value <code>x</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>floor(x)</h4>
+					<div class="section">
+						<p>Returns the largest integer less than or equal to
+						decimal value <code>x</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{floor(2.7)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>2</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Apply .NET formatting on value: format(value, format[,
-				culture])</h3>
-				<div class="section">
-					<p>Convert any <code>value</code> to a string using given
-					formatting from <code>format</code> string expression.
-					Format should use syntax "expr" or "t:expr" where "t"
-					indicates the type of the formatter to use, and "expr" is
-					the .NET format specifier. Available formatter types
-					are:</p>
-					<ul>
-						<li>a: automatic (default, used if "t" is omitted)</li>
-						<li>b: System.Boolean</li>
-						<li>d or du: System.DateTime (UTC)</li>
-						<li>dl: System.DateTime (local)</li>
-						<li>i: System.Int64</li>
-						<li>n: System.Decimal</li>
-						<li>s: System.String</li>
-					</ul>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>format(value, format[, culture])</h4>
+					<div class="section">
+						<p>Convert any <code>value</code> to a string using given
+						formatting from <code>format</code> string expression.
+						Format should use syntax "expr" or "t:expr" where "t"
+						indicates the type of the formatter to use, and "expr" is
+						the .NET format specifier. Available formatter types
+						are:</p>
+						<ul>
+							<li>a: automatic (default, used if "t" is omitted)</li>
+							<li>b: System.Boolean</li>
+							<li>d or du: System.DateTime (UTC)</li>
+							<li>dl: System.DateTime (local)</li>
+							<li>i: System.Int64</li>
+							<li>n: System.Decimal</li>
+							<li>s: System.String</li>
+						</ul>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{format(1339936496, "d:yyyy-MM-dd HH:mm:ss")}
 {format(0.165, "n:p2", "fr-FR")}
 {format(1, "b:n2")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>2012-06-17 12:34:56
 16,50 %
 True</code>
+						</blockquote>
+						<p>Formatters use current culture, unless a culture name is
+						specified in the <code>culture</code> argument. See
+						<a href="http://msdn.microsoft.com/fr-fr/goglobal/bb896001.aspx">National Language Support API on MSDN</a>
+						for a list of valid culture names.</p>
 					</div>
-					<p>Formatters use current culture, unless a culture name is
-					specified in the <code>culture</code> argument. See
-					<a href="http://msdn.microsoft.com/fr-fr/goglobal/bb896001.aspx">National Language Support API on MSDN</a>
-					for a list of valid culture names.</p>
-				</div>
 
-				<h3>Test if a value is greater or equal to another: ge(a,
-				b)</h3>
-				<div class="section">
-					<p>Return true if the numeric value of <code>a</code> is
-					greater than or equal to the numeric value of
-					<code>b</code>, false otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>ge(a, b)</h4>
+					<div class="section">
+						<p>Return true if the numeric value of <code>a</code> is
+						greater than or equal to the numeric value of
+						<code>b</code>, false otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{ge(7, 3)}
 {ge(2, 2)}
 {ge("abc", "abx")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true
 true
 false</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Test if a value is greater than another: gt(a, b)</h3>
-				<div class="section">
-					<p>Return true if the numeric value of <code>a</code> is
-					greater than the numeric value of  <code>b</code>, false
-					otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>gt(a, b)</h4>
+					<div class="section">
+						<p>Return true if the numeric value of <code>a</code> is
+						greater than the numeric value of  <code>b</code>, false
+						otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{gt(7, 3)}
 {gt(2, 2)}
 {ge("abc", "abx")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true
 false
 false</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Check if a map value contains given key: has(map,
-				key)</h3>
-				<div class="section">
-					<p>Return true if given map has a value associated to
-					given key, or false otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>has(map, key)</h4>
+					<div class="section">
+						<p>Return true if given map has a value associated to
+						given key, or false otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{has(["name": "Paul", "age": 37, "sex": "M"], "age")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Include and render template file: include(path[, map[,
-				map, ...]])</h3>
-				<div class="section">
-					<p>Parse document from a template file and render it with
-					variables extracted from given maps. Keys from input
-					maps will be used as variable names associated to their
-					respective values. For this example, we'll assume that a
-					file named "article.cottle" is available in current
-					directory and contains this template code:</p>
-					<div class="code">
-						<blockquote><span>Template
-						"article.cottle":</span></blockquote>
+					<h4>include(path[, map[, map, ...]])</h4>
+					<div class="section">
+						<p>Parse document from a template file and render it with
+						variables extracted from given maps. Keys from input
+						maps will be used as variable names associated to their
+						respective values. For this example, we'll assume that a
+						file named "article.cottle" is available in current
+						directory and contains this template code:</p>
+						<blockquote class="code">
+							<blockquote><span>Template
+							"article.cottle":</span></blockquote>
 <code>&lt;div class="box"&gt;
-    &lt;div class="title"&gt;{a.title}&lt;/div&gt;
-    &lt;div class="text"&gt;{a.text}&lt;/div&gt;
+		&lt;div class="title"&gt;{a.title}&lt;/div&gt;
+		&lt;div class="text"&gt;{a.text}&lt;/div&gt;
 &lt;/div&gt;</code>
-					</div>
-					<p>Now, we want to include and render this template file in
-					our global rendering:</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+						</blockquote>
+						<p>Now, we want to include and render this template file in
+						our global rendering:</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{for article in articles:
-    {include("article.cottle", ["a": article])}
+		{include("article.cottle", ["a": article])}
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>C# code:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>C# code:</span>
 <code>scope["articles"] = new Value[]
 {
-    new Dictionary&lt;Value, Value&gt;
-    {
-        {"title", "First article"},
-        {"text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
-    },
-    new Dictionary&lt;Value, Value&gt;
-    {
-        {"title", "Second article"},
-        {"text", "Cras vitae erat dui, commodo gravida purus."}
-    }
+		new Dictionary&lt;Value, Value&gt;
+		{
+			{"title", "First article"},
+			{"text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+		},
+		new Dictionary&lt;Value, Value&gt;
+		{
+			{"title", "Second article"},
+			{"text", "Cras vitae erat dui, commodo gravida purus."}
+		}
 };</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>&lt;div class="box"&gt;
-    &lt;div class="title"&gt;First article&lt;/div&gt;
-    &lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
+		&lt;div class="title"&gt;First article&lt;/div&gt;
+		&lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="box"&gt;
-    &lt;div class="title"&gt;Second article&lt;/div&gt;
-    &lt;div class="text"&gt;Cras vitae erat dui, commodo gravida purus.&lt;/div&gt;
+		&lt;div class="title"&gt;Second article&lt;/div&gt;
+		&lt;div class="text"&gt;Cras vitae erat dui, commodo gravida purus.&lt;/div&gt;
 &lt;/div&gt;</code>
+						</blockquote>
+						<p>By using <code>return</code> keyword in your included
+						template, you can pass a value to the calling template (it
+						will be available as the result of the call to function
+						<code>include</code>).</p>
+						<p>For performance reasons, included templates are stored
+						in an internal cache which keeps parsed versions of the
+						last 256 included documents. If you want to change cache
+						size, use the <code>CommonFunctions.IncludeCacheSize</code>
+						property. You can also disable the cache by setting the
+						<code>CommonFunctions.IncludeCacheEnabled</code> to
+						<code>false</code> ; be sure to set it back to
+						<code>true</code> before deploying your code to a
+						production environment.</p>
 					</div>
-					<p>By using <code>return</code> keyword in your included
-					template, you can pass a value to the calling template (it
-					will be available as the result of the call to function
-					<code>include</code>).</p>
-					<p>For performance reasons, included templates are stored
-					in an internal cache which keeps parsed versions of the
-					last 256 included documents. If you want to change cache
-					size, use the <code>CommonFunctions.IncludeCacheSize</code>
-					property. You can also disable the cache by setting the
-					<code>CommonFunctions.IncludeCacheEnabled</code> to
-					<code>false</code> ; be sure to set it back to
-					<code>true</code> before deploying your code to a
-					production environment.</p>
-				</div>
 
-				<h3>Join values from a map: join(map[, string])</h3>
-				<div class="section">
-					<p>Concatenate all values from given map pairs, using
-					given string as a separator (or empty string if no
-					separator is provided).</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>join(map[, string])</h4>
+					<div class="section">
+						<p>Concatenate all values from given map pairs, using
+						given string as a separator (or empty string if no
+						separator is provided).</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{join(["2011", "01", "01"], "/")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>2011/01/01</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Convert string to lowercase: lcase(string)</h3>
-				<div class="section">
-					<p>Return a lowercase conversion of given string value.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>lcase(string)</h4>
+					<div class="section">
+						<p>Return a lowercase conversion of given string value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{lcase("Mixed Case String"}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>mixed case string</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get length of a value: len(a)</h3>
-				<div class="section">
-					<p>Return the length or given value, that is number pairs
-					if value was a map, or number of characters if value
-					was a string.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>len(a)</h4>
+					<div class="section">
+						<p>Return the length or given value, that is number pairs
+						if value was a map, or number of characters if value
+						was a string.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{len("Hello!")}
 {len([17, 22, 391, 44])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>6
 4</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Test if a value is lower or equal to another: le(a, b)</h3>
-				<div class="section">
-					<p>Return true if the numeric value of <code>a</code> is
-					lower than or equal to the numeric value of <code>b</code>,
-					false otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>le(a, b)</h4>
+					<div class="section">
+						<p>Return true if the numeric value of <code>a</code> is
+						lower than or equal to the numeric value of <code>b</code>,
+						false otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{le(3, 7)}
 {le(2, 2)}
 {le("abc", "abx")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true
 true
 true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Test if a value is lower than another: lt(a, b)</h3>
-				<div class="section">
-					<p>Return true if the numeric value of <code>a</code> is
-					lower than the numeric value of <code>b</code>, false
-					otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>lt(a, b)</h4>
+					<div class="section">
+						<p>Return true if the numeric value of <code>a</code> is
+						lower than the numeric value of <code>b</code>, false
+						otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{lt(3, 7)}
 {lt(2, 2)}
 {lt("abc", "abx")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true
 false
 true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Applying function to each value in a map: map(source,
-				modifier[, a, b, ...])</h3>
-				<div class="section">
-					<p>Return a map where values are built by applying given
-					modifier to map values, while preserving keys. Function
-					<code>modifier</code> is invoked for each value in
-					<code>source</code> with this value as its first
-					argument.</p>
-					<p>Optional arguments can be specified when calling
-					<code>map</code> and will be passed to each invocation of
-					<code>modifier</code> as second, third, forth argument and
-					so on.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>map(source, modifier[, a, b, ...])</h4>
+					<div class="section">
+						<p>Return a map where values are built by applying given
+						modifier to map values, while preserving keys. Function
+						<code>modifier</code> is invoked for each value in
+						<code>source</code> with this value as its first
+						argument.</p>
+						<p>Optional arguments can be specified when calling
+						<code>map</code> and will be passed to each invocation of
+						<code>modifier</code> as second, third, forth argument and
+						so on.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{declare square(x) as: {return mul(x, x)}}
 {for v in map([1, 2, 3, 4], square): {v}}
 
 {dump map(["a": 1, "b": 7, "c": 4, "d": 5, "e": 3, "f": 2, "g": 6], lt, 4)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>1 4 9 16
 ["a": 1, "b": 0, "c": 0, "d": 0, "e": 1, "f": 1, "g": 0]</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Match string against a regular expression: match(string,
-				pattern)</h3>
-				<div class="section">
-					<p>Match <code>string</code> against given regular
-					expression pattern. If match is successful, a map
-					containing each captured group is returned, otherwise
-					result is a void value. See
-					<a href="http://msdn.microsoft.com/en-us/library/hs600312(v=vs.71).aspx">.NET
-					Framework Regular Expressions</a> for more information.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>match(string, pattern)</h4>
+					<div class="section">
+						<p>Match <code>string</code> against given regular
+						expression pattern. If match is successful, a map
+						containing each captured group is returned, otherwise
+						result is a void value. See
+						<a href="http://msdn.microsoft.com/en-us/library/hs600312(v=vs.71).aspx">.NET
+						Framework Regular Expressions</a> for more information.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump match("abc123", "^[a-z]+([0-9]+)$")}
 {dump match("xyz", "^[a-z]+([0-9]+)$")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>[0: "abc123", 1: "123"]
 &lt;void&gt;</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get the maximum between 2 or more values: max(a[, b[,
-				c, ...]])</h3>
-				<div class="section">
-					<p>Return the highest numeric value among given ones.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>max(a[, b[, c, ...]])</h4>
+					<div class="section">
+						<p>Return the highest numeric value among given ones.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{max(7, 5)}
 {max(6, 8, 5, 7, 1, 2)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>7
 8</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get the minimum between 2 or more values: min(a[, b[,
-				c, ...]])</h3>
-				<div class="section">
-					<p>Return the lowest numeric value among given ones.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>min(a[, b[, c, ...]])</h4>
+					<div class="section">
+						<p>Return the lowest numeric value among given ones.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{min(9, 3)}
 {min(6, 8, 5, 7, 1, 2)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>3
 1</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute reminder of two values: mod(a, b)</h3>
-				<div class="section">
-					<p>Return the value of the first numeric argument modulo
-					the second one.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>mod(a, b)</h4>
+					<div class="section">
+						<p>Return the value of the first numeric argument modulo
+						the second one.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{mod(7, 3)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>1</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute product of two values: mul(a, b)</h3>
-				<div class="section">
-					<p>Return the numeric value of <code>a</code> times
-					<code>b</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>mul(a, b)</h4>
+					<div class="section">
+						<p>Return the numeric value of <code>a</code> times
+						<code>b</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{mul(3, 4)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>12</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Logical NOT: not(a)</h3>
-				<div class="section">
-					<p>Perform logical "not" on given boolean value, i.e return
-					true if value was false or false if it was true.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>not(a)</h4>
+					<div class="section">
+						<p>Perform logical "not" on given boolean value, i.e return
+						true if value was false or false if it was true.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{not(eq(1, 2))}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Logical OR: or(a, b, ...)</h3>
-				<div class="section">
-					<p>Perform logical "or" between given boolean values, i.e.
-					return "true" if at least one argument is true.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>or(a, b, ...)</h4>
+					<div class="section">
+						<p>Perform logical "or" between given boolean values, i.e.
+						return "true" if at least one argument is true.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{or(eq(2, 3), gt(5, 1))}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get unicode value from character: ord(char)</h3>
-				<div class="section">
-					<p>Get the numeric unicode value of the first character
-					of given string. See
-					<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
-					Wikipedia</a> for details.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>ord(char)</h4>
+					<div class="section">
+						<p>Get the numeric unicode value of the first character
+						of given string. See
+						<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
+						Wikipedia</a> for details.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{ord("a")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>97</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Raise a number to a power: pow(x, y)</h3>
-				<div class="section">
-					<p>Get specified number <code>x</code> raised to the power
-					<code>y</code>.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>pow(x, y)</h4>
+					<div class="section">
+						<p>Get specified number <code>x</code> raised to the power
+						<code>y</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{pow(2, 10)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>1024</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Generate pseudo-random value: rand([a[, b]])</h3>
-				<div class="section">
-					<p>Get a pseudo-random numeric value between 0 and
-					2.147.483.647 inclusive. If numeric <code>a</code> value
-					is specified, return a pseudo-random numeric value
-					between 0 and <code>a</code> exclusive. If both numeric
-					values <code>a</code> and <code>b</code> are specified,
-					return a pseudo-random numeric value between
-					<code>a</code> inclusive and <code>b</code> exclusive.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>rand([a[, b]])</h4>
+					<div class="section">
+						<p>Get a pseudo-random numeric value between 0 and
+						2.147.483.647 inclusive. If numeric <code>a</code> value
+						is specified, return a pseudo-random numeric value
+						between 0 and <code>a</code> exclusive. If both numeric
+						values <code>a</code> and <code>b</code> are specified,
+						return a pseudo-random numeric value between
+						<code>a</code> inclusive and <code>b</code> exclusive.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{rand()}
 {rand(1, 7)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>542180393
 5</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Generate arithmetic progression: range([start, ]stop[,
-				step])</h3>
-				<div class="section">
-					<p>Generate a map where value of the <em>i</em>-th pair
-					is <em>start + step * i</em> and last value is lower (or
-					higher if <code>step</code> is a negative integer) than
-					<code>stop</code>. Default base index is 0 if the
-					<code>start</code> argument is omitted, and default value
-					for <code>step</code> is 1 if <code>start</code> &lt;
-					<code>stop</code> or -1 otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>range([start, ]stop[, step])</h4>
+					<div class="section">
+						<p>Generate a map where value of the <em>i</em>-th pair
+						is <em>start + step * i</em> and last value is lower (or
+						higher if <code>step</code> is a negative integer) than
+						<code>stop</code>. Default base index is 0 if the
+						<code>start</code> argument is omitted, and default value
+						for <code>step</code> is 1 if <code>start</code> &lt;
+						<code>stop</code> or -1 otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{for v in range(5): {v}}
 {for v in range(2, 20, 3): {v}}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>0 1 2 3 4
 2 5 8 11 14 17</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Rounds a value to the nearest integer or specified number
-				of decimal places: round(x[, y])</h3>
-				<div class="section">
-					<p>Rounds a decimal value to a specified number of
-					fractional digits <code>y</code>, or to the nearest
-					integral value if <code>y</code> is not specified.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>round(x[, y])</h4>
+					<div class="section">
+						<p>Rounds a decimal value to a specified number of
+						fractional digits <code>y</code>, or to the nearest
+						integral value if <code>y</code> is not specified.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{round(1.57)}
 {round(1.57, 1)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>2
 1.6</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute sine of an angle: sin(x)</h3>
-				<div class="section">
-					<p>Get the sine of angle <code>x</code> in radians.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>sin(x)</h4>
+					<div class="section">
+						<p>Get the sine of angle <code>x</code> in radians.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{sin(1.57)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>0.999999682931835</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3 id="function_slice">Extract part of value: slice(value,
-				index[, count])</h3>
-				<div class="section">
-					<p>Extact slice from a map, or sub-string from a
-					string. <code>count</code> pairs or characters are
-					extracted from given 0-based numeric <code>index</code>. If
-					no <code>count</code> argument is specified, all elements
-					starting from given <code>index</code> are extracted.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4 id="function_slice">slice(value, index[, count])</h4>
+					<div class="section">
+						<p>Extact slice from a map, or sub-string from a
+						string. <code>count</code> pairs or characters are
+						extracted from given 0-based numeric <code>index</code>. If
+						no <code>count</code> argument is specified, all elements
+						starting from given <code>index</code> are extracted.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{for v in slice([68, 657, 54, 3, 12, 9], 3, 2): {v}}
 {slice("abchello", 4)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>3 12
 hello</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get sorted map: sort(map[, callback])</h3>
-				<div class="section">
-					<p>Return a sorted copy of given map. First argument is
-					the input map, and will be sorted using natural order
-					(numerical or alphabetical, depending on value types) by
-					default. You can specify a second argument as
-					comparison delegate, that should accept two arguments and
-					return -1 if the first should be placed "before" the
-					second, 0 if they are equal, or 1 otherwise.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>sort(map[, callback])</h4>
+					<div class="section">
+						<p>Return a sorted copy of given map. First argument is
+						the input map, and will be sorted using natural order
+						(numerical or alphabetical, depending on value types) by
+						default. You can specify a second argument as
+						comparison delegate, that should accept two arguments and
+						return -1 if the first should be placed "before" the
+						second, 0 if they are equal, or 1 otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{set shuffled to ["in", "order", "elements" "natural"]}
 
 {for item in sort(shuffled):
-    {item}
+		{item}
 }
 
 {declare by_length(a, b) as:
-    {return cmp(len(b), len(a))}
+		{return cmp(len(b), len(a))}
 }
 
 {set shuffled to ["by their", "are sorted", "length", "these strings"]}
 
 {for item in sort(shuffled, by_length):
-    {item}
+		{item}
 }</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>elements
 in
 natural
@@ -2173,145 +2179,143 @@ these strings
 are sorted
 by their
 length</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Split string into map: split(input, separator)</h3>
-				<div class="section">
-					<p>Split string <code>input</code> according to given
-					string separator <code>separator</code>. Result is an
-					map where pair values contain split sub-strings.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>split(input, separator)</h4>
+					<div class="section">
+						<p>Split string <code>input</code> according to given
+						string separator <code>separator</code>. Result is an
+						map where pair values contain split sub-strings.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump split("2011/01/01", "/")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>[0: "2011", 1: "01", 2: "01"]</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Compute difference between two values: sub(a, b)</h3>
-				<div class="section">
-					<p>Return the numeric value of a minus b.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>sub(a, b)</h4>
+					<div class="section">
+						<p>Return the numeric value of a minus b.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{sub(3, 5)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>-2</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Search or replace section delimited by characters: token(string, search, index[, replace])</h3>
-				<div class="section">
-					<p>Either return the n-th section of a string delimited by
-					separator substring <code>search</code> if no
-					<code>replace</code> argument is provided, or replace this
-					section by <code>replace</code> else. This function can be
-					used as a faster alteranative to combined split/slice/join
-					calls in some cases.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>token(string, search, index[, replace])</h4>
+					<div class="section">
+						<p>Either return the n-th section of a string delimited by
+						separator substring <code>search</code> if no
+						<code>replace</code> argument is provided, or replace this
+						section by <code>replace</code> else. This function can be
+						used as a faster alteranative to combined split/slice/join
+						calls in some cases.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{token("First.Second.Third", ".", 1)}
 {token("A//B//C//D", "//", 2)}
 {token("XX-??-ZZ", "-", 1, "YY")}
 {token("1;2;3", ";", 3, "4")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>Second
 C
 XX-YY-ZZ
 1;2;3;4</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Convert string to uppercase: ucase(string)</h3>
-				<div class="section">
-					<p>Return an uppercase conversion of given string
-					value.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>ucase(string)</h4>
+					<div class="section">
+						<p>Return an uppercase conversion of given string
+						value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{ucase("Mixed Case String"}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>MIXED CASE STRING</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3 id="function_union">Get union of two maps: union(map1,
-				map2, ...)</h3>
-				<div class="section">
-					<p>Return a map containing all pairs from input maps,
-					but without duplicating any key. If a key exists more than
-					once in all input maps, the last one will overwrite any
-					previous pair using it.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4 id="function_union">union(map1, map2, ...)</h4>
+					<div class="section">
+						<p>Return a map containing all pairs from input maps,
+						but without duplicating any key. If a key exists more than
+						once in all input maps, the last one will overwrite any
+						previous pair using it.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{dump union([1: "a", 2: "b"], [2: "x", 3: "c"], [4: "d"])}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>[1: "a", 2: "x", 3: "c", 4: "d"]</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Get value depending on a conditional test: when(test[,
-				true_part[, false_part]])</h3>
-				<div class="section">
-					<p>Return <code>true_part</code> if <code>test</code>
-					<a href="#conditional_statements">evaluates to true</a>, or
-					<code>false_part</code> otherwise
-					(or a void value if <code>false_part</code> is
-					missing).</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>when(test[, true[, false]])</h4>
+					<div class="section">
+						<p>Return <code>true</code> if <code>test</code>
+						<a href="#conditional_statements">evaluates to true</a>, or
+						<code>false</code> otherwise (or a void value if
+						<code>false</code> is missing).</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{set x to 3}
 {set y to 0}
 {dump when(x, "x is true", "x is false")}
 {dump when(y, "y is true", "y is false")}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>"x is true"
 "y is false"</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Logical exclusive OR: xor(a, b, ...)</h3>
-				<div class="section">
-					<p>Perform logical "xor" between given boolean values, i.e.
-					return "true" if exactly one argument is true and all the
-					others are false.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>xor(a, b, ...)</h4>
+					<div class="section">
+						<p>Perform logical "xor" between given boolean values, i.e.
+						return "true" if exactly one argument is true and all the
+						others are false.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{xor(lt(2, 3), eq(1, 2))}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>true</code>
+						</blockquote>
 					</div>
-				</div>
 
-				<h3>Combine two maps values into pairs: zip(a, b)</h3>
-				<div class="section">
-					<p>Combine given maps to create a new one. The n-th pair
-					in result map will use the n-th value from first map as
-					its key and the n-th value of second map as its value. If
-					the two maps don't have the same length, exceeding
-					elements from the longest map are ignored.</p>
-					<div class="code">
-						<blockquote><span>Template:</span></blockquote>
+					<h4>zip(a, b)</h4>
+					<div class="section">
+						<p>Combine given maps to create a new one. The n-th pair
+						in result map will use the n-th value from first map as
+						its key and the n-th value of second map as its value. If
+						the two maps don't have the same length, exceeding
+						elements from the longest map are ignored.</p>
+						<blockquote class="code">
+							<span>Template:</span>
 <code>{set a to ["key1", "key2", "key3"]}
 {set b to ["value1", "value2", "value3"]}
 {dump zip(a, b)}</code>
-					</div>
-					<div class="code">
-						<blockquote><span>Result:</span></blockquote>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
 <code>["key1": "value1", "key2": "value2", "key3": "value3"]</code>
+						</blockquote>
 					</div>
 				</div>
 			</div>
@@ -2386,100 +2390,101 @@ XX-YY-ZZ
 				</div>
 			</div>
 		</div>
-		<div class="toc" id="toc-data">
-			<div>
-				<span class="handle">Table of contents</span>
-			</div>
-		</div>
 
 		<script type="text/javascript">
 <!--
-(function (target, source, depth)
+(function (target, source, level, limit)
 {
 	var	anchor;
 	var child;
-	var current;
+	var cursor;
+	var	element;
+	var items;
 	var	next;
-	var	node;
 	var parent;
 	var stack;
+	var title;
 	var unique;
 
 	stack =
 	[{
 		elements	: source.childNodes,
 		index		: 0,
-		num			: 0
+		number		: 0
 	}];
 
 	unique = 0;
 
 	while (stack.length > 0)
 	{
-		current = stack[stack.length - 1];
+		cursor = stack[stack.length - 1];
 
-		if (current.index < current.elements.length)
+		if (cursor.index < cursor.elements.length)
 		{
-			node = current.elements[current.index++];
+			element = cursor.elements[cursor.index++];
 
-			if (node.tagName !== undefined && node.tagName.length == 2 && node.tagName[0] == 'H')
+			if (element.tagName !== undefined && element.tagName[0] == 'H')
 			{
-				++current.num;
+				next = parseInt (element.tagName.substr (1));
 
-				next = parseInt (node.tagName.substr (1));
+				if (isNaN (next) || next > limit)
+					continue;
 
-				for (; next < depth; --depth)
+				++cursor.number;
+
+				for (; level > next; --level)
 					target = target.parentNode.parentNode;
 
-				node.innerHTML = ' ' + node.innerHTML;
+				title = ' ' + element.innerHTML;
 
 				for (var i = stack.length; i-- > 0; )
-					node.innerHTML = stack[i].num + '.' + node.innerHTML;
+					title = stack[i].number + '.' + title;
 
-				if (!node.id)
-					node.id = 'toc' + unique++;
+				if (!element.id)
+					element.id = 'toc' + unique++;
 
 				anchor = document.createElement ('a');
-				anchor.innerHTML = node.innerHTML;
-				anchor.href = '#' + node.id;
+				anchor.innerHTML = element.innerHTML;
+				anchor.href = '#' + element.id;
 
 				child = document.createElement ('li');
 				child.appendChild (anchor);
 
-				for (; next > depth; ++depth)
-				{
-					parent = undefined;
+				element.innerHTML = title;
 
-					for (var j = 0; j < target.childNodes.length; ++j)
+				for (; level < next; ++level)
+				{
+					items = target.getElementsByTagName ('li');
+
+					if (items.length > 0)
+						parent = items[items.length - 1];
+					else
 					{
-						if (target.childNodes[j].tagName !== undefined)
-							parent = target.childNodes[j];
+						parent = document.createElement ('li');
+						target.appendChild (parent);
 					}
 
 					target = document.createElement ('ul');
-					target.appendChild (child);
-
-					if (parent !== undefined)
-						parent.appendChild (target);
+					parent.appendChild (target);
 				}
 
 				target.appendChild (child);
 			}
 
-			if (node.childNodes !== undefined)
+			if (element.childNodes !== undefined && element.childNodes.length > 0)
 			{
 				stack.push
 				({
-					elements	: node.childNodes,
+					elements	: element.childNodes,
 					index		: 0,
-					num			: 0
+					number		: 0
 				});
 			}
 		}
 		else
 			stack.pop ();
 	}
-}) (document.getElementById ('toc-data'), document.getElementById ('toc-from'), 1);
+}) (document.getElementById ('toc-to'), document.getElementById ('toc-from'), 2, 3);
 -->
 		</script>
 	</body>
