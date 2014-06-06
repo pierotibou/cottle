@@ -8,7 +8,7 @@
 			}
 
 			a:hover {
-				color:	#6080C0;
+				color:	#728FC7;
 			}
 
 			aside.toc {
@@ -23,34 +23,6 @@
 				text-decoration:	none;
 			}
 
-			aside.toc li a,
-			aside.toc li li a {
-				display:		block;
-				padding-right:	6px;
-				border-right:	0px;
-			}
-
-			aside.toc li ul {
-				display:		none;
-				padding-right:	8px;
-				font-size:		0.8em;
-				line-height:	1.4;
-			}
-
-			aside.toc li:hover > a {
-				padding-right:	5px;
-				border-right:	1px solid #4060A0;
-			}
-
-			aside.toc li.active > a {
-				padding-right:	4px;
-				border-right:	2px solid #4060A0;
-			}
-
-			aside.toc li:hover > ul {
-				display:	block;
-			}
-
 			aside.toc strong {
 				color:	#4060A0;
 			}
@@ -59,16 +31,64 @@
 				padding:		0;
 				margin:			0;
 				font-size:		0.9em;
-				line-height:	1.6;
+				line-height:	1.2;
 				list-style:		none;
+			}
+
+			aside.toc ul li {
+				margin:	6px 0;
+			}
+
+			aside.toc ul li a,
+			aside.toc ul li ul li a {
+				display:		block;
+				padding-right:	6px;
+				border-right:	0px;
+			}
+
+			aside.toc ul li ul {
+				display:		none;
+				padding-right:	8px;
+				font-size:		0.8em;
+			}
+
+			aside.toc ul li ul li {
+				margin:	4px 0;
+			}
+
+			aside.toc ul li:hover > a {
+				padding-right:	5px;
+				border-right:	1px solid #4060A0;
+			}
+
+			aside.toc ul li.active > a {
+				padding-right:	4px;
+				border-right:	2px solid #4060A0;
+			}
+
+			aside.toc ul li:hover > ul,
+			aside.toc ul li.active > ul {
+				display:	block;
 			}
 
 			body {
 				padding:		0px;
-				margin:			32px 264px 32px 64px;
+				margin:			32px 64px 32px 64px;
 				font:			normal normal normal 0.9em "Helvetica Neue", Helvetica, Arial, sans-serif;
 				line-height:	1.4;
 				color:			#303030;
+			}
+
+			body aside.toc {
+				display:	none;
+			}
+
+			body.toc {
+				margin-right:	264px;
+			}
+
+			body.toc aside.toc {
+				display:	block;
 			}
 
 			blockquote.code {
@@ -193,13 +213,15 @@
 			<ul id="toc-to"></ul>
 		</aside>
 		<div class="section" id="toc-from">
-			<h2>Cottle overview</h2>
+			<h2>Library overview</h2>
 			<div class="section">
-				<h3>What is Cottle, and what does it looks like?</h3>
+				<h3>What does it looks like?</h3>
 				<div class="section">
-					<p>Cottle, short for "<u>C</u>ompact <u>O</u>bject to
-					<u>T</u>ext <u>T</u>ransform <u>L</u>anguag<u>e</u>" is a
-					lightweight template engine in .NET 3.5 allowing you to
+					<p>Cottle, short for "<strong>C</strong>ompact
+					<strong>O</strong>bject to <strong>T</strong>ext
+					<strong>T</strong>ransform
+					<strong>L</strong>anguag<strong>e</strong>" is a
+					lightweight template engine for .NET 3.5 allowing you to
 					transform structured data into any text-based format
 					output like plain text, HTML or XML. It uses a simple yet
 					highly extensible template language, thus enabling clean
@@ -242,9 +264,14 @@
 
 				<h3>Download the library</h3>
 				<div class="section">
-					<p>You can download the last version of Cottle on Github,
-					by following this link:
-					<a href="https://github.com/r3c/Cottle">https://github.com/r3c/Cottle</a>.</p>
+					<p>Cottle is available as an installable package on
+					<a href="http://www.nuget.org/packages/Cottle/">NuGet</a>
+					official website. Just open your extension manager in
+					Visual Studio, search for "Cottle" and install from
+					there.</p>
+					<p>You can also read, download or contribute to the source
+					code on
+					<a href="https://github.com/r3c/Cottle">GitHub</a>.</p>
 				</div>
 
 				<h3>About this documentation</h3>
@@ -1326,7 +1353,7 @@ PropertyItems =</code>
 
 			<h2 id="builtin_functions">Builtin functions</h2>
 			<div class="section">
-				<h3>All functions</h3>
+				<h3>Numeric and mathematical</h3>
 				<div class="section">
 					<h4>abs(numeric)</h4>
 					<div class="section">
@@ -1356,59 +1383,201 @@ PropertyItems =</code>
 						</blockquote>
 					</div>
 
-					<h4>and(a, b, ...)</h4>
+					<h4>ceil(x)</h4>
 					<div class="section">
-						<p>Perform logical "and" between given boolean values, i.e.
-						return "true" if every argument is true.</p>
+						<p>Returns the smallest integer greater than or equal to
+						decimal value <code>x</code>.</p>
 						<blockquote class="code">
 							<span>Template:</span>
-<code>{and(lt(2, 3), gt(5, 1))}</code>
+<code>{ceil(2.7)}</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>Result:</span>
-<code>true</code>
+<code>3</code>
 						</blockquote>
 					</div>
 
-					<h4>call(func, map)</h4>
+					<h4>cos(x)</h4>
 					<div class="section">
-						<p>Call function <code>func</code> with values from given
-						map as arguments (keys are not used).</p>
+						<p>Get the cosine of angle <code>x</code> in radians.</p>
 						<blockquote class="code">
 							<span>Template:</span>
-<code>{call(cat, ["Hello", ", ", "World", "!"])}
-{call(max, [3, 8, 2, 7])}</code>
+<code>{cos(-1.57)}</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>Result:</span>
-<code>Hello, World!
+<code>0.000796326710733263</code>
+						</blockquote>
+					</div>
+
+					<h4>div(a, b)</h4>
+					<div class="section">
+						<p>Return the numeric value of <code>a</code> divided by
+						the numeric value of <code>b</code>. Result of a division
+						by zero is a void value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{div(5, 2)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>2.5</code>
+						</blockquote>
+					</div>
+
+					<h4>floor(x)</h4>
+					<div class="section">
+						<p>Returns the largest integer less than or equal to
+						decimal value <code>x</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{floor(2.7)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>2</code>
+						</blockquote>
+					</div>
+
+					<h4>max(a[, b[, c, ...]])</h4>
+					<div class="section">
+						<p>Return the highest numeric value among given ones.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{max(7, 5)}
+{max(6, 8, 5, 7, 1, 2)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>7
 8</code>
 						</blockquote>
 					</div>
 
-					<h4 id="function_cast">cast(value, type)</h4>
+					<h4>min(a[, b[, c, ...]])</h4>
 					<div class="section">
-						<p>Get value converted to requested scalar type. Type must
-						be a string value specifying desired type:</p>
-						<ul>
-							<li>b: convert to boolean value</li>
-							<li>n: convert to numeric value</li>
-							<li>s: convert to string value</li>
-						</ul>
+						<p>Return the lowest numeric value among given ones.</p>
 						<blockquote class="code">
 							<span>Template:</span>
-<code>{dump eq(2, cast("2", "n"))}
-{dump ["value for key 0"][cast("0", "n")]}
-{dump cast("some string", "b")}</code>
+<code>{min(9, 3)}
+{min(6, 8, 5, 7, 1, 2)}</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>Result:</span>
-<code>&lt;true&gt;
-"value for key 0"
-&lt;true&gt;</code>
+<code>3
+1</code>
 						</blockquote>
 					</div>
 
+					<h4>mod(a, b)</h4>
+					<div class="section">
+						<p>Return the value of the first numeric argument modulo
+						the second one.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{mod(7, 3)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>1</code>
+						</blockquote>
+					</div>
+
+					<h4>mul(a, b)</h4>
+					<div class="section">
+						<p>Return the numeric value of <code>a</code> times
+						<code>b</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{mul(3, 4)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>12</code>
+						</blockquote>
+					</div>
+
+					<h4>pow(x, y)</h4>
+					<div class="section">
+						<p>Get specified number <code>x</code> raised to the power
+						<code>y</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{pow(2, 10)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>1024</code>
+						</blockquote>
+					</div>
+
+					<h4>rand([a[, b]])</h4>
+					<div class="section">
+						<p>Get a pseudo-random numeric value between 0 and
+						2.147.483.647 inclusive. If numeric <code>a</code> value
+						is specified, return a pseudo-random numeric value
+						between 0 and <code>a</code> exclusive. If both numeric
+						values <code>a</code> and <code>b</code> are specified,
+						return a pseudo-random numeric value between
+						<code>a</code> inclusive and <code>b</code> exclusive.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{rand()}
+{rand(1, 7)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>542180393
+5</code>
+						</blockquote>
+					</div>
+
+					<h4>round(x[, y])</h4>
+					<div class="section">
+						<p>Rounds a decimal value to a specified number of
+						fractional digits <code>y</code>, or to the nearest
+						integral value if <code>y</code> is not specified.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{round(1.57)}
+{round(1.57, 1)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>2
+1.6</code>
+						</blockquote>
+					</div>
+
+					<h4>sin(x)</h4>
+					<div class="section">
+						<p>Get the sine of angle <code>x</code> in radians.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{sin(1.57)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>0.999999682931835</code>
+						</blockquote>
+					</div>
+
+					<h4>sub(a, b)</h4>
+					<div class="section">
+						<p>Return the numeric value of a minus b.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{sub(3, 5)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>-2</code>
+						</blockquote>
+					</div>
+				</div>
+
+				<h3>String and map processing</h3>
+				<div class="section">
 					<h4 id="function_cat">cat(a, b, ...)</h4>
 					<div class="section">
 						<p>Concatenate all input values into a single one. This
@@ -1422,20 +1591,6 @@ PropertyItems =</code>
 							<span>Result:</span>
 <code>Hello, World!
 1 2 3</code>
-						</blockquote>
-					</div>
-
-					<h4>ceil(x)</h4>
-					<div class="section">
-						<p>Returns the smallest integer greater than or equal to
-						decimal value <code>x</code>.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{ceil(2.7)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>3</code>
 						</blockquote>
 					</div>
 
@@ -1455,153 +1610,6 @@ PropertyItems =</code>
 						</blockquote>
 					</div>
 
-					<h4>cmp(a, b)</h4>
-					<div class="section">
-						<p>Compare <code>a</code> against <code>b</code>, and
-						return -1 if <code>a</code> is lower than <code>b</code>,
-						0 if they're equal, or 1 else. When used on numeric
-						values, the <code>cmp</code> function uses numerical order.
-						When used on strings, it uses alphabetical order. When
-						used on maps, it first compare their lengths then compare
-						their values if lengths are equal. Two values of different
-						types are always different.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{cmp("abc", "bcd")}
-{cmp(9, 6)}
-{cmp([2, 4], [2, 4])}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>-1
-1
-0</code>
-						</blockquote>
-					</div>
-
-					<h4>cos(x)</h4>
-					<div class="section">
-						<p>Get the cosine of angle <code>x</code> in radians.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{cos(-1.57)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>0.000796326710733263</code>
-						</blockquote>
-					</div>
-
-					<h4>cross(map1, map2, ...)</h4>
-					<div class="section">
-						<p>Return a map containing all pairs from
-						<code>map1</code> having a key that also exists in
-						<code>map2</code> and all following maps. Output pair
-						values will always be taken from <code>map1</code>.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump cross([1: "a", 2: "b", 3: "c"], [1: "x", 3: "y"])}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>[1: "a", 3: "c"]</code>
-						</blockquote>
-					</div>
-
-					<h4>default(test[, fallback])</h4>
-					<div class="section">
-						<p>Return <code>test</code> if it
-						<a href="#conditional_statements">evaluates to true</a>, or
-						<code>fallback</code> otherwise (or a void value if
-						<code>fallback</code> is missing).</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{set x to 3}
-{dump default(x, "invisible")}
-{dump default(y, "visible")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>3
-"visible"</code>
-						</blockquote>
-					</div>
-
-					<h4>div(a, b)</h4>
-					<div class="section">
-						<p>Return the numeric value of <code>a</code> divided by
-						the numeric value of <code>b</code>. Result of a division
-						by zero is a void value.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{div(5, 2)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>2.5</code>
-						</blockquote>
-					</div>
-
-					<h4>eq(a, b, ...)</h4>
-					<div class="section">
-						<p>Return true if all arguments are equal, or false
-						otherwise. See <a href="#function_cmp">cmp</a> common
-						function for more information about comparisons.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{eq(7, 7)}
-{eq(1, 4)}
-{eq("test", "test")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>true
-false
-true</code>
-						</blockquote>
-					</div>
-
-					<h4 id="function_except">except(map1, map2, ...)</h4>
-					<div class="section">
-						<p>Return a map containing all pairs from <code>map1</code>
-						having a key that does not exist in <code>map2</code> and
-						any of following maps. This function can also be used to
-						remove a single pair from a map (if you are sure that it's
-						key is not used by any other pair, otherwise all pairs
-						using that key would be removed also).</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump except([1: "a", 2: "b", 3: "c"], [2: "x", 4: "y"])}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>[1: "a", 3: "c"]</code>
-						</blockquote>
-					</div>
-
-					<h4>filter(map, predicate[, a, b, ...])</h4>
-					<div class="section">
-						<p>Return a map containing all pairs having a value that
-						satisfies given predicate. Function <code>predicate</code>
-						is invoked for each value from <code>map</code> with this
-						value as its first argument, and pair is added to output
-						map if predicate result
-						<a href="#conditional_statements">evaluates to true</a>.</p>
-						<p>Optional arguments can be specified when calling
-						<code>filter</code> and will be passed to each invocation
-						of <code>predicate</code> as second, third, forth argument
-						and so on.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{declare multiple_of(x, y) as: {return eq(mod(x, y), 0)}}
-{for v in filter([1, 6, 7, 4, 9, 5, 0], multiple_of, 3): {v}}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>6 9 0</code>
-						</blockquote>
-					</div>
-
 					<h4>find(value, token[, start])</h4>
 					<div class="section">
 						<p>Find the 0-based index of given token in a map, or
@@ -1616,40 +1624,6 @@ true</code>
 							<span>Result:</span>
 <code>3
 8</code>
-						</blockquote>
-					</div>
-
-					<h4>flip(map)</h4>
-					<div class="section">
-						<p>Return a map were pairs are created by swapping each
-						key and value pair from input map. Using resulting map
-						with the <code>for</code> command will still iterate
-						through each pair even if there was duplicates, but only
-						the last occurrence of each duplicate can be accessed
-						using map subscript operator ([]).</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump flip([1: "hello,", 2: "world!"])}
-{dump flip(["a": 0, "b": 0])}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>["hello,": 1, "world!": 2]
-[0: "a", 0: "b"]</code>
-						</blockquote>
-					</div>
-
-					<h4>floor(x)</h4>
-					<div class="section">
-						<p>Returns the largest integer less than or equal to
-						decimal value <code>x</code>.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{floor(2.7)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>2</code>
 						</blockquote>
 					</div>
 
@@ -1686,6 +1660,223 @@ True</code>
 						specified in the <code>culture</code> argument. See
 						<a href="http://msdn.microsoft.com/fr-fr/goglobal/bb896001.aspx">National Language Support API on MSDN</a>
 						for a list of valid culture names.</p>
+					</div>
+
+					<h4>lcase(string)</h4>
+					<div class="section">
+						<p>Return a lowercase conversion of given string value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{lcase("Mixed Case String"}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>mixed case string</code>
+						</blockquote>
+					</div>
+
+					<h4>len(a)</h4>
+					<div class="section">
+						<p>Return the length or given value, that is number pairs
+						if value was a map, or number of characters if value
+						was a string.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{len("Hello!")}
+{len([17, 22, 391, 44])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>6
+4</code>
+						</blockquote>
+					</div>
+
+					<h4>match(string, pattern)</h4>
+					<div class="section">
+						<p>Match <code>string</code> against given regular
+						expression pattern. If match is successful, a map
+						containing each captured group is returned, otherwise
+						result is a void value. See
+						<a href="http://msdn.microsoft.com/en-us/library/hs600312(v=vs.71).aspx">.NET
+						Framework Regular Expressions</a> for more information.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump match("abc123", "^[a-z]+([0-9]+)$")}
+{dump match("xyz", "^[a-z]+([0-9]+)$")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>[0: "abc123", 1: "123"]
+&lt;void&gt;</code>
+						</blockquote>
+					</div>
+
+					<h4>ord(char)</h4>
+					<div class="section">
+						<p>Get the numeric unicode value of the first character
+						of given string. See
+						<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
+						Wikipedia</a> for details.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{ord("a")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>97</code>
+						</blockquote>
+					</div>
+
+					<h4 id="function_slice">slice(value, index[, count])</h4>
+					<div class="section">
+						<p>Extact slice from a map, or sub-string from a
+						string. <code>count</code> pairs or characters are
+						extracted from given 0-based numeric <code>index</code>. If
+						no <code>count</code> argument is specified, all elements
+						starting from given <code>index</code> are extracted.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{for v in slice([68, 657, 54, 3, 12, 9], 3, 2): {v}}
+{slice("abchello", 4)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>3 12
+hello</code>
+						</blockquote>
+					</div>
+
+					<h4>split(input, separator)</h4>
+					<div class="section">
+						<p>Split string <code>input</code> according to given
+						string separator <code>separator</code>. Result is an
+						map where pair values contain split sub-strings.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump split("2011/01/01", "/")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>[0: "2011", 1: "01", 2: "01"]</code>
+						</blockquote>
+					</div>
+
+					<h4>token(string, search, index[, replace])</h4>
+					<div class="section">
+						<p>Either return the n-th section of a string delimited by
+						separator substring <code>search</code> if no
+						<code>replace</code> argument is provided, or replace this
+						section by <code>replace</code> else. This function can be
+						used as a faster alteranative to combined split/slice/join
+						calls in some cases.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{token("First.Second.Third", ".", 1)}
+{token("A//B//C//D", "//", 2)}
+{token("XX-??-ZZ", "-", 1, "YY")}
+{token("1;2;3", ";", 3, "4")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>Second
+C
+XX-YY-ZZ
+1;2;3;4</code>
+						</blockquote>
+					</div>
+
+					<h4>ucase(string)</h4>
+					<div class="section">
+						<p>Return an uppercase conversion of given string
+						value.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{ucase("Mixed Case String"}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>MIXED CASE STRING</code>
+						</blockquote>
+					</div>					
+				</div>
+
+				<h3>Boolean and logical</h3>
+				<div class="section">
+					<h4>and(a, b, ...)</h4>
+					<div class="section">
+						<p>Perform logical "and" between given boolean values, i.e.
+						return "true" if every argument is true.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{and(lt(2, 3), gt(5, 1))}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true</code>
+						</blockquote>
+					</div>
+
+					<h4>cmp(a, b)</h4>
+					<div class="section">
+						<p>Compare <code>a</code> against <code>b</code>, and
+						return -1 if <code>a</code> is lower than <code>b</code>,
+						0 if they're equal, or 1 else. When used on numeric
+						values, the <code>cmp</code> function uses numerical order.
+						When used on strings, it uses alphabetical order. When
+						used on maps, it first compare their lengths then compare
+						their values if lengths are equal. Two values of different
+						types are always different.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{cmp("abc", "bcd")}
+{cmp(9, 6)}
+{cmp([2, 4], [2, 4])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>-1
+1
+0</code>
+						</blockquote>
+					</div>
+
+					<h4>default(test[, fallback])</h4>
+					<div class="section">
+						<p>Return <code>test</code> if it
+						<a href="#conditional_statements">evaluates to true</a>, or
+						<code>fallback</code> otherwise (or a void value if
+						<code>fallback</code> is missing).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{set x to 3}
+{dump default(x, "invisible")}
+{dump default(y, "visible")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>3
+"visible"</code>
+						</blockquote>
+					</div>
+
+					<h4>eq(a, b, ...)</h4>
+					<div class="section">
+						<p>Return true if all arguments are equal, or false
+						otherwise. See <a href="#function_cmp">cmp</a> common
+						function for more information about comparisons.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{eq(7, 7)}
+{eq(1, 4)}
+{eq("test", "test")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true
+false
+true</code>
+						</blockquote>
 					</div>
 
 					<h4>ge(a, b)</h4>
@@ -1739,6 +1930,372 @@ false</code>
 <code>true</code>
 						</blockquote>
 					</div>
+
+					<h4>le(a, b)</h4>
+					<div class="section">
+						<p>Return true if the numeric value of <code>a</code> is
+						lower than or equal to the numeric value of <code>b</code>,
+						false otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{le(3, 7)}
+{le(2, 2)}
+{le("abc", "abx")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true
+true
+true</code>
+						</blockquote>
+					</div>
+
+					<h4>lt(a, b)</h4>
+					<div class="section">
+						<p>Return true if the numeric value of <code>a</code> is
+						lower than the numeric value of <code>b</code>, false
+						otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{lt(3, 7)}
+{lt(2, 2)}
+{lt("abc", "abx")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true
+false
+true</code>
+						</blockquote>
+					</div>
+
+					<h4>not(a)</h4>
+					<div class="section">
+						<p>Perform logical "not" on given boolean value, i.e return
+						true if value was false or false if it was true.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{not(eq(1, 2))}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true</code>
+						</blockquote>
+					</div>
+
+					<h4>or(a, b, ...)</h4>
+					<div class="section">
+						<p>Perform logical "or" between given boolean values, i.e.
+						return "true" if at least one argument is true.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{or(eq(2, 3), gt(5, 1))}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true</code>
+						</blockquote>
+					</div>
+
+					<h4>when(test[, true[, false]])</h4>
+					<div class="section">
+						<p>Return <code>true</code> if <code>test</code>
+						<a href="#conditional_statements">evaluates to true</a>, or
+						<code>false</code> otherwise (or a void value if
+						<code>false</code> is missing).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{set x to 3}
+{set y to 0}
+{dump when(x, "x is true", "x is false")}
+{dump when(y, "y is true", "y is false")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>"x is true"
+"y is false"</code>
+						</blockquote>
+					</div>
+
+					<h4>xor(a, b, ...)</h4>
+					<div class="section">
+						<p>Perform logical "xor" between given boolean values, i.e.
+						return "true" if exactly one argument is true and all the
+						others are false.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{xor(lt(2, 3), eq(1, 2))}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>true</code>
+						</blockquote>
+					</div>
+				</div>
+
+				<h3>Collection manipulation</h3>
+				<div class="section">
+					<h4>cross(map1, map2, ...)</h4>
+					<div class="section">
+						<p>Return a map containing all pairs from
+						<code>map1</code> having a key that also exists in
+						<code>map2</code> and all following maps. Output pair
+						values will always be taken from <code>map1</code>.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump cross([1: "a", 2: "b", 3: "c"], [1: "x", 3: "y"])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>[1: "a", 3: "c"]</code>
+						</blockquote>
+					</div>
+
+					<h4 id="function_except">except(map1, map2, ...)</h4>
+					<div class="section">
+						<p>Return a map containing all pairs from <code>map1</code>
+						having a key that does not exist in <code>map2</code> and
+						any of following maps. This function can also be used to
+						remove a single pair from a map (if you are sure that it's
+						key is not used by any other pair, otherwise all pairs
+						using that key would be removed also).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump except([1: "a", 2: "b", 3: "c"], [2: "x", 4: "y"])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>[1: "a", 3: "c"]</code>
+						</blockquote>
+					</div>
+
+					<h4>flip(map)</h4>
+					<div class="section">
+						<p>Return a map were pairs are created by swapping each
+						key and value pair from input map. Using resulting map
+						with the <code>for</code> command will still iterate
+						through each pair even if there was duplicates, but only
+						the last occurrence of each duplicate can be accessed
+						using map subscript operator ([]).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump flip([1: "hello,", 2: "world!"])}
+{dump flip(["a": 0, "b": 0])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>["hello,": 1, "world!": 2]
+[0: "a", 0: "b"]</code>
+						</blockquote>
+					</div>
+
+					<h4>join(map[, string])</h4>
+					<div class="section">
+						<p>Concatenate all values from given map pairs, using
+						given string as a separator (or empty string if no
+						separator is provided).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{join(["2011", "01", "01"], "/")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>2011/01/01</code>
+						</blockquote>
+					</div>
+
+					<h4>range([start, ]stop[, step])</h4>
+					<div class="section">
+						<p>Generate a map where value of the <em>i</em>-th pair
+						is <em>start + step * i</em> and last value is lower (or
+						higher if <code>step</code> is a negative integer) than
+						<code>stop</code>. Default base index is 0 if the
+						<code>start</code> argument is omitted, and default value
+						for <code>step</code> is 1 if <code>start</code> &lt;
+						<code>stop</code> or -1 otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{for v in range(5): {v}}
+{for v in range(2, 20, 3): {v}}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>0 1 2 3 4
+2 5 8 11 14 17</code>
+						</blockquote>
+					</div>
+
+					<h4>sort(map[, callback])</h4>
+					<div class="section">
+						<p>Return a sorted copy of given map. First argument is
+						the input map, and will be sorted using natural order
+						(numerical or alphabetical, depending on value types) by
+						default. You can specify a second argument as
+						comparison delegate, that should accept two arguments and
+						return -1 if the first should be placed "before" the
+						second, 0 if they are equal, or 1 otherwise.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{set shuffled to ["in", "order", "elements" "natural"]}
+
+{for item in sort(shuffled):
+		{item}
+}
+
+{declare by_length(a, b) as:
+		{return cmp(len(b), len(a))}
+}
+
+{set shuffled to ["by their", "are sorted", "length", "these strings"]}
+
+{for item in sort(shuffled, by_length):
+		{item}
+}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>elements
+in
+natural
+order
+
+these strings
+are sorted
+by their
+length</code>
+						</blockquote>
+					</div>
+
+					<h4 id="function_union">union(map1, map2, ...)</h4>
+					<div class="section">
+						<p>Return a map containing all pairs from input maps,
+						but without duplicating any key. If a key exists more than
+						once in all input maps, the last one will overwrite any
+						previous pair using it.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump union([1: "a", 2: "b"], [2: "x", 3: "c"], [4: "d"])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>[1: "a", 2: "x", 3: "c", 4: "d"]</code>
+						</blockquote>
+					</div>
+
+					<h4>zip(a, b)</h4>
+					<div class="section">
+						<p>Combine given maps to create a new one. The n-th pair
+						in result map will use the n-th value from first map as
+						its key and the n-th value of second map as its value. If
+						the two maps don't have the same length, exceeding
+						elements from the longest map are ignored.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{set a to ["key1", "key2", "key3"]}
+{set b to ["value1", "value2", "value3"]}
+{dump zip(a, b)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>["key1": "value1", "key2": "value2", "key3": "value3"]</code>
+						</blockquote>
+					</div>
+				</div>
+
+				<h3>Functional programming</h3>
+				<div class="section">
+					<h4>call(func, map)</h4>
+					<div class="section">
+						<p>Call function <code>func</code> with values from given
+						map as arguments (keys are not used).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{call(cat, ["Hello", ", ", "World", "!"])}
+{call(max, [3, 8, 2, 7])}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>Hello, World!
+8</code>
+						</blockquote>
+					</div>
+
+					<h4 id="function_cast">cast(value, type)</h4>
+					<div class="section">
+						<p>Get value converted to requested scalar type. Type must
+						be a string value specifying desired type:</p>
+						<ul>
+							<li>b: convert to boolean value</li>
+							<li>n: convert to numeric value</li>
+							<li>s: convert to string value</li>
+						</ul>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{dump eq(2, cast("2", "n"))}
+{dump ["value for key 0"][cast("0", "n")]}
+{dump cast("some string", "b")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>&lt;true&gt;
+"value for key 0"
+&lt;true&gt;</code>
+						</blockquote>
+					</div>
+
+					<h4>filter(map, predicate[, a, b, ...])</h4>
+					<div class="section">
+						<p>Return a map containing all pairs having a value that
+						satisfies given predicate. Function <code>predicate</code>
+						is invoked for each value from <code>map</code> with this
+						value as its first argument, and pair is added to output
+						map if predicate result
+						<a href="#conditional_statements">evaluates to true</a>.</p>
+						<p>Optional arguments can be specified when calling
+						<code>filter</code> and will be passed to each invocation
+						of <code>predicate</code> as second, third, forth argument
+						and so on.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{declare multiple_of(x, y) as: {return eq(mod(x, y), 0)}}
+{for v in filter([1, 6, 7, 4, 9, 5, 0], multiple_of, 3): {v}}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>6 9 0</code>
+						</blockquote>
+					</div>
+
+					<h4>map(source, modifier[, a, b, ...])</h4>
+					<div class="section">
+						<p>Return a map where values are built by applying given
+						modifier to map values, while preserving keys. Function
+						<code>modifier</code> is invoked for each value in
+						<code>source</code> with this value as its first
+						argument.</p>
+						<p>Optional arguments can be specified when calling
+						<code>map</code> and will be passed to each invocation of
+						<code>modifier</code> as second, third, forth argument and
+						so on.</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{declare square(x) as: {return mul(x, x)}}
+{for v in map([1, 2, 3, 4], square): {v}}
+
+{dump map(["a": 1, "b": 7, "c": 4, "d": 5, "e": 3, "f": 2, "g": 6], lt, 4)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>1 4 9 16
+["a": 1, "b": 0, "c": 0, "d": 0, "e": 1, "f": 1, "g": 0]</code>
+						</blockquote>
+					</div>
+
+
+
+
+
+
 
 					<h4>include(path[, map[, map, ...]])</h4>
 					<div class="section">
@@ -1804,518 +2361,6 @@ false</code>
 						<code>false</code> ; be sure to set it back to
 						<code>true</code> before deploying your code to a
 						production environment.</p>
-					</div>
-
-					<h4>join(map[, string])</h4>
-					<div class="section">
-						<p>Concatenate all values from given map pairs, using
-						given string as a separator (or empty string if no
-						separator is provided).</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{join(["2011", "01", "01"], "/")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>2011/01/01</code>
-						</blockquote>
-					</div>
-
-					<h4>lcase(string)</h4>
-					<div class="section">
-						<p>Return a lowercase conversion of given string value.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{lcase("Mixed Case String"}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>mixed case string</code>
-						</blockquote>
-					</div>
-
-					<h4>len(a)</h4>
-					<div class="section">
-						<p>Return the length or given value, that is number pairs
-						if value was a map, or number of characters if value
-						was a string.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{len("Hello!")}
-{len([17, 22, 391, 44])}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>6
-4</code>
-						</blockquote>
-					</div>
-
-					<h4>le(a, b)</h4>
-					<div class="section">
-						<p>Return true if the numeric value of <code>a</code> is
-						lower than or equal to the numeric value of <code>b</code>,
-						false otherwise.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{le(3, 7)}
-{le(2, 2)}
-{le("abc", "abx")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>true
-true
-true</code>
-						</blockquote>
-					</div>
-
-					<h4>lt(a, b)</h4>
-					<div class="section">
-						<p>Return true if the numeric value of <code>a</code> is
-						lower than the numeric value of <code>b</code>, false
-						otherwise.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{lt(3, 7)}
-{lt(2, 2)}
-{lt("abc", "abx")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>true
-false
-true</code>
-						</blockquote>
-					</div>
-
-					<h4>map(source, modifier[, a, b, ...])</h4>
-					<div class="section">
-						<p>Return a map where values are built by applying given
-						modifier to map values, while preserving keys. Function
-						<code>modifier</code> is invoked for each value in
-						<code>source</code> with this value as its first
-						argument.</p>
-						<p>Optional arguments can be specified when calling
-						<code>map</code> and will be passed to each invocation of
-						<code>modifier</code> as second, third, forth argument and
-						so on.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{declare square(x) as: {return mul(x, x)}}
-{for v in map([1, 2, 3, 4], square): {v}}
-
-{dump map(["a": 1, "b": 7, "c": 4, "d": 5, "e": 3, "f": 2, "g": 6], lt, 4)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>1 4 9 16
-["a": 1, "b": 0, "c": 0, "d": 0, "e": 1, "f": 1, "g": 0]</code>
-						</blockquote>
-					</div>
-
-					<h4>match(string, pattern)</h4>
-					<div class="section">
-						<p>Match <code>string</code> against given regular
-						expression pattern. If match is successful, a map
-						containing each captured group is returned, otherwise
-						result is a void value. See
-						<a href="http://msdn.microsoft.com/en-us/library/hs600312(v=vs.71).aspx">.NET
-						Framework Regular Expressions</a> for more information.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump match("abc123", "^[a-z]+([0-9]+)$")}
-{dump match("xyz", "^[a-z]+([0-9]+)$")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>[0: "abc123", 1: "123"]
-&lt;void&gt;</code>
-						</blockquote>
-					</div>
-
-					<h4>max(a[, b[, c, ...]])</h4>
-					<div class="section">
-						<p>Return the highest numeric value among given ones.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{max(7, 5)}
-{max(6, 8, 5, 7, 1, 2)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>7
-8</code>
-						</blockquote>
-					</div>
-
-					<h4>min(a[, b[, c, ...]])</h4>
-					<div class="section">
-						<p>Return the lowest numeric value among given ones.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{min(9, 3)}
-{min(6, 8, 5, 7, 1, 2)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>3
-1</code>
-						</blockquote>
-					</div>
-
-					<h4>mod(a, b)</h4>
-					<div class="section">
-						<p>Return the value of the first numeric argument modulo
-						the second one.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{mod(7, 3)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>1</code>
-						</blockquote>
-					</div>
-
-					<h4>mul(a, b)</h4>
-					<div class="section">
-						<p>Return the numeric value of <code>a</code> times
-						<code>b</code>.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{mul(3, 4)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>12</code>
-						</blockquote>
-					</div>
-
-					<h4>not(a)</h4>
-					<div class="section">
-						<p>Perform logical "not" on given boolean value, i.e return
-						true if value was false or false if it was true.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{not(eq(1, 2))}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>true</code>
-						</blockquote>
-					</div>
-
-					<h4>or(a, b, ...)</h4>
-					<div class="section">
-						<p>Perform logical "or" between given boolean values, i.e.
-						return "true" if at least one argument is true.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{or(eq(2, 3), gt(5, 1))}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>true</code>
-						</blockquote>
-					</div>
-
-					<h4>ord(char)</h4>
-					<div class="section">
-						<p>Get the numeric unicode value of the first character
-						of given string. See
-						<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
-						Wikipedia</a> for details.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{ord("a")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>97</code>
-						</blockquote>
-					</div>
-
-					<h4>pow(x, y)</h4>
-					<div class="section">
-						<p>Get specified number <code>x</code> raised to the power
-						<code>y</code>.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{pow(2, 10)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>1024</code>
-						</blockquote>
-					</div>
-
-					<h4>rand([a[, b]])</h4>
-					<div class="section">
-						<p>Get a pseudo-random numeric value between 0 and
-						2.147.483.647 inclusive. If numeric <code>a</code> value
-						is specified, return a pseudo-random numeric value
-						between 0 and <code>a</code> exclusive. If both numeric
-						values <code>a</code> and <code>b</code> are specified,
-						return a pseudo-random numeric value between
-						<code>a</code> inclusive and <code>b</code> exclusive.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{rand()}
-{rand(1, 7)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>542180393
-5</code>
-						</blockquote>
-					</div>
-
-					<h4>range([start, ]stop[, step])</h4>
-					<div class="section">
-						<p>Generate a map where value of the <em>i</em>-th pair
-						is <em>start + step * i</em> and last value is lower (or
-						higher if <code>step</code> is a negative integer) than
-						<code>stop</code>. Default base index is 0 if the
-						<code>start</code> argument is omitted, and default value
-						for <code>step</code> is 1 if <code>start</code> &lt;
-						<code>stop</code> or -1 otherwise.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{for v in range(5): {v}}
-{for v in range(2, 20, 3): {v}}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>0 1 2 3 4
-2 5 8 11 14 17</code>
-						</blockquote>
-					</div>
-
-					<h4>round(x[, y])</h4>
-					<div class="section">
-						<p>Rounds a decimal value to a specified number of
-						fractional digits <code>y</code>, or to the nearest
-						integral value if <code>y</code> is not specified.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{round(1.57)}
-{round(1.57, 1)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>2
-1.6</code>
-						</blockquote>
-					</div>
-
-					<h4>sin(x)</h4>
-					<div class="section">
-						<p>Get the sine of angle <code>x</code> in radians.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{sin(1.57)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>0.999999682931835</code>
-						</blockquote>
-					</div>
-
-					<h4 id="function_slice">slice(value, index[, count])</h4>
-					<div class="section">
-						<p>Extact slice from a map, or sub-string from a
-						string. <code>count</code> pairs or characters are
-						extracted from given 0-based numeric <code>index</code>. If
-						no <code>count</code> argument is specified, all elements
-						starting from given <code>index</code> are extracted.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{for v in slice([68, 657, 54, 3, 12, 9], 3, 2): {v}}
-{slice("abchello", 4)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>3 12
-hello</code>
-						</blockquote>
-					</div>
-
-					<h4>sort(map[, callback])</h4>
-					<div class="section">
-						<p>Return a sorted copy of given map. First argument is
-						the input map, and will be sorted using natural order
-						(numerical or alphabetical, depending on value types) by
-						default. You can specify a second argument as
-						comparison delegate, that should accept two arguments and
-						return -1 if the first should be placed "before" the
-						second, 0 if they are equal, or 1 otherwise.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{set shuffled to ["in", "order", "elements" "natural"]}
-
-{for item in sort(shuffled):
-		{item}
-}
-
-{declare by_length(a, b) as:
-		{return cmp(len(b), len(a))}
-}
-
-{set shuffled to ["by their", "are sorted", "length", "these strings"]}
-
-{for item in sort(shuffled, by_length):
-		{item}
-}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>elements
-in
-natural
-order
-
-these strings
-are sorted
-by their
-length</code>
-						</blockquote>
-					</div>
-
-					<h4>split(input, separator)</h4>
-					<div class="section">
-						<p>Split string <code>input</code> according to given
-						string separator <code>separator</code>. Result is an
-						map where pair values contain split sub-strings.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump split("2011/01/01", "/")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>[0: "2011", 1: "01", 2: "01"]</code>
-						</blockquote>
-					</div>
-
-					<h4>sub(a, b)</h4>
-					<div class="section">
-						<p>Return the numeric value of a minus b.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{sub(3, 5)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>-2</code>
-						</blockquote>
-					</div>
-
-					<h4>token(string, search, index[, replace])</h4>
-					<div class="section">
-						<p>Either return the n-th section of a string delimited by
-						separator substring <code>search</code> if no
-						<code>replace</code> argument is provided, or replace this
-						section by <code>replace</code> else. This function can be
-						used as a faster alteranative to combined split/slice/join
-						calls in some cases.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{token("First.Second.Third", ".", 1)}
-{token("A//B//C//D", "//", 2)}
-{token("XX-??-ZZ", "-", 1, "YY")}
-{token("1;2;3", ";", 3, "4")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>Second
-C
-XX-YY-ZZ
-1;2;3;4</code>
-						</blockquote>
-					</div>
-
-					<h4>ucase(string)</h4>
-					<div class="section">
-						<p>Return an uppercase conversion of given string
-						value.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{ucase("Mixed Case String"}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>MIXED CASE STRING</code>
-						</blockquote>
-					</div>
-
-					<h4 id="function_union">union(map1, map2, ...)</h4>
-					<div class="section">
-						<p>Return a map containing all pairs from input maps,
-						but without duplicating any key. If a key exists more than
-						once in all input maps, the last one will overwrite any
-						previous pair using it.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump union([1: "a", 2: "b"], [2: "x", 3: "c"], [4: "d"])}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>[1: "a", 2: "x", 3: "c", 4: "d"]</code>
-						</blockquote>
-					</div>
-
-					<h4>when(test[, true[, false]])</h4>
-					<div class="section">
-						<p>Return <code>true</code> if <code>test</code>
-						<a href="#conditional_statements">evaluates to true</a>, or
-						<code>false</code> otherwise (or a void value if
-						<code>false</code> is missing).</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{set x to 3}
-{set y to 0}
-{dump when(x, "x is true", "x is false")}
-{dump when(y, "y is true", "y is false")}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>"x is true"
-"y is false"</code>
-						</blockquote>
-					</div>
-
-					<h4>xor(a, b, ...)</h4>
-					<div class="section">
-						<p>Perform logical "xor" between given boolean values, i.e.
-						return "true" if exactly one argument is true and all the
-						others are false.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{xor(lt(2, 3), eq(1, 2))}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>true</code>
-						</blockquote>
-					</div>
-
-					<h4>zip(a, b)</h4>
-					<div class="section">
-						<p>Combine given maps to create a new one. The n-th pair
-						in result map will use the n-th value from first map as
-						its key and the n-th value of second map as its value. If
-						the two maps don't have the same length, exceeding
-						elements from the longest map are ignored.</p>
-						<blockquote class="code">
-							<span>Template:</span>
-<code>{set a to ["key1", "key2", "key3"]}
-{set b to ["value1", "value2", "value3"]}
-{dump zip(a, b)}</code>
-						</blockquote>
-						<blockquote class="code">
-							<span>Result:</span>
-<code>["key1": "value1", "key2": "value2", "key3": "value3"]</code>
-						</blockquote>
 					</div>
 				</div>
 			</div>
@@ -2395,25 +2440,25 @@ XX-YY-ZZ
 <!--
 (function (target, source, level, limit)
 {
-	var	anchor;
+	var anchors;
 	var child;
 	var cursor;
 	var	element;
 	var items;
+	var	link;
 	var	next;
+	var number;
 	var parent;
 	var stack;
-	var title;
-	var unique;
 
+	// Generate bootstrap-like aside menu from headers
+	anchors = [];
 	stack =
 	[{
 		elements	: source.childNodes,
 		index		: 0,
-		number		: 0
+		order		: 0
 	}];
-
-	unique = 0;
 
 	while (stack.length > 0)
 	{
@@ -2430,27 +2475,34 @@ XX-YY-ZZ
 				if (isNaN (next) || next > limit)
 					continue;
 
-				++cursor.number;
+				++cursor.order;
 
 				for (; level > next; --level)
 					target = target.parentNode.parentNode;
 
-				title = ' ' + element.innerHTML;
+				number = '';
 
 				for (var i = stack.length; i-- > 0; )
-					title = stack[i].number + '.' + title;
+					number = stack[i].order + '.' + number;
 
 				if (!element.id)
-					element.id = 'toc' + unique++;
+					element.id = 'toc-' + number.substr (0, number.length - 1);
 
-				anchor = document.createElement ('a');
-				anchor.innerHTML = element.innerHTML;
-				anchor.href = '#' + element.id;
+				link = document.createElement ('a');
+				link.innerHTML = element.innerHTML;
+				link.href = '#' + element.id;
 
 				child = document.createElement ('li');
-				child.appendChild (anchor);
+				child.appendChild (link);
 
-				element.innerHTML = title;
+				element.innerHTML = number + ' ' + element.innerHTML;
+
+				anchors.push
+				({
+					element:	element,
+					level:		next,
+					target:		child
+				});
 
 				for (; level < next; ++level)
 				{
@@ -2477,14 +2529,62 @@ XX-YY-ZZ
 				({
 					elements	: element.childNodes,
 					index		: 0,
-					number		: 0
+					order		: 0
 				});
 			}
 		}
 		else
 			stack.pop ();
 	}
+
+	// Highlight current menu section when scrolling
+	document.addEventListener ('scroll', function ()
+	{
+		var element;
+		var index;
+		var level;
+		var top;
+
+		index = 0;
+		top = document.documentElement.scrollTop || document.body.scrollTop;
+
+		for (; index < anchors.length; ++index)
+		{
+			element = anchors[index].element;
+
+			if (element.offsetTop - element.offsetHeight > top)
+			{
+				if (index > 0)
+				{
+					level = anchors[index - 1].level + 1;
+
+					for (var i = index - 1; i >= 0; --i)
+					{
+						if (anchors[i].level < level)
+						{
+							anchors[i].target.className = 'active';
+
+							level = anchors[i].level;
+						}
+					}
+				}
+
+				break;
+			}
+
+			anchors[index].target.className = '';
+		}
+
+		for (; index < anchors.length; ++index)
+			anchors[index].target.className = '';
+	});
 }) (document.getElementById ('toc-to'), document.getElementById ('toc-from'), 2, 3);
+
+(function (target)
+{
+	if (target !== undefined)
+		target.className = 'toc';
+}) (document.getElementsByTagName ('body')[0]);
 -->
 		</script>
 	</body>
