@@ -23,6 +23,10 @@
 				text-decoration:	none;
 			}
 
+			aside.toc a:hover {
+				text-decoration:	underline;
+			}
+
 			aside.toc strong {
 				color:	#4060A0;
 			}
@@ -64,6 +68,7 @@
 			aside.toc ul li.active > a {
 				padding-right:	4px;
 				border-right:	2px solid #4060A0;
+				color:			#728FC7;
 			}
 
 			aside.toc ul li:hover > ul,
@@ -284,7 +289,8 @@
 					<ul>
 						<li>An input template written in Cottle format, used to
 						control how your data must be rendered. This template
-						can be streamed from any source compatible with
+						can be contained in a <code>string</code> or streamed
+						from any source compatible with
 						<code>System.IO.TextReader</code> class (text file,
 						memory buffer, network socket...) as shown in the
 						example below.</li>
@@ -306,14 +312,14 @@
 
     using (StreamReader template = new StreamReader(new FileStream("test.cottle", FileMode.Open), Encoding.UTF8))
     {
-        document = new SimpleDocument(template); // may throw a ConfigException or DocumentException on error
+        document = new SimpleDocument(template); // may throw DocumentException on error
     }
 
-    scope = new DefaultScope(); // create a new scope to store values
+    scope = new DefaultScope(); // create a scope to store variables
 
     /* TODO: assign some values to scope */
 
-    document.Render(scope, Console.Out); // may throw a RenderException on error
+    document.Render(scope, Console.Out);
 }</code>
 					</blockquote>
 					<blockquote class="code">
@@ -993,10 +999,12 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 				<h3>Understanding value types</h3>
 				<div class="section">
 					<p>Every value has a type in Cottle, even if you usually
-					don't have to worry about it since casts are performed
-					automatically when required. In some cases however, you may
-					have to force a cast to get desired result, for example
-					when accessing values from a map:</p>
+					don't have to worry about it. Functions that expect
+					arguments of specific types will try to cast them silently
+					or fallback to <code>void</code> values if they can't. In
+					some cases you may have to force a cast yourself to get
+					desired result, for example when accessing values from a
+					map:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{set map to ["first", "second", "third"]}
@@ -1009,13 +1017,13 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 <code>&lt;void&gt;</code>
 					</blockquote>
 					<p>You could have expected this template to display
-					"second", but Cottle actually searches for the value
-					associated to key "1" (as a string) in <code>map</code>,
-					not key 1 (as a number). This can be explained by the fact
-					that <code>map</code> could contain different values for
-					both keys 1 and "1", and it would be perfectly valid, so no
-					automatic cast can be performed for you.</p>
-					<p>This can be solved by explicitely changing the type of
+					"second", but Cottle actually searches for the map value
+					associated to key "1" (as a string), not key 1 (as a
+					number). These are two different values and storing two
+					different values for keys "1" and 1 in a map is perfectly
+					valid, hence no automatic cast can be performed for
+					you.</p>
+					<p>In this example, you can explicitely change the type of
 					<code>key</code> to a number by using the
 					<a href="#function_cast">cast</a> builtin function.</p>
 				</div>
@@ -1179,8 +1187,7 @@ Move one disk from A to C</code>
 }</code>
 					</blockquote>
 					<p>Note that the <code>set</code> command can also be used
-					without a value. Declaring or setting a variable without a
-					value is equivalent to asigning it a void value.</p>
+					without a value. Doing so assigns it a void value.</p>
 				</div>
 
 				<h3>Custom .NET methods</h3>
@@ -1189,49 +1196,52 @@ Move one disk from A to C</code>
 					can assign your own .NET methods to template variables.
 					That's actually what Cottle does when you use a
 					<code>DefaultScope</code> object in your code: a set of
-					internal .NET methods is assigned to predefined variables
-					within the scope, and you can have a look at source code to
-					see how these methods work.</p>
-					<p>To assign a method to a scope, just wrap it within a
-					<code>CallbackFunction</code> object contained by a
-					<code>FunctionValue</code> object, then add it to the
-					<code>Value</code> property of your <code>Document</code>
-					instance, as you would do for any regular variable:</p>
+					internal .NET methods is assigned to your scope, just have
+					a look at source code to see how these methods work.</p>
+					<p>To assign a method to a scope, wrap it within a
+					<code>NativeFunction</code> object which can then be stored
+					in a <code>FunctionValue</code> (an implicit constructor is
+					also available), then add it to your scope as you would do
+					for any value:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>Testing custom "repeat" function:
 
 {repeat("a", 15)}
-{repeat("hello! ", 3)}
+{repeat("oh", 7)}
 {repeat("-", 10)}</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["repeat"] = new FunctionValue(new CallbackFunction(delegate(IList&lt;Value&gt; values, IScope scope, TextWriter output)
+<code>// Implicit construction of Value from a NativeFunction instance
+scope["repeat"] = new NativeFunction((values, scope, output) =>
 {
-    StringBuilder builder = new StringBuilder();
-    int           i;
+	StringBuilder builder = new StringBuilder();
+	int           i;
 
-    for (i = 0; i &lt; values[1].AsNumber; ++i)
-        builder.Append(values[0].AsString);
+	for (i = 0; i &lt; values[1].AsNumber; ++i)
+		builder.Append(values[0].AsString);
 
-    return builder.ToString();
-}, 2));</code>
+	return builder.ToString();
+}, 2);</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
 <code>Testing custom "repeat" function:
 
 aaaaaaaaaaaaaaa
-hello! hello! hello! 
+ohohohohohohoh
 ----------</code>
 					</blockquote>
-					<p>Your custom .NET method must take three arguments:</p>
+					<p>Your custom .NET method can take up to three arguments
+					but only the first one is mandatory:</p>
 					<ul>
-						<li>The list of arguments passed to the function
-						(values),</li>
-						<li>Current variables scope (scope),</li>
-						<li>Document text writer object (output).</li>
+						<li>The <code>IList&lt;Value&gt;</code> of arguments
+						passed to the function,</li>
+						<li>The <code>IScope</code> containing all variables
+						currently defined in the document,</li>
+						<li>A <code>TextWriter</code> opened on document
+						rendering output.</li>
 					</ul>
 					<p>Arguments are instances of the <code>Value</code> class,
 					which can hold data of any type known by Cottle. You can
@@ -1282,8 +1292,8 @@ hello! hello! hello!
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{if is_admin:
-    Administration log:
-    {log}
+	Administration log:
+	{log}
 }</code>
 					</blockquote>
 					<blockquote class="code">
@@ -1317,7 +1327,7 @@ document.Render(scope, Console.Out);</code>
 <code>Your image has a size of {image.Width} x {image.Height} pixels.
 
 {for key, value in image:
-  {key} = {value}
+	{key} = {value}
 }</code>
 					</blockquote>
 					<blockquote class="code">
@@ -1806,7 +1816,7 @@ XX-YY-ZZ
 					<h4>and(a, b, ...)</h4>
 					<div class="section">
 						<p>Perform logical "and" between given boolean values, i.e.
-						return "true" if every argument is true.</p>
+						return "true" if all arguments are true.</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{and(lt(2, 3), gt(5, 1))}</code>
@@ -2139,17 +2149,17 @@ true</code>
 <code>{set shuffled to ["in", "order", "elements" "natural"]}
 
 {for item in sort(shuffled):
-		{item}
+	{item}
 }
 
 {declare by_length(a, b) as:
-		{return cmp(len(b), len(a))}
+	{return cmp(len(b), len(a))}
 }
 
 {set shuffled to ["by their", "are sorted", "length", "these strings"]}
 
 {for item in sort(shuffled, by_length):
-		{item}
+	{item}
 }</code>
 						</blockquote>
 						<blockquote class="code">
@@ -2290,13 +2300,10 @@ length</code>
 ["a": 1, "b": 0, "c": 0, "d": 0, "e": 1, "f": 1, "g": 0]</code>
 						</blockquote>
 					</div>
+				</div>
 
-
-
-
-
-
-
+				<h3>Obsolete functions</h3>
+				<div class="section">
 					<h4>include(path[, map[, map, ...]])</h4>
 					<div class="section">
 						<p>Parse document from a template file and render it with
@@ -2309,8 +2316,8 @@ length</code>
 							<blockquote><span>Template
 							"article.cottle":</span></blockquote>
 <code>&lt;div class="box"&gt;
-		&lt;div class="title"&gt;{a.title}&lt;/div&gt;
-		&lt;div class="text"&gt;{a.text}&lt;/div&gt;
+	&lt;div class="title"&gt;{a.title}&lt;/div&gt;
+	&lt;div class="text"&gt;{a.text}&lt;/div&gt;
 &lt;/div&gt;</code>
 						</blockquote>
 						<p>Now, we want to include and render this template file in
@@ -2318,34 +2325,34 @@ length</code>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{for article in articles:
-		{include("article.cottle", ["a": article])}
+	{include("article.cottle", ["a": article])}
 }</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>C# code:</span>
 <code>scope["articles"] = new Value[]
 {
-		new Dictionary&lt;Value, Value&gt;
-		{
-			{"title", "First article"},
-			{"text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
-		},
-		new Dictionary&lt;Value, Value&gt;
-		{
-			{"title", "Second article"},
-			{"text", "Cras vitae erat dui, commodo gravida purus."}
-		}
+	new Dictionary&lt;Value, Value&gt;
+	{
+		{"title", "First article"},
+		{"text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+	},
+	new Dictionary&lt;Value, Value&gt;
+	{
+		{"title", "Second article"},
+		{"text", "Cras vitae erat dui, commodo gravida purus."}
+	}
 };</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>Result:</span>
 <code>&lt;div class="box"&gt;
-		&lt;div class="title"&gt;First article&lt;/div&gt;
-		&lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
+	&lt;div class="title"&gt;First article&lt;/div&gt;
+	&lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="box"&gt;
-		&lt;div class="title"&gt;Second article&lt;/div&gt;
-		&lt;div class="text"&gt;Cras vitae erat dui, commodo gravida purus.&lt;/div&gt;
+	&lt;div class="title"&gt;Second article&lt;/div&gt;
+	&lt;div class="text"&gt;Cras vitae erat dui, commodo gravida purus.&lt;/div&gt;
 &lt;/div&gt;</code>
 						</blockquote>
 						<p>By using <code>return</code> keyword in your included
@@ -2369,36 +2376,21 @@ length</code>
 			<div class="section">
 				<h3>Change log</h3>
 				<div class="section">
-					<p>Cottle version numbers use format A.B.C.D where:</p>
+					<p>Cottle version numbers use format A.B.C.D where each
+					digit get incremented for different reasons:</p>
 					<ul>
 						<li>A changes when code base is entirely rewritten from
-						scratch, meaning that no compatibility exists with API
-						from the previous version (B, C and D are reset to 0)
-						;</li>
+						scratch with no compatibility with previous version ;</li>
 						<li>B changes when backwards incompatible changes are
-						introduced to the API (C and D are reset to 0 );</li>
+						introduced to the API ;</li>
 						<li>C changes when significant new features are added
-						to the API without any loss of compatibility (D is
-						reset to 0) ;</li>
+						to the API while preserving backward compatibility ;</li>
 						<li>D changes when a bugfix, patch or any other minor
 						change is released.</li>
 					</ul>
-					<p>Here is a summary of important and/or potentially
-					backward-incompatible changes made to the library:</p>
+					<p>Here is a summary of backward-incompatible changes
+					introduced in previous versions:</p>
 					<ul>
-						<li>1.0.0.9 =&gt; 1.0.1.0:
-							<ul>
-								<li>Local variables must now be declared with
-								the new <code>declare</code> command.</li>
-								<li>Changed meaning of the <code>set</code>
-								command (using it with "as" is
-								deprecated).</li>
-								<li>Command <code>define</code> is now
-								deprecated (both <code>set</code> and
-								<code>declare</code> can be used to assign
-								functions).</li>
-							</ul>
-						</li>
 						<li>1.0.1.0 =&gt; 1.1.0.0:
 							<ul>
 								<li><code>LexerConfig</code> must be replaced
