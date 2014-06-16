@@ -227,11 +227,10 @@
 					<strong>T</strong>ransform
 					<strong>L</strong>anguag<strong>e</strong>" is a
 					lightweight template engine for .NET 3.5 allowing you to
-					transform structured data into any text-based format
-					output like plain text, HTML or XML. It uses a simple yet
-					highly extensible template language, thus enabling clean
-					separation of document content (data structure) and
-					document presentation.</p>
+					transform structured data into any text-based format output
+					such as plain text, HTML or XML. It uses a simple yet
+					easily extensible template language, thus enabling clean
+					separation of document contents and layout.</p>
 					<p>A simple Cottle template printing an HTML document
 					showing how many messages are in your mailbox could look
 					like this:</p>
@@ -252,9 +251,8 @@
 					</blockquote>
 					<p>As you can guess by looking at this code, a Cottle
 					template contains both "raw" text printed directly and
-					special tags used to control how text output is generated.
-					Cottle supports most common template engine features, such
-					as:</p>
+					commands used to define dynamic sections. Cottle supports
+					most common template engine features, including:</p>
 					<ul>
 						<li>Text substitutions through variables,</li>
 						<li>Builtin and used-defined functions,</li>
@@ -263,8 +261,8 @@
 						<li>Conditional statements (if),</li>
 						<li>Loops (for, while).</li>
 					</ul>
-					<p>Source code is available, and contributions will be
-					highly welcomed!</p>
+					<p>Source code is available, feel free to read and
+					contribute!</p>
 				</div>
 
 				<h3>Download the library</h3>
@@ -279,199 +277,184 @@
 					<a href="https://github.com/r3c/Cottle">GitHub</a>.</p>
 				</div>
 
-				<h3>About this documentation</h3>
+				<h3 id="getting_started">Getting started</h3>
 				<div class="section">
-					<p>The intent of this document is to explain how Cottle
-					works, how to write templates and how to use them in your
-					code. Most features will be introduced with a code sample
-					to ease readability.</p>
-					<p>Using Cottle in your code requires two things:</p>
+					<p>To start using Cottle, first reference the package in
+					your solution (using NuGet or manual install). You'll then
+					need two things:</p>
 					<ul>
-						<li>An input template written in Cottle format, used to
-						control how your data must be rendered. This template
-						can be contained in a <code>string</code> or streamed
-						from any source compatible with
-						<code>System.IO.TextReader</code> class (text file,
-						memory buffer, network socket...) as shown in the
-						example below.</li>
-						<li>An executable code that parses the template into a
-						<code>Cottle.IDocument</code> instance, then renders it
-						into an output string or writer.</li>
+						<li>An input template written with Cottle's template
+						language, used to control how your data must be
+						rendered. This template can be econtained in a
+						<code>string</code> or streamed from any source
+						compatible with <code>System.IO.TextReader</code> class
+						(text file, memory buffer, network socket...) as shown
+						in the example below.</li>
+						<li>An executable code that reads your input template,
+						create a <code>Cottle.IDocument</code> object from it
+						then render it to an output string or
+						<code>System.IO.TextWriter</code> instance.</li>
 					</ul>
-					<p>Here is a simple use case:</p>
+					<p>Here is a basic yet working sample rendering a plain
+					text template that doesn't contain dynamic code. Copy the
+					"<strong>Template</strong>" snippet a "test.cottle" file
+					you put in the same folder your project executable is, then
+					copy the "<strong>C# code</strong>" snippet somewhere in
+					your program and get it executed. You should see the
+					content of "<strong>Result</strong>" snippet printed to
+					standard output:</p>
 					<blockquote class="code">
 						<span>Template:</span>
-<code>Text contents of the template file 'test.cottle'.</code>
+<code>This is my input template file (with only literal text for now).</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>private void   SomeFunction()
+<code>void RenderAndPrintMyTemplate()
 {
     IDocument  document;
     IScope     scope;
 
-    using (StreamReader template = new StreamReader(new FileStream("test.cottle", FileMode.Open), Encoding.UTF8))
+    using (Stream stream = new FileStream("test.cottle", FileMode.Open))
     {
-        document = new SimpleDocument(template); // may throw DocumentException on error
+        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+        {
+            document = new SimpleDocument(reader); // throws DocumentException on error
+        }
     }
 
-    scope = new DefaultScope(); // create a scope to store variables
+    scope = new BuiltinScope(); // this is where variables can be stored
 
-    /* TODO: assign some values to scope */
+    <strong>/* TODO: assign some values to scope */</strong>
 
-    document.Render(scope, Console.Out);
+    Console.Write(document.Render(scope));
 }</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
-<code>Text contents of the template file 'test.cottle'.</code>
+<code>This is my input template file (with only literal text for now).</code>
 					</blockquote>
-					<p>Since the sample C# codes used in example is quite
-					redundant, only specific parts for each one will appear in
-					following examples. They should be inserted where the
-					"TODO" comment is located. Common parts of the code won't
-					be shown anymore.
+					<p>Next samples in this document will show the same
+					"Template", "C# code" and "Result" snippets. Since the C#
+					code above applies to all following examples it won't be
+					repeated and only parts that must replace the
+					"<strong>TODO</strong>" comment will appear.
 					</p>
 				</div>
 			</div>
-			
-			<h2>Template fundamentals</h2>
+
+			<h2>Template language</h2>
 			<div class="section">
-				<h3>Simple raw text output</h3>
+				<h3>Literal text and commands</h3>
 				<div class="section">
-					<p>Everything you type into a Cottle template will be
-					printed "as is" in the result document, except for some
-					special characters. That means raw text will appear exactly
-					as you entered it in your template, as shown in this
-					example:</p>
+					<p>A Cottle template can contain literal text (which will
+					be printed "as is") and special command that will be
+					executed when document is rendered. These commands can
+					either print dynamic content or have side-effects such as
+					controlling rendering flow or store variables. Here is an
+					example using the "echo" command to print content of a
+					variable named "x", we'll assume its value is "53":</p>
 					<blockquote class="code">
 						<span>Template:</span>
-<code>Hello, world!</code>
+						<code>Value of x is {echo x}.</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
-<code>Hello, world!</code>
+						<code>Value of x is 53.</code>
 					</blockquote>
-				</div>
-
-				<h3>Using commands in templates</h3>
-				<div class="section">
-					<p>A Cottle template can contain commands which will
-					trigger special behaviors such as printing value of
-					variables, using conditional statements, etc.</p>
-					<p>To write a command, use the "{" (left brace) character
-					followed by the name of the command you want to use and its
-					parameters, then a "}" (right brace) character to end it.
-					Here is an example using the <code>echo</code> command
-					which outputs the value of a variable or constant:</p>
+					<p>Here we used the <code>echo</code> command which prints
+					the value of its argument to display current value of
+					variable <code>x</code>. We'll see in next section how to
+					pass variables to templates. Command <code>echo</code> is
+					the most commonly used command so a shorter form is
+					available and you can omit the "echo" keyword if the name
+					of the variable you want to print doesn't conflict with
+					another command: <code>{echo 53}</code> is equivalent to
+					<code>{53}</code> in previous example. This form will be
+					used in all following samples.</p>
+					<p>All commands should appear between special "begin
+					command" and "end command" delimiters "{" (left brace) and
+					"}" (right brace). Contents between those delimiters is
+					recognized as commands which have their own syntax.
+					Character "|" (pipe) is also used as a "continue command"
+					delimiter for some commands.</p>
+					<p>Since delimiters have a special meaning you must escape
+					them if you want to use them as literal text. Use a
+					backslash character before any deliminer (or another
+					backslash) to escape it:</p>
 					<blockquote class="code">
 						<span>Template:</span>
-<code>The answer is: {echo 42}</code>
+						<code>Characters \{, \}, \| and \\ must be escaped.</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
-<code>The answer is: 42</code>
+						<code>Characters {, }, | and \ must be escaped.</code>
 					</blockquote>
-					<p>Of course, this template sample has no actual use as it
-					results in a constant string, but we'll see more realistic
-					examples in following sections.</p>
-					<p>You'll see later that some commands, such as the
-					<code>if</code> command, also require a body which must
-					appear between a ":" (colon) character and the "}" at the
-					end of the command:</p>
-					<blockquote class="code">
-						<span>Template:</span>
-<code>{if condition:something}</code>
-					</blockquote>
-					<p>Command bodies are always raw text, not code, so in this
-					example "something" will be printed if the <code>if</code>
-					command is satisfied. You can of course use commands from
-					within another command body:</p>
-					<blockquote class="code">
-						<span>Template:</span>
-<code>{if condition:{echo result}}</code>
-					</blockquote>
+					<p>Delimiters can be changed as you'll see in section
+					"<a href="#delimiters_customization">delimiters customization</a>".</p>
 				</div>
 
-				<h3>Sending variables to a template</h3>
+				<h3>Sending variables to templates</h3>
 				<div class="section">
-					<p>To send variables to parsed document so they can be used
-					while rendering, you must use a <code>Cottle.IScope</code>
-					instance that will hold them. This class behaves quite like
-					a <code>Dictionary&lt;Cottle.Value,Cottle.Value&gt;</code>,
-					where <code>Cottle.Value</code> is an internal Cottle type.
-					Key and value pairs within this dictionary are used as
-					variable names and associated values. Implicit constructors
-					from some native .NET types to <code>Value</code> type are
-					provided so most of the time you won't have to explicitly
-					build <code>Value</code> objects yourself, but you can
-					check in <code>Cottle.Values</code> namespace for available
-					types.</p>
-
-					<p>Once assigned, variables can be used in the template,
-					for example by using the <code>echo</code> command that
-					can output the value of any variable:</p>
+					<p>To send variables so they can be used when a document
+					is rendered you must store them in a
+					<code>Cottle.IScope</code> instance which is used as a
+					render-time storage. This interface behaves quite like a
+					<code>Dictionary&lt;Cottle.Value, Cottle.Value&gt;</code>
+					where <code>Cottle.Value</code> is a data structure able to
+					store any value Cottle can handle. Key and value pairs
+					within this dictionary are used as variable names and their
+					associated values.</p>
+					<p>Implicit constructors from some native .NET types to
+					<code>Value</code> type are provided so you usually don't
+					have to explicitly do the conversion yourself but you can
+					browse <code>Cottle.Values</code> namespace to see
+					available types.</p>
+					<p>Once you assigned variables to a scope, pass it to your
+					document's rendering method so you can read them from your
+					template (see "<a href="#getting_started">getting
+					started</a>" section for full code):</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>Hello {echo name}, you have no new message.</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["name"] = "John"; // implicit conversion to Value, new StringValue("John") is valid too</code>
+<code>scope["name"] = "John"; // implicit conversion, equivalent to 'new StringValue("John")'</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
 <code>Hello John, you have no new message.</code>
 					</blockquote>
-					<p>As <code>echo</code> is the most commonly used command a
-					shorter form is available and you can omit the "echo"
-					keyword if the name of the variable you want to print
-					doesn't conflict with another command:
-					<code>{echo name}</code> is equivalent to
-					<code>{name}</code> in this example. This form will be used
-					in all following samples.</p>
+					<p>Scopes are passed at document render time so they can be
+					changed from one render to another. This allows you to
+					reuse a compiled document multiple times, since compiling a
+					document has an important cost compared to rendering.</p>
 				</div>
 
-				<h3>Escaping special characters</h3>
+				<h3>Constants, variables and types</h3>
 				<div class="section">
-					<p>There are four special characters that won't be printed
-					unless you escape them, since they're used by template
-					parser to trigger special behaviours. Special characters
-					are:</p>
+					<p>Cottle supports immutable values which can either be
+					declared as constants in templates or stored in scopes you
+					pass when rendering a document. Values have a type which
+					can be one of the following:</p>
 					<ul>
-						<li>{ and }  (opening and closing braces),</li>
-						<li>| (pipe),</li>
-						<li>\ (backslash).</li>
+						<li>Boolean (value is either true or false) ;</li>
+						<li>Number (equivalent to .NET's decimal) ;</li>
+						<li>String (sequence of character) ;</li>
+						<li>Map (associative key/value container) ;</li>
+						<li>Void (value is undefined)</li>
 					</ul>
-					<p>If you need to print one of these in your template, you
-					must preceed them with a backslash character:</p>
-					<blockquote class="code">
-						<span>Template:</span>
-<code>Special characters \{, \}, \| and \\ must be escaped.</code>
-					</blockquote>
-					<blockquote class="code">
-						<span>Result:</span>
-<code>Special characters {, }, | and \ must be escaped.</code>
-					</blockquote>
-					<p>Special characters can be changed as you'll see in
-					section
-					"<a href="#block_delimiters_customization">Block delimiters customization</a>".</p>
-				</div>
-
-				<h3>Using map values</h3>
-				<div class="section">
 					<p>Map values are associative tables that contain multiple
-					values stored as key/value pairs. Keys and values can be
-					either scalar values or other nested map values. Values
-					within a map value can be accessed directly by their key,
-					using either dotted or subscript notation:</p>
+					children values stored as key/value pairs. Values within a
+					map can be accessed directly by their key, using either
+					dotted or subscript notation:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>You can use either {mymap.f1} or {mymap["f2"]} notations for map values.</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["mymap"] = new Dictionary&lt;Value,Value&gt; // implicit conversion to MapValue
+<code>scope["mymap"] = new Dictionary&lt;Value, Value&gt; // implicit conversion to MapValue
 {
     {"f1", "dotted"},
     {"f2", "subscript"}
@@ -486,57 +469,60 @@
 					result in a very different behavior, since it will search
 					for the value whose key is the value of <code>f2</code>
 					(which hasn't be defined), leading to an undefined (void)
-					result.</p>
-					<p>It is valid to have a map in which two or more keys
+					result. It is valid to have a map in which two or more keys
 					are equal, but you will only be able to access the last
 					one when using direct access. However, iteration through
 					the map's elements, as we'll see later, will show you
 					its entire content.</p>
-				</div>
-
-				<h3>Literals and variables</h3>
-				<div class="section">
-					<p>All commands in Cottle, like <code>echo</code>, must be
-					called with values as arguments. These arguments can be
-					names of variables you set through .NET code before
-					rendering the template, constant literals, or any
-					expression returning a value (this last case will be
-					explained in details later in this document).</p>
-					<p>Here is how to use literal values in your templates:</p>
+					<p>Implicit constructors on <code>Cottle.Value</code> class
+					allow you to convert most .NET standard types into a Cottle
+					value instance. To get an undefined value your from C# code
+					use the <code>Cottle.Values.VoidValue.Instance</code>
+					static property.</p>
+					<p>You can also declare constant values in your templates
+					with following constructs:</p>
 					<blockquote class="code">
 						<span>Template:</span>
-<code>{17.42}
-{"Constant string value"}
-{'String with single quotes'}
-{["key1": "value1", "key2": "value2", 43: "value for key 43"]}
-{["constant", "map", "with", "auto-generated", "numeric", "keys"]}
-{[1: ["map", "with"], "mixed": "values"]}</code>
+<code>{echo 17.42}
+{echo "Constant string"}
+{echo 'String with single quotes'}
+{echo ["key1": "value1", "key2": "value2"]}
+{echo ["constant", "map", "with", "numeric", "keys"]}</code>
 					</blockquote>
-					<p>As you can see in this example, literals can be:</p>
-					<ul>
-						<li>Integer or decimal numeric constants,</li>
-						<li>Character strings delimited by either single or
-						double quotes,</li>
-						<li>Maps with either key/value pairs or values
-						only (numeric keys starting at index 0 are generated in
-						this case)</li>
-					</ul>
+					<p>Keys can be ommited in constant maps declaration,
+					numeric keys starting at index 0 are generated in this
+					case. Also remember that both keys and values can be of any
+					value type (numbers, strings, other nested maps...). There
+					is no way to write a constant boolean value in a
+					template ; you can write your own
+					<a href="#custom_dotnet_methods">functions</a> if you
+					really need this feature, but numeric values 0 and 1
+					are equivalent except in very special cases.</p>
 				</div>
 
-				<h3 id="calling_functions">Calling functions</h3>
+				<h3>Calling builtin functions</h3>
 				<div class="section">
 					<p>Functions in Cottle are special values that can be
-					called just like functions in any programming language,
-					using this syntax:</p>
+					invoked like in most programming languages. As they are
+					values, they are stored in a scope, and a special scope
+					class is available so you can start with a predefined set
+					of standard functions when rendering your documents. To use
+					them, create a <code>BuiltinScope</code> instance and pass
+					it to document's rendering method.</p>
+					<p>If you don't want to use standard functions you can use
+					a blank scope (e.g. an instance of <code>SimpleScope</code>
+					class, or your own implementation of the
+					<code>IScope</code> interface).</p>
+					<p>Here is how to call a function:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>You have {len(messages)} new message(s) in your inbox.</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>IScope  scope;
+<code>IScope scope;
 
-scope = new DefaultScope(); // see below for details about this line
+scope = new BuiltinScope(); // must be used to have the "len" function available
 
 scope["messages"] = new Dictionary&lt;Value,Value&gt;
 {
@@ -549,61 +535,54 @@ scope["messages"] = new Dictionary&lt;Value,Value&gt;
 						<span>Result:</span>
 <code>You have 3 new message(s) in your inbox.</code>
 					</blockquote>
-					<p>Please note the use of a <code>DefaultScope</code>
-					object in this sample. This special sub-class of the
-					<code>IScope</code> interface comes with all Cottle
-					default functions assigned automatically. You could also
-					use another object if you don't need or don't want these
-					functions. For example, the <code>SimpleScope</code> class
-					as no default value assigned.</p>
-					<p>To get a description of each of the functions assigned
-					when using a <code>DefaultScope</code> object, see
-					paragraph
-					"<a href="#builtin_functions">Builtin functions</a>". For all
-					following samples, we'll assume that builtin functions are
-					assigned before template is rendered.</p>
+					<p>All builtin functions available from the
+					<code>BuiltinScope</code> class are described in paragraph
+					"<a href="#builtin_functions">builtin functions</a>". For all
+					following samples in this document we'll assume that builtin
+					functions are available from rendered templates.</p>
 				</div>
 
-				<h3>Commenting your templates</h3>
-				<div class="section">
-					<p>You can use the <code>_</code> (underscore) command to
-					add comments to your template. This command can be followed
-					by any literal text and won't print any result when
-					template is rendered.</p>
-					<blockquote class="code">
-						<span>Template:</span>
-<code>{_ This is a comment that will be ignored when rendering the template}
-Hello, World!</code>
-					</blockquote>
-					<blockquote class="code">
-						<span>Result:</span>
-<code>Hello, World!</code>
-					</blockquote>
-				</div>
-			</div>
-
-			<h2>Flow control</h2>
-			<div class="section">
 				<h3 id="conditional_statements">Conditional statements</h3>
 				<div class="section">
 					<p>You can write conditional statements by using the
-					<code>if</code> command which evaluates a value (which can
-					be a variable or the result of a function call) as a
-					boolean to check if its body should be printed or not.
-					A condition is satisfied if the value as a boolean is true:
-					any void value, empty string, zero number or empty map will
-					be converted to a boolean "false" value whereas any other
-					value will be converted to "true".</p>
-					<p>The <code>if</code> command also supports optional
-					<code>elif</code> (else if) and <code>else</code> blocks
-					that behave like in any programming language.</p>
+					<code>if</code> command which uses a value as a predicate
+					to check whether its body should be printed or not.
+					Predicate is verified if value, once converted to a boolean
+					type, is true. Any void value, empty string, zero number of
+					empty map will be converted to false while any other value
+					will be converted to true.</p>
+					<p>Predicate must be followed by ":" (colon) character and
+					body as a literal text (which can also include commands),
+					then the end delimiter ("}"
+					<a href="#delimiters_customization">unless you changed
+					it</a>).</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{if 1:
     A condition on a numeric value is true if the value is non-zero.
 }
 
-{if test: Variable "test" is true! |else: Variable "test" is false! }
+{if 0:
+    see?
+}</code>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
+<code>A condition on a numeric value is true if the value is non-zero.</code>
+					</blockquote>
+					<p>The <code>if</code> command also supports optional
+					<code>elif</code> (else if) and <code>else</code> blocks
+					that behave like in any other programming language. Replace
+					the "end command" special delimiter by "continue command"
+					one ("|" <a href="#delimiters_customization">unless you
+					changed it</a>) to end the <code>if</code> body then use
+					either <code>else</code> or <code>elif</code> followed by a
+					predicate, then a ":" (colon) character and another body as
+					a literal text. Last block must be ended by the "end
+					command" special delimiter:</p>
+					<blockquote class="code">
+						<span>Template:</span>
+<code>{if test: Variable "test" is true! |else: Variable "test" is false! }
 
 {if gt(len(items), 2):
     There are more than two items in map ({len(items)}, actually).
@@ -631,9 +610,7 @@ scope["x"] = -3;</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
-<code>A condition on a numeric value is true if the value is non-zero.
-
-Variable "test" is true!
+<code>Variable "test" is true!
 
 There are more than two items in map (3, actually).
 
@@ -641,7 +618,7 @@ X is negative.</code>
 					</blockquote>
 				</div>
 
-				<h3>Maps enumeration</h3>
+				<h3>Map values enumeration</h3>
 				<div class="section">
 					<p>Pairs contained within a map value can be enumerated
 					with the <code>for</code> command, that will print its body
@@ -651,6 +628,9 @@ X is negative.</code>
 					an optional <code>empty</code> block printed when the map
 					you tried to enumerate doesn't contain any key/value
 					pair.</p>
+					<p>Syntax of the <code>for</code> keyword and its optional
+					<code>empty</code> block is similar to the one used by the
+					<code>if</code> command:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{for index, text in messages:
@@ -687,14 +667,34 @@ Tags: action horror fantastic</code>
 					</blockquote>
 				</div>
 
-				<h3 id="variables_assignment">Variables assignment</h3>
+				<h3>Commenting your templates</h3>
+				<div class="section">
+					<p>You can use the <code>_</code> (underscore) command to
+					add comments to your template. This command can be followed
+					by any literal text and won't print any result when
+					template is rendered.</p>
+					<blockquote class="code">
+						<span>Template:</span>
+<code>{_ This is a comment that will be ignored when rendering the template}
+Hello, World!</code>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
+<code>Hello, World!</code>
+					</blockquote>
+				</div>
+
+				<h3 id="variables_assignment">Variable assignments</h3>
 				<div class="section">
 					<p>You can assign variables while template is being
-					rendered by using the <code>set</code> command. Variable
-					assignment allows you improve performance by storing
-					evaluation results (such as function calls) that are going
-					to be used several times, or code complex template
-					mechanism by combining the <code>if</code>,
+					rendered by using the <code>set</code> command. This
+					command affects the same scope you passed to document
+					rendering method and either insert or update a value into
+					it.</p>
+					<p>Variable assignment allows you improve performance by
+					storing evaluation results (such as function calls) that
+					are going to be used several times, or code complex
+					template mechanism by combining the <code>if</code>,
 					<code>for</code> and <code>set</code> commands.</p>
 					<blockquote class="code">
 						<span>Template:</span>
@@ -731,46 +731,17 @@ Tags: action horror fantastic</code>
 
 1 message is more than 20 characters long.</code>
 					</blockquote>
-					<p>You can assume that all variables are set in a global
-					common scope. More advanced use of variable assignments
-					will be explained later in this document.</p>
-					<p>Variables in Cottle are immutable, so it's not possible
-					to assign some value to a map subscript. If you want to
-					append, replace or erase a value in a map, you'll have
-					to build a new one and inject, filter out or replace
-					desired value. Builtin functions
-					"<a href="#function_cat">cat</a>",
-					"<a href="#function_slice">slice</a>",
-					"<a href="#function_union">union</a>",
-					"<a href="#function_except">except</a>" can be used to
-					easily achieve such operations:</p>
-					<blockquote class="code">
-						<span>Template:</span>
-<code>{set my_array to [4, 8, 50, 90, 23, 42]}
-{set my_array to cat(slice(my_array, 0, 2), slice(my_array, 4))}
-{set my_array to cat(slice(my_array, 0, 2), [15, 16], slice(my_array, 2))}
-{dump my_array}
-
-{set my_hash to ["delete_me": "TODO: delete this value", "let_me": "I shouldn't be touched"]}
-{set my_hash to union(my_hash, ["append_me": "I'm here!"])}
-{set my_hash to except(my_hash, ["delete_me": 0])}
-{dump my_hash}</code>
-					</blockquote>
-					<blockquote class="code">
-						<span>Result:</span>
-<code>[0: 4, 1: 8, 0: 15, 1: 16, 4: 23, 5: 42]
-["let_me": "I shouldn't be touched", "append_me": "I'm here!"]</code>
-					</blockquote>					
+					<p>More advanced use of variable assignments are explained
+					later in this document.</p>
 				</div>
 
 				<h3>Conditional loops</h3>
 				<div class="section">
-					<p>The <code>while</code> command is the equivalent of the
-					"while" keyword in most programming languages. Be sure to
-					check for a condition that will become false after a finite
-					number of iterations, or rendering of your template will
-					never complete. When possible, prefer the use of the
-					<code>for</code> command over <code>while</code>.</p>
+					<p>The <code>while</code> command evaluates its predicate
+					argument and continues executing its body until predicate
+					is false. Be sure to check for a condition that will
+					become false after a finite number of iterations, or
+					rendering of your template will never complete.</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{set password to ""}
@@ -797,11 +768,40 @@ Your random password is: {password}.</code>
 						<span>Result:</span>
 <code>Your random password is: 2PIBnodftxz8jAX.</code>
 					</blockquote>
+					<p>When possible, prefer the use of the <code>for</code>
+					command over <code>while</code>.</p>
 				</div>
 			</div>
 
 			<h2>Configuration options</h2>
 			<div class="section">
+				<h3>Dynamic compiled documents</h3>
+				<div class="section">
+					<p>Code sample from the "<a href="#getting_started">getting
+					started</a>" section used a <code>SimpleDocument</code>
+					object to convert template into a renderable document. This
+					class uses a simple tree evaluator to provide decent
+					performance and light construction cost. In some cases you
+					may want to benefit from better rendering performance at
+					the cost of a heavier construction impact.</p>
+					<p>This is where <code>DynamicDocument</code> may come in
+					handy: this alternative document uses dynamic IL generation
+					to compile your template into executable code directly:</p>
+					<blockquote class="code">
+						<span>C# code:</span>
+<code>document = <strong>new DynamicDocument(myTemplate)</strong>; // throws DocumentException on error</code>
+					</blockquote>
+					<p>You should use <code>DynamicDocument</code> only if you
+					render your documents way more often than you compile them,
+					otherwise you would probably put too much pressure on
+					.NET's garbage collector (bench and compare both variants
+					to select the one which better suits your needs).<p>
+					<p>Also note that performance gain increases with the
+					number of commands you use in your templates ; almost
+					plain-text templates won't render faster with a dynamic
+					document.</p>
+				</div>
+
 				<h3>Using custom configuration</h3>
 				<div class="section">
 					<p>When creating a new Cottle document, you can pass it an
@@ -813,32 +813,38 @@ Your random password is: {password}.</code>
 					the interface yourself for more advanced uses:</p>
 					<blockquote class="code">
 						<span>C# code:</span>
-					<code>IDocument       document;
-IScope          scope;
-CustomSetting   setting;
-
-setting = new CustomSetting();
-
-/* TODO: update setting properties */
-
-scope = new DefaultScope();
-
-/* TODO: assign some values to scope */
-
-using (StreamReader template = new StreamReader(new FileStream("test.cottle", FileMode.Open), Encoding.UTF8))
+<code>void RenderAndPrintMyTemplate()
 {
-    document = new SimpleDocument(template, setting);
-}
+    IDocument     document;
+    IScope        scope;
+    CustomSetting setting;
 
-document.Render(scope, Console.Out);</code>
+    setting = new CustomSetting();
+
+    <strong>/* TODO: update setting properties */</strong>
+
+    using (Stream stream = new FileStream("test.cottle", FileMode.Open))
+    {
+        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+        {
+            document = new SimpleDocument(reader, setting); // throws DocumentException on error
+        }
+    }
+
+    scope = new BuiltinScope(); // this is where variables can be stored
+
+    <strong>/* TODO: assign some values to scope */</strong>
+
+    Console.Write(document.Render(scope));
+}</code>
 					</blockquote>
 					<p>Configuration parameters can be updated where the first
-					"TODO" comment is located. This code will be used for
-					detailed usage of specific parameters in following
-					sections.</p>
+					"<strong>TODO</strong>" comment is located. This code will
+					be used for detailed usage of specific parameters in
+					following sections.</p>
 				</div>
 
-				<h3>Raw text cleaning</h3>
+				<h3>Raw text trimming</h3>
 				<div class="section">
 					<p>Cottle's default behavior for raw text is to render it
 					without any modification. While this gives you a perfect
@@ -932,7 +938,7 @@ going to be collapsed.</code>
 					rendered.</p>
 				</div>
 
-				<h3 id="block_delimiters_customization">Block delimiters customization</h3>
+				<h3 id="delimiters_customization">Delimiters customization</h3>
 				<div class="section">
 					<p>When using default configuration, Cottle uses {
 					character to start a code block, | to continue it (before
@@ -968,18 +974,33 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 <code>Block delimiters are now double left bracket ([[), double pipe (||) and double right bracket (]]).</code>
 					</blockquote>
 				</div>
+
+				<h3>Disable code optimizer</h3>
+				<div class="section">
+					<p>Cottle performs various optimizations on your code when
+					converting a template into document to ensure faster
+					rendering. You may want to disable these optimizations for
+					some reasons, e.g. when debugging, or if you want to speed
+					up document construction (but slower rendering):</p>
+					<blockquote class="code">
+						<span>C# code:</span>
+						<code>setting.Optimize = false;</code>
+					</blockquote>
+					<p>Turning optimization off is not recommended however.</p>
+				</div>
 			</div>
 
 			<h2>Advanced topics</h2>
 			<div class="section">
-				<h3>Variable contents inspection</h3>
+				<h3>Debug value contents</h3>
 				<div class="section">
 					<p>When your template doesn't render as you would expect,
 					the <code>dump</code> command can help you identify issues
-					by showing value in a "printable" form. Undefined values,
-					for example, won't print anything when passed through the
-					<code>echo</code> command, but will appear as
-					<code>&lt;void&gt;</code> with <code>dump</code>.</p>
+					by showing value as an explicit human readable string.
+					Undefined values, for example, won't print anything when
+					passed through the <code>echo</code> command, but the
+					<code>dump</code> command will show them as
+					<code>&lt;void&gt;</code>.</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{dump "string"}
@@ -1028,21 +1049,59 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					<a href="#function_cast">cast</a> builtin function.</p>
 				</div>
 
+				<h3>Workaround immutability</h3>
+				<div class="section">
+					<p>Variables in Cottle are immutable, meaning it's not
+					possible to replace portion of a string or assign some
+					value to a map subscript. If you want to append, replace or
+					erase a value in a map, you'll have to build a new one
+					where you inject, filter out or replace desired value.
+					Builtin functions
+					"<a href="#function_cat">cat</a>",
+					"<a href="#function_slice">slice</a>",
+					"<a href="#function_union">union</a>",
+					"<a href="#function_except">except</a>" can be used to
+					easily achieve such operations:</p>
+					<blockquote class="code">
+						<span>Template:</span>
+<code>{set my_string to "Modify me if you can"}
+{set my_string to cat("I", slice(my_string, 16), ".")}
+{dump my_string}
+
+{set my_array to [4, 8, 50, 90, 23, 42]}
+{set my_array to cat(slice(my_array, 0, 2), slice(my_array, 4))}
+{set my_array to cat(slice(my_array, 0, 2), [15, 16], slice(my_array, 2))}
+{dump my_array}
+
+{set my_hash to ["delete_me": "TODO: delete this value", "let_me": "I shouldn't be touched"]}
+{set my_hash to union(my_hash, ["append_me": "I'm here!"])}
+{set my_hash to except(my_hash, ["delete_me": 0])}
+{dump my_hash}</code>
+					</blockquote>
+					<blockquote class="code">
+						<span>Result:</span>
+<code>"I can."
+[0: 4, 1: 8, 0: 15, 1: 16, 4: 23, 5: 42]
+["let_me": "I shouldn't be touched", "append_me": "I'm here!"]</code>
+					</blockquote>
+				</div>
+
 				<h3>Functions declaration</h3>
 				<div class="section">
-					<p>Cottle allows you to declare functions, that are
-					callable values you can use to factor code as you would do
-					in a program. To declare a function and assign it to a
-					variable, use the same <code>set</code> you used for
-					regular values assignments with a slightly different
-					syntax. Function arguments must be specified between
-					parenthesis right after the variable name that should
-					receive the function, and are followed by <code>to</code>
-					and function body declaration.</p>
+					<p>Cottle allows you to declare functions directly in your
+					template code so you can factor code as you would do with
+					any other programming language. To declare a function and
+					assign it to a variable use the same <code>set</code> you
+					used for regular values assignments with a slightly
+					different syntax. Function arguments must be specified
+					between parenthesis right after the variable name that
+					should receive the function, and the <code>to</code>
+					keyword must be followed by a ":" (semicolon) character
+					then function body declaration.</p>
 					<p>Functions can return a value that can be used in any
 					expression or stored in a variable. To make a function halt
 					and return a value, use the <code>return</code> command
-					within its body.</p>
+					within its body:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{set factorial(n) to:
@@ -1090,17 +1149,19 @@ Move one disk from A to C</code>
 					within function body is printed each time the function is
 					called, or more precisely each time its enclosing block is
 					executed (that means it won't print if contained in an
-					<code>if</code> command that fails to pass, for example).
-					The value returned by the function won't be printed unless
-					you explicitly require it by using the <code>echo</code>
-					command (e.g. something like <code>{factorial(8)}</code>).
-					If a function doesn't use any <code>return</code> command,
-					the value it returns is empty, that's why the call to
-					<code>{hanoi(3)}</code> in the sample above does not print
-					anything more than the raw text blocks it contains.</p>
+					<code>if</code> command that fails to pass, for
+					example).</p>
+					<p>The value returned by the function won't be printed
+					unless you explicitly require it by using the
+					<code>echo</code> command (e.g. something like
+					<code>{factorial(8)}</code>). If a function doesn't use any
+					<code>return</code> command it returns an undefined value,
+					that's why the call to <code>{hanoi(3)}</code> in the
+					sample above does not print anything more than the raw text
+					blocks it contains.</p>
 				</div>
 
-				<h3>Variables scopes</h3>
+				<h3>Assigned variables scope</h3>
 				<div class="section">
 					<p>When writing complex templates using nested or recursive
 					functions, you may have to take care of variable scopes to
@@ -1190,12 +1251,12 @@ Move one disk from A to C</code>
 					without a value. Doing so assigns it a void value.</p>
 				</div>
 
-				<h3>Custom .NET methods</h3>
+				<h3 id="custom_dotnet_methods">Custom .NET methods</h3>
 				<div class="section">
 					<p>If you need new features or improved performance, you
 					can assign your own .NET methods to template variables.
 					That's actually what Cottle does when you use a
-					<code>DefaultScope</code> object in your code: a set of
+					<code>BuiltinScope</code> object in your code: a set of
 					internal .NET methods is assigned to your scope, just have
 					a look at source code to see how these methods work.</p>
 					<p>To assign a method to a scope, wrap it within a
@@ -1274,7 +1335,7 @@ ohohohohohohoh
 					native type is valid too.</p>
 				</div>
 
-				<h3>Lazy evaluation</h3>
+				<h3>Lazy value evaluation</h3>
 				<div class="section">
 					<p>In some cases, you may want to inject to your template
 					big and/or complex values that may or may not be needed at
@@ -1292,24 +1353,24 @@ ohohohohohohoh
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{if is_admin:
-	Administration log:
-	{log}
+    Administration log:
+    {log}
 }</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope = new DefaultScope();
-scope["is_admin"] = user.IsAdmin();
-scope["log"] = () => log.BuildComplexAdministrationLogValue(); // implicit conversion to LazyValue
+<code>scope = new BuiltinScope();
+scope["is_admin"] = user.IsAdmin;
+scope["log"] = () => log.BuildComplexLogValue(); // implicit conversion to LazyValue
 
 document.Render(scope, Console.Out);</code>
 					</blockquote>
 					<p>In this example, method
-					<code>log.BuildComplexAdministrationLogValue</code> won't
+					<code>log.BuildComplexLogValue</code> won't
 					be called unless <code>is_admin</code> value is true.</p>
 				</div>
 
-				<h3>Inspect objects through reflection</h3>
+				<h3>Inspect through reflection</h3>
 				<div class="section">
 					<p>Instead of converting complex object hierarchies to
 					Cottle values, you can have the library do it for you by
@@ -1324,10 +1385,10 @@ document.Render(scope, Console.Out);</code>
 					map:</p>
 					<blockquote class="code">
 						<span>Template:</span>
-<code>Your image has a size of {image.Width} x {image.Height} pixels.
+<code>Your image has a size of {image.Width}x{image.Height} pixels.
 
 {for key, value in image:
-	{key} = {value}
+    {key} = {value}
 }</code>
 					</blockquote>
 					<blockquote class="code">
@@ -1336,7 +1397,7 @@ document.Render(scope, Console.Out);</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
-<code>Your image has a size of 50 x 50 pixels.
+<code>Your image has a size of 50x50 pixels.
 
 nativeImage =
 Tag =
@@ -2149,17 +2210,17 @@ true</code>
 <code>{set shuffled to ["in", "order", "elements" "natural"]}
 
 {for item in sort(shuffled):
-	{item}
+    {item}
 }
 
 {declare by_length(a, b) as:
-	{return cmp(len(b), len(a))}
+    {return cmp(len(b), len(a))}
 }
 
 {set shuffled to ["by their", "are sorted", "length", "these strings"]}
 
 {for item in sort(shuffled, by_length):
-	{item}
+    {item}
 }</code>
 						</blockquote>
 						<blockquote class="code">
@@ -2306,6 +2367,12 @@ length</code>
 				<div class="section">
 					<h4>include(path[, map[, map, ...]])</h4>
 					<div class="section">
+						<p>This function is obsolete as it is too specific and
+						has insufficient customization support, and therefore
+						is not available by default in
+						<code>BuiltinScope</code> objects. You should consider
+						reimplementing your own "include" function if you need
+						a similar feature.</p>
 						<p>Parse document from a template file and render it with
 						variables extracted from given maps. Keys from input
 						maps will be used as variable names associated to their
@@ -2316,8 +2383,8 @@ length</code>
 							<blockquote><span>Template
 							"article.cottle":</span></blockquote>
 <code>&lt;div class="box"&gt;
-	&lt;div class="title"&gt;{a.title}&lt;/div&gt;
-	&lt;div class="text"&gt;{a.text}&lt;/div&gt;
+    &lt;div class="title"&gt;{a.title}&lt;/div&gt;
+    &lt;div class="text"&gt;{a.text}&lt;/div&gt;
 &lt;/div&gt;</code>
 						</blockquote>
 						<p>Now, we want to include and render this template file in
@@ -2325,34 +2392,34 @@ length</code>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{for article in articles:
-	{include("article.cottle", ["a": article])}
+    {include("article.cottle", ["a": article])}
 }</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>C# code:</span>
 <code>scope["articles"] = new Value[]
 {
-	new Dictionary&lt;Value, Value&gt;
-	{
-		{"title", "First article"},
-		{"text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
-	},
-	new Dictionary&lt;Value, Value&gt;
-	{
-		{"title", "Second article"},
-		{"text", "Cras vitae erat dui, commodo gravida purus."}
-	}
+    new Dictionary&lt;Value, Value&gt;
+    {
+        {"title", "First article"},
+        {"text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+    },
+    new Dictionary&lt;Value, Value&gt;
+    {
+        {"title", "Second article"},
+        {"text", "Cras vitae erat dui, commodo gravida purus."}
+    }
 };</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>Result:</span>
 <code>&lt;div class="box"&gt;
-	&lt;div class="title"&gt;First article&lt;/div&gt;
-	&lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
+    &lt;div class="title"&gt;First article&lt;/div&gt;
+    &lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="box"&gt;
-	&lt;div class="title"&gt;Second article&lt;/div&gt;
-	&lt;div class="text"&gt;Cras vitae erat dui, commodo gravida purus.&lt;/div&gt;
+    &lt;div class="title"&gt;Second article&lt;/div&gt;
+    &lt;div class="text"&gt;Cras vitae erat dui, commodo gravida purus.&lt;/div&gt;
 &lt;/div&gt;</code>
 						</blockquote>
 						<p>By using <code>return</code> keyword in your included
@@ -2423,7 +2490,7 @@ length</code>
 				<h3>Contact</h3>
 				<div class="section">
 					<p>Contact me by e-mail: cottle [at] mirari [dot] fr</p>
-					<p><a href="http://remi.caput.fr/">RCa</a>, 2012</p>
+					<p><a href="http://remi.caput.fr/">Remi Caput</a>, 2012</p>
 				</div>
 			</div>
 		</div>
