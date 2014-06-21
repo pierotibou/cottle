@@ -312,7 +312,7 @@
 <code>void RenderAndPrintMyTemplate()
 {
     IDocument  document;
-    IScope     scope;
+    IStore     store;
 
     using (Stream stream = new FileStream("test.cottle", FileMode.Open))
     {
@@ -322,11 +322,11 @@
         }
     }
 
-    scope = new BuiltinScope(); // this is where variables can be stored
+    store = new BuiltinStore(); // this is where variables can be stored
 
-    <strong>/* TODO: assign some values to scope */</strong>
+    <strong>/* TODO: assign some values to store */</strong>
 
-    Console.Write(document.Render(scope));
+    Console.Write(document.Render(store));
 }</code>
 					</blockquote>
 					<blockquote class="code">
@@ -397,7 +397,7 @@
 				<div class="section">
 					<p>To send variables so they can be used when a document
 					is rendered you must store them in a
-					<code>Cottle.IScope</code> instance which is used as a
+					<code>Cottle.IStore</code> instance which is used as a
 					render-time storage. This interface behaves quite like a
 					<code>Dictionary&lt;Cottle.Value, Cottle.Value&gt;</code>
 					where <code>Cottle.Value</code> is a data structure able to
@@ -409,7 +409,7 @@
 					have to explicitly do the conversion yourself but you can
 					browse <code>Cottle.Values</code> namespace to see
 					available types.</p>
-					<p>Once you assigned variables to a scope, pass it to your
+					<p>Once you assigned variables to a store, pass it to your
 					document's rendering method so you can read them from your
 					template (see "<a href="#getting_started">getting
 					started</a>" section for full code):</p>
@@ -419,13 +419,13 @@
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["name"] = "John"; // implicit conversion, equivalent to 'new StringValue("John")'</code>
+<code>store["name"] = "John"; // implicit conversion, equivalent to 'new StringValue("John")'</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
 <code>Hello John, you have no new message.</code>
 					</blockquote>
-					<p>Scopes are passed at document render time so they can be
+					<p>Stores are passed at document render time so they can be
 					changed from one render to another. This allows you to
 					reuse a compiled document multiple times, since compiling a
 					document has an important cost compared to rendering.</p>
@@ -434,7 +434,7 @@
 				<h3>Constants, variables and types</h3>
 				<div class="section">
 					<p>Cottle supports immutable values which can either be
-					declared as constants in templates or stored in scopes you
+					declared as constants in templates or stored in stores you
 					pass when rendering a document. Values have a type which
 					can be one of the following:</p>
 					<ul>
@@ -454,7 +454,7 @@
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["mymap"] = new Dictionary&lt;Value, Value&gt; // implicit conversion to MapValue
+<code>store["mymap"] = new Dictionary&lt;Value, Value&gt; // implicit conversion to MapValue
 {
     {"f1", "dotted"},
     {"f2", "subscript"}
@@ -504,15 +504,15 @@
 				<div class="section">
 					<p>Functions in Cottle are special values that can be
 					invoked like in most programming languages. As they are
-					values, they are stored in a scope, and a special scope
+					values, they are stored in a store, and a special store
 					class is available so you can start with a predefined set
 					of standard functions when rendering your documents. To use
-					them, create a <code>BuiltinScope</code> instance and pass
+					them, create a <code>BuiltinStore</code> instance and pass
 					it to document's rendering method.</p>
 					<p>If you don't want to use standard functions you can use
-					a blank scope (e.g. an instance of <code>SimpleScope</code>
+					a blank store (e.g. an instance of <code>SimpleStore</code>
 					class, or your own implementation of the
-					<code>IScope</code> interface).</p>
+					<code>IStore</code> interface).</p>
 					<p>Here is how to call a function:</p>
 					<blockquote class="code">
 						<span>Template:</span>
@@ -520,11 +520,11 @@
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>IScope scope;
+<code>IStore store;
 
-scope = new BuiltinScope(); // must be used to have the "len" function available
+store = new BuiltinStore(); // must be used to have the "len" function available
 
-scope["messages"] = new Dictionary&lt;Value,Value&gt;
+store["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "message #0"},
     {1, "message #1"},
@@ -536,7 +536,7 @@ scope["messages"] = new Dictionary&lt;Value,Value&gt;
 <code>You have 3 new message(s) in your inbox.</code>
 					</blockquote>
 					<p>All builtin functions available from the
-					<code>BuiltinScope</code> class are described in paragraph
+					<code>BuiltinStore</code> class are described in paragraph
 					"<a href="#builtin_functions">builtin functions</a>". For all
 					following samples in this document we'll assume that builtin
 					functions are available from rendered templates.</p>
@@ -598,15 +598,15 @@ scope["messages"] = new Dictionary&lt;Value,Value&gt;
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["items"] = new Dictionary&lt;Value,Value&gt;
+<code>store["items"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "item #0"},
     {1, "item #1"},
     {2, "item #2"}
 };
 
-scope["test"] = 42;
-scope["x"] = -3;</code>
+store["test"] = 42;
+store["x"] = -3;</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
@@ -643,14 +643,14 @@ Tags: {for tag in tags:{tag} }</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["messages"] = new Dictionary&lt;Value,Value&gt;
+<code>store["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "Hi, this is a sample message!"},
     {1, "Hi, me again!"},
     {2, "Hi, guess what?"}
 };
 
-scope["tags"] = new Value[]
+store["tags"] = new Value[]
 {
     "action",
     "horror",
@@ -688,7 +688,7 @@ Hello, World!</code>
 				<div class="section">
 					<p>You can assign variables while template is being
 					rendered by using the <code>set</code> command. This
-					command affects the same scope you passed to document
+					command affects the same store you passed to document
 					rendering method and either insert or update a value into
 					it.</p>
 					<p>Variable assignment allows you improve performance by
@@ -718,7 +718,7 @@ Hello, World!</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["messages"] = new Dictionary&lt;Value,Value&gt;
+<code>store["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "Hi, this is a sample message!"},
     {1, "Hi, me again!"},
@@ -816,8 +816,8 @@ Your random password is: {password}.</code>
 <code>void RenderAndPrintMyTemplate()
 {
     IDocument     document;
-    IScope        scope;
     CustomSetting setting;
+    IStore        store;
 
     setting = new CustomSetting();
 
@@ -831,11 +831,11 @@ Your random password is: {password}.</code>
         }
     }
 
-    scope = new BuiltinScope(); // this is where variables can be stored
+    store = new BuiltinStore(); // this is where variables can be stored
 
-    <strong>/* TODO: assign some values to scope */</strong>
+    <strong>/* TODO: assign some values to store */</strong>
 
-    Console.Write(document.Render(scope));
+    Console.Write(document.Render(store));
 }</code>
 					</blockquote>
 					<p>Configuration parameters can be updated where the first
@@ -965,9 +965,9 @@ going to be collapsed.</code>
 setting.BlockContinue = "||";
 setting.BlockEnd = "]]";
 
-scope["block_begin"] = "double left bracket (" + setting.BlockBegin + ")";
-scope["block_continue"] = "double pipe (" + setting.BlockContinue + ")";
-scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
+store["block_begin"] = "double left bracket (" + setting.BlockBegin + ")";
+store["block_continue"] = "double pipe (" + setting.BlockContinue + ")";
+store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
@@ -981,7 +981,7 @@ scope["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					converting a template into document to ensure faster
 					rendering. You may want to disable these optimizations for
 					some reasons, e.g. when debugging, or if you want to speed
-					up document construction (but slower rendering):</p>
+					up document construction (but slow down rendering):</p>
 					<blockquote class="code">
 						<span>C# code:</span>
 						<code>setting.Optimize = false;</code>
@@ -1166,7 +1166,7 @@ Move one disk from A to C</code>
 					<p>When writing complex templates using nested or recursive
 					functions, you may have to take care of variable scopes to
 					avoid potential issues. A scope is the local evaluation
-					context of any function or command that have a body. When
+					context of any function or command having a body. When
 					assigning a value to a variable as described in paragraph
 					"<a href="#variables_assignment">Variables assignment</a>",
 					all variables belong to the same top-level scope. Consider
@@ -1191,10 +1191,9 @@ Move one disk from A to C</code>
 					nested maps. Of course it could be written in a much more
 					efficient way without using non necessary temporary
 					variables, but it would hide the problem we want to
-					illustrate. Anyway, we want this code to return a valid
-					result, and if you try to execute it you'll notice that it
-					returns <code>2</code> where <code>3</code> would have been
-					expected.</p>
+					illustrate. If you try to execute this code you'll notice
+					it returns <code>2</code> where <code>3</code> would have
+					been expected.</p>
 					<p>Here is the explanation: when using the <code>set</code>
 					method to assign a value to variable <code>res</code>, it
 					always uses the same <code>res</code> instance.
@@ -1203,15 +1202,14 @@ Move one disk from A to C</code>
 					time it tries to store a value in it, and therefore fails
 					to store the actual deepest level as it should.</p>
 					<p>To solve this issue, the <code>res</code> variable needs
-					to be local to function <code>depth</code>, that means each
-					call to <code>depth</code> must use its own instance of the
-					<code>res</code> variable. This can be achieved by using
-					the <code>declare</code> command that creates a variable in
-					current scope. Our previous example can then be fixed by
-					declaring a new <code>res</code> variable inside body of
-					function <code>depth</code>, so that every subsequent
-					reference to <code>res</code> resolves to our local
-					instance:</p>
+					to be local to function <code>depth</code> so that each
+					invocation uses its own <code>res</code> instance. This can
+					be achieved by using the <code>declare</code> command that
+					creates a variable in current scope. Our previous example
+					can then be fixed by declaring a new <code>res</code>
+					variable inside body of function <code>depth</code>, so
+					that every subsequent reference to <code>res</code>
+					resolves to our local instance:</p>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{set depth(item) to:
@@ -1248,7 +1246,7 @@ Move one disk from A to C</code>
 }</code>
 					</blockquote>
 					<p>Note that the <code>set</code> command can also be used
-					without a value. Doing so assigns it a void value.</p>
+					without argument, and assigns variable a void value.</p>
 				</div>
 
 				<h3 id="custom_dotnet_methods">Custom .NET methods</h3>
@@ -1256,13 +1254,13 @@ Move one disk from A to C</code>
 					<p>If you need new features or improved performance, you
 					can assign your own .NET methods to template variables.
 					That's actually what Cottle does when you use a
-					<code>BuiltinScope</code> object in your code: a set of
-					internal .NET methods is assigned to your scope, just have
+					<code>BuiltinStore</code> object in your code: a set of
+					internal .NET methods is assigned to your store, just have
 					a look at source code to see how these methods work.</p>
-					<p>To assign a method to a scope, wrap it within a
+					<p>To assign a method to a store, wrap it within a
 					<code>NativeFunction</code> object which can then be stored
 					in a <code>FunctionValue</code> (an implicit constructor is
-					also available), then add it to your scope as you would do
+					also available), then add it to your store as you would do
 					for any value:</p>
 					<blockquote class="code">
 						<span>Template:</span>
@@ -1275,7 +1273,7 @@ Move one disk from A to C</code>
 					<blockquote class="code">
 						<span>C# code:</span>
 <code>// Implicit construction of Value from a NativeFunction instance
-scope["repeat"] = new NativeFunction((values, scope, output) =>
+store["repeat"] = new NativeFunction((values, store, output) =>
 {
 	StringBuilder builder = new StringBuilder();
 	int           i;
@@ -1299,7 +1297,7 @@ ohohohohohohoh
 					<ul>
 						<li>The <code>IList&lt;Value&gt;</code> of arguments
 						passed to the function,</li>
-						<li>The <code>IScope</code> containing all variables
+						<li>The <code>IStore</code> containing all variables
 						currently defined in the document,</li>
 						<li>A <code>TextWriter</code> opened on document
 						rendering output.</li>
@@ -1314,13 +1312,13 @@ ohohohohohohoh
 					know which data type a <code>Value</code> instance is
 					actually holding. The <code>Fields</code> property contains
 					all key/value pairs.</p>
-					<p>In most cases you won't use scope and output text
+					<p>In most cases you won't use store and output text
 					writer, but may need them if you want to run a function
 					evaluation within your code. The text writer instance can
 					however be used if you want your function to print
 					something.</p>
-					<p>The <code>CallbackFunction</code> objects also takes 2
-					more optional arguments, used to indicate how many
+					<p>The <code>NativeFunction</code> constructors also accept
+					2 more optional arguments used to indicate how many
 					arguments are expected for your function. You can either
 					ignore those arguments (and check yourself how many
 					values your function received), specify an exact number of
@@ -1341,7 +1339,7 @@ ohohohohohohoh
 					big and/or complex values that may or may not be needed at
 					rendering, depending on other parameters. In such
 					configurations, it may be better to avoid injecting the
-					entire value in your scope if there is chances it won't be
+					entire value in your store if there is chances it won't be
 					used, and use lazy evaluation instead.</p>
 					<p>Lazy evaluation allows you to inject a value with a
 					"resolver" callback which will be called only the first
@@ -1359,11 +1357,11 @@ ohohohohohohoh
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope = new BuiltinScope();
-scope["is_admin"] = user.IsAdmin;
-scope["log"] = () => log.BuildComplexLogValue(); // implicit conversion to LazyValue
+<code>store = new BuiltinStore();
+store["is_admin"] = user.IsAdmin;
+store["log"] = () => log.BuildComplexLogValue(); // implicit conversion to LazyValue
 
-document.Render(scope, Console.Out);</code>
+document.Render(store, Console.Out);</code>
 					</blockquote>
 					<p>In this example, method
 					<code>log.BuildComplexLogValue</code> won't
@@ -1380,7 +1378,7 @@ document.Render(scope, Console.Out);</code>
 					have complex objects and don't know in advance which fields
 					might be used in your templates.</p>
 					<p>To use reflection, create a new ReflectionValue from any
-					.NET object instance, and push it to your scope. Its fields
+					.NET object instance, and push it to your store. Its fields
 					and properties will be accessible like if it were a Cottle
 					map:</p>
 					<blockquote class="code">
@@ -1393,7 +1391,7 @@ document.Render(scope, Console.Out);</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>scope["image"] = new ReflectionValue(new Bitmap(50, 50));</code>
+<code>store["image"] = new ReflectionValue(new Bitmap(50, 50));</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>Result:</span>
@@ -2370,7 +2368,7 @@ length</code>
 						<p>This function is obsolete as it is too specific and
 						has insufficient customization support, and therefore
 						is not available by default in
-						<code>BuiltinScope</code> objects. You should consider
+						<code>BuiltinStore</code> objects. You should consider
 						reimplementing your own "include" function if you need
 						a similar feature.</p>
 						<p>Parse document from a template file and render it with
@@ -2397,7 +2395,7 @@ length</code>
 						</blockquote>
 						<blockquote class="code">
 							<span>C# code:</span>
-<code>scope["articles"] = new Value[]
+<code>store["articles"] = new Value[]
 {
     new Dictionary&lt;Value, Value&gt;
     {
@@ -2458,6 +2456,19 @@ length</code>
 					<p>Here is a summary of backward-incompatible changes
 					introduced in previous versions:</p>
 					<ul>
+						<li>1.1.3.0 =&gt; 1.2.0.0:
+							<ul>
+								<li><code>IScope</code> replaced by similar
+								<code>IStore</code> interface (they mostly
+								differ by the return type of their "Set" method
+								which made this impossible to change without
+								breaking the API).</li>
+								<li>Callback argument of constructors for
+								<code>NativeFunction</code> are not compatible
+								with <code>IScope</code> to avoid ambiguous
+								statements.</li>
+							</ul>
+						</li>
 						<li>1.0.1.0 =&gt; 1.1.0.0:
 							<ul>
 								<li><code>LexerConfig</code> must be replaced
