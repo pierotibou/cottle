@@ -285,7 +285,7 @@
 					<ul>
 						<li>An input template written with Cottle's template
 						language, used to control how your data must be
-						rendered. This template can be econtained in a
+						rendered. This template can be contained in a
 						<code>string</code> or streamed from any source
 						compatible with <code>System.IO.TextReader</code> class
 						(text file, memory buffer, network socket...) as shown
@@ -297,7 +297,7 @@
 					</ul>
 					<p>Here is a basic yet working sample rendering a plain
 					text template that doesn't contain dynamic code. Copy the
-					"<strong>Template</strong>" snippet a "test.cottle" file
+					"<strong>Template</strong>" snippet in a "test.cottle" file
 					you put in the same folder your project executable is, then
 					copy the "<strong>C# code</strong>" snippet somewhere in
 					your program and get it executed. You should see the
@@ -318,7 +318,7 @@
     {
         using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
         {
-            document = new SimpleDocument(reader); // throws DocumentException on error
+            document = new SimpleDocument(reader); // throws ParseException on error
         }
     }
 
@@ -789,7 +789,7 @@ Your random password is: {password}.</code>
 					to compile your template into executable code directly:</p>
 					<blockquote class="code">
 						<span>C# code:</span>
-<code>document = <strong>new DynamicDocument(myTemplate)</strong>; // throws DocumentException on error</code>
+<code>document = <strong>new DynamicDocument(myTemplate)</strong>; // throws ParseException on error</code>
 					</blockquote>
 					<p>You should use <code>DynamicDocument</code> only if you
 					render your documents way more often than you compile them,
@@ -827,7 +827,7 @@ Your random password is: {password}.</code>
     {
         using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
         {
-            document = new SimpleDocument(reader, setting); // throws DocumentException on error
+            document = new SimpleDocument(reader, setting); // throws ParseException on error
         }
     }
 
