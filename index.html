@@ -240,8 +240,8 @@
     &lt;body&gt;
         &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
         &lt;p&gt;
-            {if gt(len(messages),0):
-                You have {len(messages)} new message{if gt(len(messages),1):s} in your mailbox!
+            {if len(messages) &gt; 0:
+                You have {len(messages)} new message{if len(messages) &gt; 1:s} in your mailbox!
             |else:
                 You have no new message.
             }
@@ -500,6 +500,46 @@
 					are equivalent except in very special cases.</p>
 				</div>
 
+				<h3>Expression operators</h3>
+				<div class="section">
+					<p>Cottle supports the same mathematical and logical
+					operators found in most programming langages. Here they
+					are sorted by decreasing precedence order:</p>
+					<ul>
+						<li><code>+</code>, <code>-</code> and <code>!</code>:
+						unary plus, minus and logical "not" operator ;</li>
+						<li><code>*</code>, <code>/</code> and <code>%</code>:
+						binary multiplication, division and modulo operators ;
+						</li>
+						<li><code>+</code> and <code>-</code>: binary addition
+						and subtraction operators ;</li>
+						<li><code>&lt;</code>, <code>&lt;=</code>,
+						<code>=</code>, <code>!=</code>, <code>&gt;=</code> and
+						<code>&gt;</code>: binary logical comparison operators
+						;</li>
+						<li><code>&amp;&amp;</code> and <code>||</code>:
+						binary "and" and "or" logical operators.</li>
+					</ul>
+					<p>You can also use <code>(</code> and <code>)</code> to
+					group sub-expressions and change natural precedence
+					order. Here are some example of valid expressions:</p>
+					<blockquote class="code">
+						<span>Template:</span>
+<code>{1 + 2 * 3}
+{(1 + 2) * 3}
+{!(x &lt; 1 || x &gt; 9)}
+{value / 2 &gt;= -10}
+{"aaa" &lt; "aab"}</code>
+					</blockquote>
+					<p>Mathematical operators (<code>+</code>, <code>-</code>,
+					<code>*</code>, <code>/</code> and <code>%</code>) only
+					accept numeric operands and return a numeric value (or a
+					void value in case of division by zero). Logical operators
+					work on any type of operand in a similar way the
+					<a href="#function_cmp">cmp</a> standard function
+					does.</code>
+				</div>
+
 				<h3>Calling builtin functions</h3>
 				<div class="section">
 					<p>Functions in Cottle are special values that can be
@@ -584,13 +624,13 @@ store["messages"] = new Dictionary&lt;Value,Value&gt;
 						<span>Template:</span>
 <code>{if test: Variable "test" is true! |else: Variable "test" is false! }
 
-{if gt(len(items), 2):
+{if len(items) &gt; 2:
     There are more than two items in map ({len(items)}, actually).
 }
 
-{if lt(x, 0):
+{if x &lt; 0:
     X is negative.
-|elif gt(x, 0):
+|elif x &gt; 0:
     X is positive.
 |else:
     X equals zero.
@@ -700,8 +740,8 @@ Hello, World!</code>
 						<span>Template:</span>
 <code>{set nb_msgs to len(messages)}
 
-{if gt(nb_msgs,0):
-    You have {nb_msgs} new message{if gt(nb_msgs, 1):s} in your mailbox!
+{if nb_msgs &gt; 0:
+    You have {nb_msgs} new message{if nb_msgs &gt; 1:s} in your mailbox!
 |else:
     You have no new message.
 }
@@ -709,12 +749,12 @@ Hello, World!</code>
 {set nb_long to 0}
 
 {for message in messages:
-    {if gt(len(message), 20):
+    {if len(message) &gt; 20:
         {set nb_long to add(nb_long, 1)}
     }
 }
 
-{nb_long} message{if gt(nb_long, 1):s is|else: are} more than 20 characters long.</code>
+{nb_long} message{if nb_long &gt; 1:s is|else: are} more than 20 characters long.</code>
 					</blockquote>
 					<blockquote class="code">
 						<span>C# code:</span>
@@ -748,12 +788,12 @@ Hello, World!</code>
 {set nb to rand(8, 16)}
 {set i to 0}
 
-{while lt(i, nb):
+{while i &lt; nb:
     {set ascii to rand(62)}
 
-    {if lt(ascii, 10):
+    {if ascii &lt; 10:
         {set password to cat(password, char(add(ascii, ord("0"))))}
-    |elif lt(ascii, 36):
+    |elif ascii &lt; 36:
         {set password to cat(password, char(add(sub(ascii, 10), ord("A"))))}
     |else:
         {set password to cat(password, char(add(sub(ascii, 36), ord("a"))))}
@@ -1105,7 +1145,7 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					<blockquote class="code">
 						<span>Template:</span>
 <code>{set factorial(n) to:
-    {if gt(n, 1):
+    {if n &gt; 1:
         {return mul(n, factorial(sub(n, 1)))}
     |else:
         {return 1}
@@ -1119,9 +1159,9 @@ Factorial 8 = {factorial(8)}
 {set hanoi_rec(n, from, by, to) to:
     {set n to sub(n, 1)}
 
-    {if gt(n, 0): {hanoi_rec(n, from, to, by)}}
+    {if n &gt; 0: {hanoi_rec(n, from, to, by)}}
 Move one disk from {from} to {to}
-    {if gt(n, 0): {hanoi_rec(n, by, from, to)}}
+    {if n &gt; 0: {hanoi_rec(n, by, from, to)}}
 }
 
 {set hanoi(n) to:
@@ -1441,7 +1481,8 @@ PropertyItems =</code>
 
 					<h4>add(a, b)</h4>
 					<div class="section">
-						<p>Return the sum of two numeric values.</p>
+						<p>Return the sum of two numeric values (equivalent to
+						<code>+</code> operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{add(3, 7)}</code>
@@ -1481,9 +1522,10 @@ PropertyItems =</code>
 
 					<h4>div(a, b)</h4>
 					<div class="section">
-						<p>Return the numeric value of <code>a</code> divided by
-						the numeric value of <code>b</code>. Result of a division
-						by zero is a void value.</p>
+						<p>Return the numeric value of <code>a</code> divided
+						by the numeric value of <code>b</code> (equivalent to
+						<code>/</code> operator). Result of a division by zero
+						is a void value.</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{div(5, 2)}</code>
@@ -1541,7 +1583,8 @@ PropertyItems =</code>
 					<h4>mod(a, b)</h4>
 					<div class="section">
 						<p>Return the value of the first numeric argument modulo
-						the second one.</p>
+						the second one (equivalent to <code>%</code>
+						operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{mod(7, 3)}</code>
@@ -1555,7 +1598,8 @@ PropertyItems =</code>
 					<h4>mul(a, b)</h4>
 					<div class="section">
 						<p>Return the numeric value of <code>a</code> times
-						<code>b</code>.</p>
+						<code>b</code> (equivalent to <code>*</code>
+						operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{mul(3, 4)}</code>
@@ -1633,7 +1677,8 @@ PropertyItems =</code>
 
 					<h4>sub(a, b)</h4>
 					<div class="section">
-						<p>Return the numeric value of a minus b.</p>
+						<p>Return the numeric value of a minus b (equivalent to
+						<code>-</code> operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{sub(3, 5)}</code>
@@ -1650,7 +1695,8 @@ PropertyItems =</code>
 					<h4 id="function_cat">cat(a, b, ...)</h4>
 					<div class="section">
 						<p>Concatenate all input values into a single one. This
-						function works on both strings and maps.</p>
+						function works on both strings and maps (keys are not
+						preserved when used with maps).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{cat("Hello, ", "World!")}
@@ -1799,11 +1845,13 @@ True</code>
 
 					<h4 id="function_slice">slice(value, index[, count])</h4>
 					<div class="section">
-						<p>Extact slice from a map, or sub-string from a
-						string. <code>count</code> pairs or characters are
-						extracted from given 0-based numeric <code>index</code>. If
-						no <code>count</code> argument is specified, all elements
-						starting from given <code>index</code> are extracted.</p>
+						<p>Extact sub-string from a string or elements from a
+						map (keys are not preserved when used with maps).
+						<code>count</code> items or characters are extracted
+						from given 0-based numeric <code>index</code>. If no
+						<code>count</code> argument is specified, all elements
+						starting from given <code>index</code> are
+						extracted.</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{for v in slice([68, 657, 54, 3, 12, 9], 3, 2): {v}}
@@ -1875,7 +1923,8 @@ XX-YY-ZZ
 					<h4>and(a, b, ...)</h4>
 					<div class="section">
 						<p>Perform logical "and" between given boolean values, i.e.
-						return "true" if all arguments are true.</p>
+						return "true" if all arguments are true (equivalent to
+						<code>&amp;&amp;</code> operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{and(lt(2, 3), gt(5, 1))}</code>
@@ -1886,7 +1935,7 @@ XX-YY-ZZ
 						</blockquote>
 					</div>
 
-					<h4>cmp(a, b)</h4>
+					<h4 id="function_cmp">cmp(a, b)</h4>
 					<div class="section">
 						<p>Compare <code>a</code> against <code>b</code>, and
 						return -1 if <code>a</code> is lower than <code>b</code>,
@@ -1932,8 +1981,9 @@ XX-YY-ZZ
 					<h4>eq(a, b, ...)</h4>
 					<div class="section">
 						<p>Return true if all arguments are equal, or false
-						otherwise. See <a href="#function_cmp">cmp</a> common
-						function for more information about comparisons.</p>
+						otherwise (equivalent to <code>=</code> operator). See
+						<a href="#function_cmp">cmp</a> common function for
+						more information about comparisons.</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{eq(7, 7)}
@@ -1952,7 +2002,8 @@ true</code>
 					<div class="section">
 						<p>Return true if the numeric value of <code>a</code> is
 						greater than or equal to the numeric value of
-						<code>b</code>, false otherwise.</p>
+						<code>b</code>, false otherwise (equivalent to
+						<code>&gt;=</code> operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{ge(7, 3)}
@@ -1970,8 +2021,9 @@ false</code>
 					<h4>gt(a, b)</h4>
 					<div class="section">
 						<p>Return true if the numeric value of <code>a</code> is
-						greater than the numeric value of  <code>b</code>, false
-						otherwise.</p>
+						greater than the numeric value of <code>b</code>, false
+						otherwise (equivalent to <code>&gt;</code>
+						operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{gt(7, 3)}
@@ -2004,7 +2056,8 @@ false</code>
 					<div class="section">
 						<p>Return true if the numeric value of <code>a</code> is
 						lower than or equal to the numeric value of <code>b</code>,
-						false otherwise.</p>
+						false otherwise (equivalent to <code>&lt;=</code>
+						operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{le(3, 7)}
@@ -2023,7 +2076,8 @@ true</code>
 					<div class="section">
 						<p>Return true if the numeric value of <code>a</code> is
 						lower than the numeric value of <code>b</code>, false
-						otherwise.</p>
+						otherwise (equivalent to <code>&lt;</code>
+						operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{lt(3, 7)}
@@ -2038,10 +2092,29 @@ true</code>
 						</blockquote>
 					</div>
 
+					<h4>ne(a, b, ...)</h4>
+					<div class="section">
+						<p>Return true if all arguments are not equal, or false
+						otherwise (equivalent to <code>!=</code> operator).</p>
+						<blockquote class="code">
+							<span>Template:</span>
+<code>{ne(7, 7)}
+{ne(1, 4)}
+{ne("test", "test")}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result:</span>
+<code>false
+true
+false</code>
+						</blockquote>
+					</div>
+
 					<h4>not(a)</h4>
 					<div class="section">
-						<p>Perform logical "not" on given boolean value, i.e return
-						true if value was false or false if it was true.</p>
+						<p>Perform logical "not" on given boolean value, i.e
+						return true if value was false or false if it was true
+						(equivalent to <code>!</code> operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{not(eq(1, 2))}</code>
@@ -2054,8 +2127,9 @@ true</code>
 
 					<h4>or(a, b, ...)</h4>
 					<div class="section">
-						<p>Perform logical "or" between given boolean values, i.e.
-						return "true" if at least one argument is true.</p>
+						<p>Perform logical "or" between given boolean values,
+						i.e. return "true" if at least one argument is true
+						(equivalent to <code>||</code> operator).</p>
 						<blockquote class="code">
 							<span>Template:</span>
 <code>{or(eq(2, 3), gt(5, 1))}</code>
