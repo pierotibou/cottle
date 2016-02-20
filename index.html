@@ -99,7 +99,7 @@
 			blockquote.code {
 				position:		relative;
 				padding:		4px 8px;
-				margin:			12px 0;
+				margin:			16px 0;
 				background:		#E3EDF6;
 				border-top:		1px solid #A9C7E4;
 				border-right:	1px solid #BDD3EA;
@@ -181,7 +181,7 @@
 
 			h1 {
 				padding:		0px;
-				margin:			24px 8px;
+				margin:			32px 8px;
 				text-align:		center;				
 				font-size:		2.2em;
 				font-variant:	small-caps;
@@ -190,15 +190,15 @@
 
 			h2 {
 				padding:	0px;
-				margin:		8px 16px;
+				margin:		24px 16px;
 				font-size:	1.4em;
 				color:		#5070B0;
 			}
 
 			h3 {
 				padding:	0px;
-				margin:		8px 24px;
-				font-size:	1.0em;
+				margin:		16px 24px;
+				font-size:	1.2em;
 				color:		#6080C0;
 			}
 
@@ -235,7 +235,7 @@
 					showing how many messages are in your mailbox could look
 					like this:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>&lt;html&gt;
     &lt;body&gt;
         &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
@@ -304,11 +304,11 @@
 					content of "<strong>Result</strong>" snippet printed to
 					standard output:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>This is my input template file (with only literal text for now).</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>void RenderAndPrintMyTemplate()
 {
     IDocument  document;
@@ -330,7 +330,7 @@
 }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>This is my input template file (with only literal text for now).</code>
 					</blockquote>
 					<p>Next samples in this document will show the same
@@ -354,11 +354,11 @@
 					example using the "echo" command to print content of a
 					variable named "x", we'll assume its value is "53":</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 						<code>Value of x is {echo x}.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 						<code>Value of x is 53.</code>
 					</blockquote>
 					<p>Here we used the <code>echo</code> command which prints
@@ -382,11 +382,11 @@
 					backslash character before any deliminer (or another
 					backslash) to escape it:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 						<code>Characters \{, \}, \| and \\ must be escaped.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 						<code>Characters {, }, | and \ must be escaped.</code>
 					</blockquote>
 					<p>Delimiters can be changed as you'll see in section
@@ -414,15 +414,15 @@
 					template (see "<a href="#getting_started">getting
 					started</a>" section for full code):</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>Hello {echo name}, you have no new message.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store["name"] = "John"; // implicit conversion, equivalent to 'new StringValue("John")'</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Hello John, you have no new message.</code>
 					</blockquote>
 					<p>Stores are passed at document render time so they can be
@@ -449,11 +449,11 @@
 					map can be accessed directly by their key, using either
 					dotted or subscript notation:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>You can use either {mymap.f1} or {mymap["f2"]} notations for map values.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store["mymap"] = new Dictionary&lt;Value, Value&gt; // implicit conversion to MapValue
 {
     {"f1", "dotted"},
@@ -461,7 +461,7 @@
 };</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>You can use either dotted or subscript notations for map values.</code>
 					</blockquote>
 					<p>Please note the quotes used in subscript notation.
@@ -482,7 +482,7 @@
 					<p>You can also declare constant values in your templates
 					with following constructs:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{echo 17.42}
 {echo "Constant string"}
 {echo 'String with single quotes'}
@@ -524,7 +524,7 @@
 					group sub-expressions and change natural precedence
 					order. Here are some example of valid expressions:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{1 + 2 * 3}
 {(1 + 2) * 3}
 {!(x &lt; 1 || x &gt; 9)}
@@ -555,11 +555,11 @@
 					<code>IStore</code> interface).</p>
 					<p>Here is how to call a function:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>You have {len(messages)} new message(s) in your inbox.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>IStore store;
 
 store = new BuiltinStore(); // must be used to have the "len" function available
@@ -572,7 +572,7 @@ store["messages"] = new Dictionary&lt;Value,Value&gt;
 };</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>You have 3 new message(s) in your inbox.</code>
 					</blockquote>
 					<p>All builtin functions available from the
@@ -597,7 +597,7 @@ store["messages"] = new Dictionary&lt;Value,Value&gt;
 					<a href="#delimiters_customization">unless you changed
 					it</a>).</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{if 1:
     A condition on a numeric value is true if the value is non-zero.
 }
@@ -607,7 +607,7 @@ store["messages"] = new Dictionary&lt;Value,Value&gt;
 }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>A condition on a numeric value is true if the value is non-zero.</code>
 					</blockquote>
 					<p>The <code>if</code> command also supports optional
@@ -621,7 +621,7 @@ store["messages"] = new Dictionary&lt;Value,Value&gt;
 					a literal text. Last block must be ended by the "end
 					command" special delimiter:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{if test: Variable "test" is true! |else: Variable "test" is false! }
 
 {if len(items) &gt; 2:
@@ -637,7 +637,7 @@ store["messages"] = new Dictionary&lt;Value,Value&gt;
 }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store["items"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "item #0"},
@@ -649,7 +649,7 @@ store["test"] = 42;
 store["x"] = -3;</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Variable "test" is true!
 
 There are more than two items in map (3, actually).
@@ -672,9 +672,9 @@ X is negative.</code>
 					<code>empty</code> block is similar to the one used by the
 					<code>if</code> command:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{for index, text in messages:
-    Message #{add(index, 1)}: {text}
+    Message #{index + 1}: {text}
 |empty:
     No messages to display.
 }
@@ -682,7 +682,7 @@ X is negative.</code>
 Tags: {for tag in tags:{tag} }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "Hi, this is a sample message!"},
@@ -698,7 +698,7 @@ store["tags"] = new Value[]
 };</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Message #1: Hi, this is a sample message!
 Message #2: Hi, me again!
 Message #3: Hi, guess what?
@@ -714,12 +714,12 @@ Tags: action horror fantastic</code>
 					by any literal text and won't print any result when
 					template is rendered.</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{_ This is a comment that will be ignored when rendering the template}
 Hello, World!</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Hello, World!</code>
 					</blockquote>
 				</div>
@@ -737,7 +737,7 @@ Hello, World!</code>
 					template mechanism by combining the <code>if</code>,
 					<code>for</code> and <code>set</code> commands.</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set nb_msgs to len(messages)}
 
 {if nb_msgs &gt; 0:
@@ -750,14 +750,14 @@ Hello, World!</code>
 
 {for message in messages:
     {if len(message) &gt; 20:
-        {set nb_long to add(nb_long, 1)}
+        {set nb_long to nb_long + 1}
     }
 }
 
 {nb_long} message{if nb_long &gt; 1:s is|else: are} more than 20 characters long.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store["messages"] = new Dictionary&lt;Value,Value&gt;
 {
     {0, "Hi, this is a sample message!"},
@@ -766,7 +766,7 @@ Hello, World!</code>
 };</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>You have 3 new messages in your mailbox!
 
 1 message is more than 20 characters long.</code>
@@ -783,7 +783,7 @@ Hello, World!</code>
 					become false after a finite number of iterations, or
 					rendering of your template will never complete.</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set password to ""}
 {set nb to rand(8, 16)}
 {set i to 0}
@@ -792,20 +792,20 @@ Hello, World!</code>
     {set ascii to rand(62)}
 
     {if ascii &lt; 10:
-        {set password to cat(password, char(add(ascii, ord("0"))))}
+        {set password to cat(password, char(ascii + ord("0")))}
     |elif ascii &lt; 36:
-        {set password to cat(password, char(add(sub(ascii, 10), ord("A"))))}
+        {set password to cat(password, char(ascii + ord("A") - 10))}
     |else:
-        {set password to cat(password, char(add(sub(ascii, 36), ord("a"))))}
+        {set password to cat(password, char(ascii + ord("a") - 36))}
     }
 
-    {set i to add(i, 1)}
+    {set i to i + 1}
 }
 
 Your random password is: {password}.</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Your random password is: 2PIBnodftxz8jAX.</code>
 					</blockquote>
 					<p>When possible, prefer the use of the <code>for</code>
@@ -828,7 +828,7 @@ Your random password is: {password}.</code>
 					handy: this alternative document uses dynamic IL generation
 					to compile your template into executable code directly:</p>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>document = <strong>new DynamicDocument(myTemplate)</strong>; // throws ParseException on error</code>
 					</blockquote>
 					<p>You should use <code>DynamicDocument</code> only if you
@@ -852,7 +852,7 @@ Your random password is: {password}.</code>
 					override any configuration parameter you want, or implement
 					the interface yourself for more advanced uses:</p>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>void RenderAndPrintMyTemplate()
 {
     IDocument     document;
@@ -916,7 +916,7 @@ Your random password is: {password}.</code>
 					results.</p>
 					<p>CollapseBlankCharacters:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>&lt;ul&gt;
     {for s in ["First", "Second", "Third"]:
         &lt;li&gt;
@@ -926,32 +926,32 @@ Your random password is: {password}.</code>
 &lt;/ul&gt;</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>setting.Trimmer = Trimmers.CollapseBlankCharacters;</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>&lt;ul&gt;  &lt;li&gt; First &lt;/li&gt;  &lt;li&gt; Second &lt;/li&gt;  &lt;li&gt; Third &lt;/li&gt;  &lt;/ul&gt;</code>
 					</blockquote>
 					<p>LeadingAndTrailingBlankCharacters:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{'white'} {'spaces '} around raw blocks are
 going to be
 {' collapsed'} .</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>setting.Trimmer = Trimmers.LeadingAndTrailingBlankCharacters;</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>whitespaces around raw blocks are
 going to be collapsed.</code>
 					</blockquote>
 					<p>FirstAndLastBlankLines:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>This is a line of text with {'inline'} Cottle code.
 
 {for s in ["normal", "exceptional", "elite"]:
@@ -960,11 +960,11 @@ going to be collapsed.</code>
 }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>setting.Trimmer = Trimmers.FirstAndLastBlankLines;</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>This is a line of text with inline Cottle code.
     - Length of string "normal" is 6 character(s).
     - Length of string "exceptional" is 11 character(s).
@@ -996,11 +996,11 @@ going to be collapsed.</code>
 					the ] character as a delimiter is a bad idea, as it will
 					conflict with internal end-of-map delimiter.</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>Block delimiters are now [[block_begin]], [[block_continue]] and [[block_end]].</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>setting.BlockBegin = "[[";
 setting.BlockContinue = "||";
 setting.BlockEnd = "]]";
@@ -1010,7 +1010,7 @@ store["block_continue"] = "double pipe (" + setting.BlockContinue + ")";
 store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Block delimiters are now double left bracket ([[), double pipe (||) and double right bracket (]]).</code>
 					</blockquote>
 				</div>
@@ -1023,7 +1023,7 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					some reasons, e.g. when debugging, or if you want to speed
 					up document construction (but slow down rendering):</p>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 						<code>setting.Optimize = false;</code>
 					</blockquote>
 					<p>Turning optimization off is not recommended however.</p>
@@ -1042,14 +1042,14 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					<code>dump</code> command will show them as
 					<code>&lt;void&gt;</code>.</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{dump "string"}
 {dump 42}
 {dump unknown(3)}
 {dump [856, "hello", "x": 17]}</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>"string"
 42
 &lt;void&gt;
@@ -1067,14 +1067,14 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					desired result, for example when accessing values from a
 					map:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set map to ["first", "second", "third"]}
 {set key to "1"}
 
 {dump map[key]}</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>&lt;void&gt;</code>
 					</blockquote>
 					<p>You could have expected this template to display
@@ -1103,7 +1103,7 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					"<a href="#function_except">except</a>" can be used to
 					easily achieve such operations:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set my_string to "Modify me if you can"}
 {set my_string to cat("I", slice(my_string, 16), ".")}
 {dump my_string}
@@ -1119,7 +1119,7 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 {dump my_hash}</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>"I can."
 [0: 4, 1: 8, 0: 15, 1: 16, 4: 23, 5: 42]
 ["let_me": "I shouldn't be touched", "append_me": "I'm here!"]</code>
@@ -1143,10 +1143,10 @@ store["block_end"] = "double right bracket (" + setting.BlockEnd + ")";</code>
 					and return a value, use the <code>return</code> command
 					within its body:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set factorial(n) to:
     {if n &gt; 1:
-        {return mul(n, factorial(sub(n, 1)))}
+        {return n * factorial(n - 1)}
     |else:
         {return 1}
     }
@@ -1157,7 +1157,7 @@ Factorial 3 = {factorial(3)}
 Factorial 8 = {factorial(8)}
 
 {set hanoi_rec(n, from, by, to) to:
-    {set n to sub(n, 1)}
+    {set n to n - 1}
 
     {if n &gt; 0: {hanoi_rec(n, from, to, by)}}
 Move one disk from {from} to {to}
@@ -1171,7 +1171,7 @@ Move one disk from {from} to {to}
 {hanoi(3)}</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Factorial 1 = 1
 Factorial 3 = 6
 Factorial 8 = 40320
@@ -1212,12 +1212,12 @@ Move one disk from A to C</code>
 					all variables belong to the same top-level scope. Consider
 					this template:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set depth(item) to:
     {set res to 0}
 
     {for child in item:
-        {set res_child to add(depth(child), 1)}
+        {set res_child to depth(child) + 1}
         {set res to max(res, res_child)}
     }
 
@@ -1251,13 +1251,13 @@ Move one disk from A to C</code>
 					that every subsequent reference to <code>res</code>
 					resolves to our local instance:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{set depth(item) to:
     <strong>{declare res}</strong>
     {set res to 0}
 
     {for child in item:
-        {set res_child to add(depth(child), 1)}
+        {set res_child to depth(child) + 1}
         {set res to max(res, res_child)}
     }
 
@@ -1274,13 +1274,13 @@ Move one disk from A to C</code>
 					command, the only difference being than "to" should be
 					replaced by "as":</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{declare res as 0}</code>
 					</blockquote>
 					<p>The same command can also be used to declare
 					functions:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{declare depth(item) as:
     ...
 }</code>
@@ -1303,7 +1303,7 @@ Move one disk from A to C</code>
 					also available), then add it to your store as you would do
 					for any value:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>Testing custom "repeat" function:
 
 {repeat("a", 15)}
@@ -1311,7 +1311,7 @@ Move one disk from A to C</code>
 {repeat("-", 10)}</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>// Implicit construction of Value from a NativeFunction instance
 store["repeat"] = new NativeFunction((values, store, output) =>
 {
@@ -1325,7 +1325,7 @@ store["repeat"] = new NativeFunction((values, store, output) =>
 }, 2);</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Testing custom "repeat" function:
 
 aaaaaaaaaaaaaaa
@@ -1389,14 +1389,14 @@ ohohohohohohoh
 					are built from any resolver callback that returns a
 					<code>Value</code> instance:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>{if is_admin:
     Administration log:
     {log}
 }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store = new BuiltinStore();
 store["is_admin"] = user.IsAdmin;
 store["log"] = () => log.BuildComplexLogValue(); // implicit conversion to LazyValue
@@ -1422,7 +1422,7 @@ document.Render(store, Console.Out);</code>
 					and properties will be accessible like if it were a Cottle
 					map:</p>
 					<blockquote class="code">
-						<span>Template:</span>
+						<span>Template</span>
 <code>Your image has a size of {image.Width}x{image.Height} pixels.
 
 {for key, value in image:
@@ -1430,11 +1430,11 @@ document.Render(store, Console.Out);</code>
 }</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>C# code:</span>
+						<span>C# code</span>
 <code>store["image"] = new ReflectionValue(new Bitmap(50, 50));</code>
 					</blockquote>
 					<blockquote class="code">
-						<span>Result:</span>
+						<span>Result</span>
 <code>Your image has a size of 50x50 pixels.
 
 nativeImage =
@@ -1468,12 +1468,12 @@ PropertyItems =</code>
 					<div class="section">
 						<p>Return the absolute value of given numeric value.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{abs(-3)}
 {abs(5)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>3
 5</code>
 						</blockquote>
@@ -1484,11 +1484,11 @@ PropertyItems =</code>
 						<p>Return the sum of two numeric values (equivalent to
 						<code>+</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{add(3, 7)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>10</code>
 						</blockquote>
 					</div>
@@ -1498,11 +1498,11 @@ PropertyItems =</code>
 						<p>Returns the smallest integer greater than or equal to
 						decimal value <code>x</code>.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{ceil(2.7)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>3</code>
 						</blockquote>
 					</div>
@@ -1511,11 +1511,11 @@ PropertyItems =</code>
 					<div class="section">
 						<p>Get the cosine of angle <code>x</code> in radians.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{cos(-1.57)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>0.000796326710733263</code>
 						</blockquote>
 					</div>
@@ -1527,11 +1527,11 @@ PropertyItems =</code>
 						<code>/</code> operator). Result of a division by zero
 						is a void value.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{div(5, 2)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>2.5</code>
 						</blockquote>
 					</div>
@@ -1541,11 +1541,11 @@ PropertyItems =</code>
 						<p>Returns the largest integer less than or equal to
 						decimal value <code>x</code>.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{floor(2.7)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>2</code>
 						</blockquote>
 					</div>
@@ -1554,12 +1554,12 @@ PropertyItems =</code>
 					<div class="section">
 						<p>Return the highest numeric value among given ones.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{max(7, 5)}
 {max(6, 8, 5, 7, 1, 2)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>7
 8</code>
 						</blockquote>
@@ -1569,12 +1569,12 @@ PropertyItems =</code>
 					<div class="section">
 						<p>Return the lowest numeric value among given ones.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{min(9, 3)}
 {min(6, 8, 5, 7, 1, 2)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>3
 1</code>
 						</blockquote>
@@ -1586,11 +1586,11 @@ PropertyItems =</code>
 						the second one (equivalent to <code>%</code>
 						operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{mod(7, 3)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>1</code>
 						</blockquote>
 					</div>
@@ -1601,11 +1601,11 @@ PropertyItems =</code>
 						<code>b</code> (equivalent to <code>*</code>
 						operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{mul(3, 4)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>12</code>
 						</blockquote>
 					</div>
@@ -1615,11 +1615,11 @@ PropertyItems =</code>
 						<p>Get specified number <code>x</code> raised to the power
 						<code>y</code>.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{pow(2, 10)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>1024</code>
 						</blockquote>
 					</div>
@@ -1634,12 +1634,12 @@ PropertyItems =</code>
 						return a pseudo-random numeric value between
 						<code>a</code> inclusive and <code>b</code> exclusive.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{rand()}
 {rand(1, 7)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>542180393
 5</code>
 						</blockquote>
@@ -1651,12 +1651,12 @@ PropertyItems =</code>
 						fractional digits <code>y</code>, or to the nearest
 						integral value if <code>y</code> is not specified.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{round(1.57)}
 {round(1.57, 1)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>2
 1.6</code>
 						</blockquote>
@@ -1666,11 +1666,11 @@ PropertyItems =</code>
 					<div class="section">
 						<p>Get the sine of angle <code>x</code> in radians.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{sin(1.57)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>0.999999682931835</code>
 						</blockquote>
 					</div>
@@ -1680,11 +1680,11 @@ PropertyItems =</code>
 						<p>Return the numeric value of a minus b (equivalent to
 						<code>-</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{sub(3, 5)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>-2</code>
 						</blockquote>
 					</div>
@@ -1698,12 +1698,12 @@ PropertyItems =</code>
 						function works on both strings and maps (keys are not
 						preserved when used with maps).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{cat("Hello, ", "World!")}
 {for v in cat([1, 2], [3]): {v}}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>Hello, World!
 1 2 3</code>
 						</blockquote>
@@ -1716,11 +1716,11 @@ PropertyItems =</code>
 						<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
 						Wikipedia</a> for details.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{char(97)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>a</code>
 						</blockquote>
 					</div>
@@ -1731,12 +1731,12 @@ PropertyItems =</code>
 						sub-string in a string. Search starts at index 0 unless
 						<code>start</code> argument is specified.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{find([89, 3, 572, 35, 7], 35)}
 {find("hello, world!", "o", 5)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>3
 8</code>
 						</blockquote>
@@ -1760,13 +1760,13 @@ PropertyItems =</code>
 							<li>s: System.String</li>
 						</ul>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{format(1339936496, "d:yyyy-MM-dd HH:mm:ss")}
 {format(0.165, "n:p2", "fr-FR")}
 {format(1, "b:n2")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>2012-06-17 12:34:56
 16,50 %
 True</code>
@@ -1781,11 +1781,11 @@ True</code>
 					<div class="section">
 						<p>Return a lowercase conversion of given string value.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{lcase("Mixed Case String"}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>mixed case string</code>
 						</blockquote>
 					</div>
@@ -1796,12 +1796,12 @@ True</code>
 						if value was a map, or number of characters if value
 						was a string.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{len("Hello!")}
 {len([17, 22, 391, 44])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>6
 4</code>
 						</blockquote>
@@ -1816,12 +1816,12 @@ True</code>
 						<a href="http://msdn.microsoft.com/en-us/library/hs600312(v=vs.71).aspx">.NET
 						Framework Regular Expressions</a> for more information.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{dump match("abc123", "^[a-z]+([0-9]+)$")}
 {dump match("xyz", "^[a-z]+([0-9]+)$")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>[0: "abc123", 1: "123"]
 &lt;void&gt;</code>
 						</blockquote>
@@ -1834,11 +1834,11 @@ True</code>
 						<a href="http://en.wikipedia.org/wiki/Unicode">Unicode on
 						Wikipedia</a> for details.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{ord("a")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>97</code>
 						</blockquote>
 					</div>
@@ -1853,12 +1853,12 @@ True</code>
 						starting from given <code>index</code> are
 						extracted.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{for v in slice([68, 657, 54, 3, 12, 9], 3, 2): {v}}
 {slice("abchello", 4)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>3 12
 hello</code>
 						</blockquote>
@@ -1870,11 +1870,11 @@ hello</code>
 						string separator <code>separator</code>. Result is an
 						map where pair values contain split sub-strings.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{dump split("2011/01/01", "/")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>[0: "2011", 1: "01", 2: "01"]</code>
 						</blockquote>
 					</div>
@@ -1888,14 +1888,14 @@ hello</code>
 						used as a faster alteranative to combined split/slice/join
 						calls in some cases.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{token("First.Second.Third", ".", 1)}
 {token("A//B//C//D", "//", 2)}
 {token("XX-??-ZZ", "-", 1, "YY")}
 {token("1;2;3", ";", 3, "4")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>Second
 C
 XX-YY-ZZ
@@ -1908,17 +1908,17 @@ XX-YY-ZZ
 						<p>Return an uppercase conversion of given string
 						value.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{ucase("Mixed Case String"}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>MIXED CASE STRING</code>
 						</blockquote>
 					</div>					
 				</div>
 
-				<h3>Boolean and logical</h3>
+				<h3>Comparison and boolean tests</h3>
 				<div class="section">
 					<h4>and(a, b, ...)</h4>
 					<div class="section">
@@ -1926,11 +1926,11 @@ XX-YY-ZZ
 						return "true" if all arguments are true (equivalent to
 						<code>&amp;&amp;</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{and(lt(2, 3), gt(5, 1))}</code>
+							<span>Template</span>
+<code>{and(2 &lt; 3, 5 &gt; 1)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true</code>
 						</blockquote>
 					</div>
@@ -1946,13 +1946,13 @@ XX-YY-ZZ
 						their values if lengths are equal. Two values of different
 						types are always different.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{cmp("abc", "bcd")}
 {cmp(9, 6)}
 {cmp([2, 4], [2, 4])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>-1
 1
 0</code>
@@ -1966,13 +1966,13 @@ XX-YY-ZZ
 						<code>fallback</code> otherwise (or a void value if
 						<code>fallback</code> is missing).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{set x to 3}
 {dump default(x, "invisible")}
 {dump default(y, "visible")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>3
 "visible"</code>
 						</blockquote>
@@ -1985,13 +1985,13 @@ XX-YY-ZZ
 						<a href="#function_cmp">cmp</a> common function for
 						more information about comparisons.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{eq(7, 7)}
 {eq(1, 4)}
 {eq("test", "test")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true
 false
 true</code>
@@ -2005,13 +2005,13 @@ true</code>
 						<code>b</code>, false otherwise (equivalent to
 						<code>&gt;=</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{ge(7, 3)}
 {ge(2, 2)}
 {ge("abc", "abx")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true
 true
 false</code>
@@ -2025,13 +2025,13 @@ false</code>
 						otherwise (equivalent to <code>&gt;</code>
 						operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{gt(7, 3)}
 {gt(2, 2)}
-{ge("abc", "abx")}</code>
+{gt("abc", "abx")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true
 false
 false</code>
@@ -2043,11 +2043,11 @@ false</code>
 						<p>Return true if given map has a value associated to
 						given key, or false otherwise.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{has(["name": "Paul", "age": 37, "sex": "M"], "age")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true</code>
 						</blockquote>
 					</div>
@@ -2059,13 +2059,13 @@ false</code>
 						false otherwise (equivalent to <code>&lt;=</code>
 						operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{le(3, 7)}
 {le(2, 2)}
 {le("abc", "abx")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true
 true
 true</code>
@@ -2079,13 +2079,13 @@ true</code>
 						otherwise (equivalent to <code>&lt;</code>
 						operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{lt(3, 7)}
 {lt(2, 2)}
 {lt("abc", "abx")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true
 false
 true</code>
@@ -2097,13 +2097,13 @@ true</code>
 						<p>Return true if all arguments are not equal, or false
 						otherwise (equivalent to <code>!=</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{ne(7, 7)}
 {ne(1, 4)}
 {ne("test", "test")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>false
 true
 false</code>
@@ -2116,11 +2116,11 @@ false</code>
 						return true if value was false or false if it was true
 						(equivalent to <code>!</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{not(eq(1, 2))}</code>
+							<span>Template</span>
+<code>{not(1 = 2)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true</code>
 						</blockquote>
 					</div>
@@ -2131,11 +2131,11 @@ false</code>
 						i.e. return "true" if at least one argument is true
 						(equivalent to <code>||</code> operator).</p>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{or(eq(2, 3), gt(5, 1))}</code>
+							<span>Template</span>
+<code>{or(2 = 3, 5 &gt; 1)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true</code>
 						</blockquote>
 					</div>
@@ -2147,14 +2147,14 @@ false</code>
 						<code>false</code> otherwise (or a void value if
 						<code>false</code> is missing).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{set x to 3}
 {set y to 0}
 {dump when(x, "x is true", "x is false")}
 {dump when(y, "y is true", "y is false")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>"x is true"
 "y is false"</code>
 						</blockquote>
@@ -2166,17 +2166,17 @@ false</code>
 						return "true" if exactly one argument is true and all the
 						others are false.</p>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{xor(lt(2, 3), eq(1, 2))}</code>
+							<span>Template</span>
+<code>{xor(2 &lt; 3, 1 = 2)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>true</code>
 						</blockquote>
 					</div>
 				</div>
 
-				<h3>Collection manipulation</h3>
+				<h3>Functional programming</h3>
 				<div class="section">
 					<h4>cross(map1, map2, ...)</h4>
 					<div class="section">
@@ -2185,11 +2185,11 @@ false</code>
 						<code>map2</code> and all following maps. Output pair
 						values will always be taken from <code>map1</code>.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{dump cross([1: "a", 2: "b", 3: "c"], [1: "x", 3: "y"])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>[1: "a", 3: "c"]</code>
 						</blockquote>
 					</div>
@@ -2203,12 +2203,35 @@ false</code>
 						key is not used by any other pair, otherwise all pairs
 						using that key would be removed also).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{dump except([1: "a", 2: "b", 3: "c"], [2: "x", 4: "y"])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>[1: "a", 3: "c"]</code>
+						</blockquote>
+					</div>
+
+					<h4>filter(map, predicate[, a, b, ...])</h4>
+					<div class="section">
+						<p>Return a map containing all pairs having a value that
+						satisfies given predicate. Function <code>predicate</code>
+						is invoked for each value from <code>map</code> with this
+						value as its first argument, and pair is added to output
+						map if predicate result
+						<a href="#conditional_statements">evaluates to true</a>.</p>
+						<p>Optional arguments can be specified when calling
+						<code>filter</code> and will be passed to each invocation
+						of <code>predicate</code> as second, third, forth argument
+						and so on.</p>
+						<blockquote class="code">
+							<span>Template</span>
+<code>{declare multiple_of(x, y) as: {return x % y = 0}}
+{for v in filter([1, 6, 7, 4, 9, 5, 0], multiple_of, 3): {v}}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result</span>
+<code>6 9 0</code>
 						</blockquote>
 					</div>
 
@@ -2221,12 +2244,12 @@ false</code>
 						the last occurrence of each duplicate can be accessed
 						using map subscript operator ([]).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{dump flip([1: "hello,", 2: "world!"])}
 {dump flip(["a": 0, "b": 0])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>["hello,": 1, "world!": 2]
 [0: "a", 0: "b"]</code>
 						</blockquote>
@@ -2238,12 +2261,37 @@ false</code>
 						given string as a separator (or empty string if no
 						separator is provided).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{join(["2011", "01", "01"], "/")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>2011/01/01</code>
+						</blockquote>
+					</div>
+
+					<h4>map(source, modifier[, a, b, ...])</h4>
+					<div class="section">
+						<p>Return a map where values are built by applying given
+						modifier to map values, while preserving keys. Function
+						<code>modifier</code> is invoked for each value in
+						<code>source</code> with this value as its first
+						argument.</p>
+						<p>Optional arguments can be specified when calling
+						<code>map</code> and will be passed to each invocation of
+						<code>modifier</code> as second, third, forth argument and
+						so on.</p>
+						<blockquote class="code">
+							<span>Template</span>
+<code>{declare square(x) as: {return x * x}}
+{for v in map([1, 2, 3, 4], square): {v}}
+
+{dump map(["a": 1, "b": 7, "c": 4, "d": 5, "e": 3, "f": 2, "g": 6], lt, 4)}</code>
+						</blockquote>
+						<blockquote class="code">
+							<span>Result</span>
+<code>1 4 9 16
+["a": 1, "b": 0, "c": 0, "d": 0, "e": 1, "f": 1, "g": 0]</code>
 						</blockquote>
 					</div>
 
@@ -2257,12 +2305,12 @@ false</code>
 						for <code>step</code> is 1 if <code>start</code> &lt;
 						<code>stop</code> or -1 otherwise.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{for v in range(5): {v}}
 {for v in range(2, 20, 3): {v}}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>0 1 2 3 4
 2 5 8 11 14 17</code>
 						</blockquote>
@@ -2278,7 +2326,7 @@ false</code>
 						return -1 if the first should be placed "before" the
 						second, 0 if they are equal, or 1 otherwise.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{set shuffled to ["in", "order", "elements" "natural"]}
 
 {for item in sort(shuffled):
@@ -2296,7 +2344,7 @@ false</code>
 }</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>elements
 in
 natural
@@ -2316,11 +2364,11 @@ length</code>
 						once in all input maps, the last one will overwrite any
 						previous pair using it.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{dump union([1: "a", 2: "b"], [2: "x", 3: "c"], [4: "d"])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>[1: "a", 2: "x", 3: "c", 4: "d"]</code>
 						</blockquote>
 					</div>
@@ -2333,31 +2381,31 @@ length</code>
 						the two maps don't have the same length, exceeding
 						elements from the longest map are ignored.</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{set a to ["key1", "key2", "key3"]}
 {set b to ["value1", "value2", "value3"]}
 {dump zip(a, b)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>["key1": "value1", "key2": "value2", "key3": "value3"]</code>
 						</blockquote>
 					</div>
 				</div>
 
-				<h3>Functional programming</h3>
+				<h3>Type and indirection</h3>
 				<div class="section">
 					<h4>call(func, map)</h4>
 					<div class="section">
 						<p>Call function <code>func</code> with values from given
 						map as arguments (keys are not used).</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{call(cat, ["Hello", ", ", "World", "!"])}
 {call(max, [3, 8, 2, 7])}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>Hello, World!
 8</code>
 						</blockquote>
@@ -2368,69 +2416,60 @@ length</code>
 						<p>Get value converted to requested scalar type. Type must
 						be a string value specifying desired type:</p>
 						<ul>
-							<li>b: convert to boolean value</li>
-							<li>n: convert to numeric value</li>
-							<li>s: convert to string value</li>
+							<li>"b" or "boolean": convert to boolean value</li>
+							<li>"n" or "number": convert to numeric value</li>
+							<li>"s" or "string": convert to string value</li>
 						</ul>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{dump eq(2, cast("2", "n"))}
+							<span>Template</span>
+<code>{dump cast("2", "n") = 2}
 {dump ["value for key 0"][cast("0", "n")]}
 {dump cast("some string", "b")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>&lt;true&gt;
 "value for key 0"
 &lt;true&gt;</code>
 						</blockquote>
 					</div>
 
-					<h4>filter(map, predicate[, a, b, ...])</h4>
+					<h4>defined(value)</h4>
 					<div class="section">
-						<p>Return a map containing all pairs having a value that
-						satisfies given predicate. Function <code>predicate</code>
-						is invoked for each value from <code>map</code> with this
-						value as its first argument, and pair is added to output
-						map if predicate result
-						<a href="#conditional_statements">evaluates to true</a>.</p>
-						<p>Optional arguments can be specified when calling
-						<code>filter</code> and will be passed to each invocation
-						of <code>predicate</code> as second, third, forth argument
-						and so on.</p>
+						<p>Check whether value is defined or not. Note this is
+						different than checking whether a value
+						<a href="#conditional_statements">evaluates to true</a>
+						or not: integer <code>0</code> is equivalent to false
+						when used as a boolean expression, yet is defined. This
+						function is mostly useful for testing if a variable has
+						been assigned a value.</p>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{declare multiple_of(x, y) as: {return eq(mod(x, y), 0)}}
-{for v in filter([1, 6, 7, 4, 9, 5, 0], multiple_of, 3): {v}}</code>
+							<span>Template</span>
+<code>{dump defined(undefined)}
+{set a to 0}
+{dump defined(a)}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
-<code>6 9 0</code>
+							<span>Result</span>
+<code>&lt;false&gt;
+&lt;true&gt;</code>
 						</blockquote>
 					</div>
 
-					<h4>map(source, modifier[, a, b, ...])</h4>
+					<h4>type(value)</h4>
 					<div class="section">
-						<p>Return a map where values are built by applying given
-						modifier to map values, while preserving keys. Function
-						<code>modifier</code> is invoked for each value in
-						<code>source</code> with this value as its first
-						argument.</p>
-						<p>Optional arguments can be specified when calling
-						<code>map</code> and will be passed to each invocation of
-						<code>modifier</code> as second, third, forth argument and
-						so on.</p>
+						<p>Retrieve type of given value as a string. Possible
+						return values are "boolean", "function", "map",
+						"number", "string" or "void".</p>
 						<blockquote class="code">
-							<span>Template:</span>
-<code>{declare square(x) as: {return mul(x, x)}}
-{for v in map([1, 2, 3, 4], square): {v}}
-
-{dump map(["a": 1, "b": 7, "c": 4, "d": 5, "e": 3, "f": 2, "g": 6], lt, 4)}</code>
+							<span>Template</span>
+<code>{dump type(15)}
+{dump type("test")}</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
-<code>1 4 9 16
-["a": 1, "b": 0, "c": 0, "d": 0, "e": 1, "f": 1, "g": 0]</code>
+							<span>Result</span>
+<code>"number"
+"string"</code>
 						</blockquote>
 					</div>
 				</div>
@@ -2462,13 +2501,13 @@ length</code>
 						<p>Now, we want to include and render this template file in
 						our global rendering:</p>
 						<blockquote class="code">
-							<span>Template:</span>
+							<span>Template</span>
 <code>{for article in articles:
     {include("article.cottle", ["a": article])}
 }</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>C# code:</span>
+							<span>C# code</span>
 <code>store["articles"] = new Value[]
 {
     new Dictionary&lt;Value, Value&gt;
@@ -2484,7 +2523,7 @@ length</code>
 };</code>
 						</blockquote>
 						<blockquote class="code">
-							<span>Result:</span>
+							<span>Result</span>
 <code>&lt;div class="box"&gt;
     &lt;div class="title"&gt;First article&lt;/div&gt;
     &lt;div class="text"&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/div&gt;
