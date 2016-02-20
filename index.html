@@ -311,20 +311,21 @@
 						<span>C# code</span>
 <code>void RenderAndPrintMyTemplate()
 {
-    IDocument  document;
-    IStore     store;
+    IDocument document;
+    IStore store;
 
-    using (Stream stream = new FileStream("test.cottle", FileMode.Open))
+    using (var stream = new FileStream("test.cottle", FileMode.Open))
     {
-        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+        using (var reader = new StreamReader(stream, Encoding.UTF8))
         {
             document = new SimpleDocument(reader); // throws ParseException on error
         }
     }
 
     store = new BuiltinStore(); // this is where variables can be stored
+    store["somevar"] = "some value"; // declare new "somevar" string variable
 
-    <strong>/* TODO: assign some values to store */</strong>
+    <strong>/* TODO: customize rendering if needed */</strong>
 
     Console.Write(document.Render(store));
 }</code>
@@ -336,7 +337,7 @@
 					<p>Next samples in this document will show the same
 					"Template", "C# code" and "Result" snippets. Since the C#
 					code above applies to all following examples it won't be
-					repeated and only parts that must replace the
+					repeated and only parts that should replace the
 					"<strong>TODO</strong>" comment will appear.
 					</p>
 				</div>
