@@ -181,12 +181,12 @@ namespace Cottle
 
 		public static implicit operator Value (double value)
 		{
-			return new NumberValue (value);
+			return double.IsInfinity (value) || double.IsNaN (value) ? VoidValue.Instance as Value : new NumberValue (value);
 		}
 
 		public static implicit operator Value (float value)
 		{
-			return new NumberValue (value);
+			return float.IsInfinity(value) || float.IsNaN(value) ? VoidValue.Instance as Value : new NumberValue (value);
 		}
 
 		public static implicit operator Value (int value)
