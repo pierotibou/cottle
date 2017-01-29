@@ -1747,10 +1747,10 @@ PropertyItems =</code>
 					<div class="section">
 						<p>Convert any <code>value</code> to a string using given
 						formatting from <code>format</code> string expression.
-						Format should use syntax "expr" or "t:expr" where "t"
-						indicates the type of the formatter to use, and "expr" is
-						the .NET format specifier. Available formatter types
-						are:</p>
+						Format should use syntax "str" or "t:str" where "t"
+						indicates the type of the formatter to use and "str" is
+						the associated .NET format string. Available formatter
+						types are:</p>
 						<ul>
 							<li>a: automatic (default, used if "t" is omitted)</li>
 							<li>b: System.Boolean</li>
@@ -1760,6 +1760,10 @@ PropertyItems =</code>
 							<li>n: System.Decimal</li>
 							<li>s: System.String</li>
 						</ul>
+						Format string depends on the type of formatter selected,
+						see help about
+						<a href="https://msdn.microsoft.com/fr-fr/library/system.string.format(v=vs.110).aspx">String.Format</a>
+						method for more information about format strings.
 						<blockquote class="code">
 							<span>Template</span>
 <code>{format(1339936496, "d:yyyy-MM-dd HH:mm:ss")}
